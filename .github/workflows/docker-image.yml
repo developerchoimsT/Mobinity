@@ -62,8 +62,6 @@ jobs:
 
           # Deploy commands
           ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ec2-user@$SSH_HOST << 'EOF'
-            # Navigate to the deployment directory
-            cd /path/to/your/app
 
             # Stop and remove existing containers
             docker-compose down
