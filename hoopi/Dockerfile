@@ -15,5 +15,5 @@ RUN ./gradlew build -x test
 
 # Stage 2: Run
 FROM amazoncorretto:17
-COPY --from=build /app/build/libs/*.jar app.jar
+COPY --from=build /hoopi/build/libs/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "/app.jar"]
