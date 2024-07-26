@@ -1,23 +1,17 @@
 version: '3.8'
-
 services:
-  react-app:
-    image: developerchoims/my-react-app:latest
-    ports:
-      - "3000:80"
-
-  spring-boot-app:
-    image: developerchoims/my-spring-boot-app:latest
-    ports:
-      - "8080:8080"
-
   nginx:
-    image: nginx:alpine
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    image: developerchoims/my-nginx:latest
     ports:
       - "80:80"
     depends_on:
-      - react-app
-      - spring-boot-app
+      - react
+      - spring
+  react:
+    image: developerchoims/my-react-app:latest
+    ports:
+      - "3000:3000"
+  spring:
+    image: developerchoims/my-spring-boot-app:latest
+    ports:
+      - "8080:8080"
