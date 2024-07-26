@@ -20,7 +20,7 @@ jobs:
 
       - name: Create application.yml
         run: |
-          cd ./src/main/resources
+          cd ./hoopi/src/main/resources
           echo "${{ secrets.PROPERTIES }}" > application.yml
 
       - name: Build with Gradle
