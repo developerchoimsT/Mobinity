@@ -11,6 +11,6 @@ RUN chmod +x ./gradlew
 RUN ./gradlew build -x test
 
 # Stage 2: Run
-FROM openjdk:17-jdk-alpine
+FROM amazoncorretto:17-alpine
 COPY --from=build /app/build/libs/*.jar /app/app.jar
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
