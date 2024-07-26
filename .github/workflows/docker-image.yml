@@ -30,7 +30,7 @@ jobs:
       - name: Build and push React Docker image
         uses: docker/build-push-action@v4
         with:
-          context: ./hoopifront
+          context: ./hoopifront  # Make sure this points to the correct directory
           file: ./hoopifront/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_REPO }}/my-react-app:latest
