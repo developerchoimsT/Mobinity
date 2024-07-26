@@ -56,13 +56,14 @@ jobs:
           SSH_KEY: ${{ secrets.SSH_KEY }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
         run: |
-          cd /home/ec2-user
           # Save SSH private key to a file
           echo "$SSH_KEY" > /tmp/id_rsa
           chmod 600 /tmp/id_rsa
 
           # Deploy commands
           ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ec2-user@$SSH_HOST << 'EOF'
+            # Navigate to the deployment directory
+            cd /home/ec2-user
 
             # Stop and remove existing containers
             docker-compose down
@@ -72,4 +73,10 @@ jobs:
 
             # Start the containers
             docker-compose up -d
+
+            # Check the status of the containers
+            docker ps -a
+
+            # View logs for debugging
+            docker-compose logs
           EOF
