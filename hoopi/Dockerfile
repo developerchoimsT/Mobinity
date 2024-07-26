@@ -3,9 +3,9 @@ FROM gradle:8.8-jdk17 AS build
 
 WORKDIR /app
 
-# Copy source code and build
+# Copy source code & build
 COPY --chown=gradle:gradle . /app
-RUN gradle build --no-daemon
+RUN ./gradlew build -x test
 
 # Stage 2: Run
 FROM amazoncorretto:17-alpine
