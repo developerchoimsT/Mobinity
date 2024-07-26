@@ -36,9 +36,9 @@ jobs:
 
       - name: Build Docker images
         run: |
-          docker build -t my-react-app:latest ./path-to-react-app
-          docker build -t my-spring-boot-app:latest ./path-to-spring-boot-app
-          docker build -t my-nginx:latest ./path-to-nginx-config
+          docker build -t my-react-app:latest ./hoopifront
+          docker build -t my-spring-boot-app:latest ./hoopi
+          docker build -t my-nginx:latest ./hoopifront/nginx
 
       - name: Push Docker images to Docker Hub
         uses: docker/login-action@v2
