@@ -2,7 +2,7 @@ FROM gradle:8.8-jdk17 AS build
 WORKDIR /hoopi
 
 # Copy source code & build
-COPY --chown=gradle:gradle . /hoopi
+COPY --chown=gradle:gradle ./hoopi /hoopi
 
 # Make gradlew executable
 RUN chmod +x ./gradlew
