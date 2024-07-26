@@ -1,9 +1,9 @@
 # Stage 1: Build
 FROM gradle:8.8-jdk17 AS build
-WORKDIR /hoopi
+WORKDIR /app
 
 # Copy source code & build
-COPY . /hoopi
+COPY . /app
 
 # Make gradlew executable
 RUN chmod +x gradlew
@@ -13,5 +13,5 @@ RUN ./gradlew build -x test
 
 # Stage 2: Run
 FROM amazoncorretto:17
-COPY --from=build /hoopi/build/libs/app.jar /hoopi/app.jar
+COPY --from=build /app/build/libs/*.jar /hoopi/app.jar
 ENTRYPOINT ["java", "-jar", "/hoopi/app.jar"]
