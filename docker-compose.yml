@@ -10,7 +10,7 @@ services:
   react:
     image: developerchoims/my-react-app:latest
     ports:
-      - "3000:3000"
+      - "3000:80"
   spring:
     image: developerchoims/my-spring-boot-app:latest
     ports:
