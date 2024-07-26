@@ -1,19 +1,16 @@
-# Stage 1: Build
-FROM gradle:8.8-jdk17 AS build
-WORKDIR /hoopi
+# Step 1: Build the JAR file
+FROM amazoncorretto:17 AS builder
+WORKDIR /app
 COPY gradlew .
 COPY gradle gradle
 COPY build.gradle .
 COPY settings.gradle .
 COPY src src
-
-# Make gradlew executable
 RUN chmod +x ./gradlew
+RUN ./gradlew bootJar
 
-# Run Gradle build
-RUN ./gradlew build -x test
-
-# Stage 2: Run
+# Step 2: Create a lightweight image and add the JAR file
 FROM amazoncorretto:17
-COPY --from=build /hoopi/build/libs/*.jar app.jar
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+WORKDIR /app
+COPY --from=builder /hoopi/build/libs/*.jar app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
