@@ -48,11 +48,24 @@ jobs:
 
       - name: Deploy to EC2
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
         run: |
-          ssh -o StrictHostKeyChecking=no -i "$SSH_PRIVATE_KEY" ec2-user@${{ secrets.SSH_HOST }} << 'EOF'
+          # Save SSH private key to a file
+          echo "$SSH_KEY" > /tmp/id_rsa
+          chmod 600 /tmp/id_rsa
+
+          # Deploy commands
+          ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ec2-user@$SSH_HOST << 'EOF'
+            # Navigate to the deployment directory
             cd /path/to/your/app
+
+            # Stop and remove existing containers
             docker-compose down
+
+            # Pull latest images
             docker-compose pull
+
+            # Start the containers
             docker-compose up -d
           EOF
