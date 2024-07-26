@@ -1,11 +1,12 @@
+# Stage 1: Build
 FROM gradle:8.8-jdk17 AS build
 WORKDIR /hoopi
 
 # Copy source code & build
-COPY --chown=gradle:gradle ./hoopi /hoopi
+COPY . /hoopi
 
 # Make gradlew executable
-RUN chmod +x ./gradlew
+RUN chmod +x gradlew
 
 # Run Gradle build
 RUN ./gradlew build -x test
