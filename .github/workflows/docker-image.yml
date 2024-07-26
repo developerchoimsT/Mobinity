@@ -43,8 +43,13 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_REPO }}/my-spring-boot-app:latest
 
-      # Nginx는 기본 이미지 사용
-      # - name: Build and push Nginx Docker image (skipped since using default image)
+      - name: Build and push Nginx Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./nginx
+          file: ./nginx/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_REPO }}/my-nginx:latest
 
       - name: Deploy to EC2
         env:
