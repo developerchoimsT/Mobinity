@@ -59,18 +59,15 @@ jobs:
           # Save SSH private key to a file
           echo "$SSH_KEY" > /tmp/id_rsa
           chmod 600 /tmp/id_rsa
-
+        
           # Deploy commands
-          ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ec2-user@$SSH_HOST << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ec2-user@$SSH_HOST << EOF
             # Navigate to the deployment directory
             cd /home/ec2-user
-
-            # Stop and remove existing containers
+            
+            # Build images and start containers
             docker-compose down
-
-            # Pull latest images
+            docker-compose build
             docker-compose pull
-
-            # Start the containers
             docker-compose up -d
           EOF
