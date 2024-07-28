@@ -60,7 +60,7 @@ jobs:
           echo "$SSH_KEY" > /tmp/id_rsa
           chmod 600 /tmp/id_rsa
 
-          # Copy nginx.conf to the server, overwrite if exists
+          # Copy nginx.conf to the server's home directory
           scp -o StrictHostKeyChecking=no -i /tmp/id_rsa ./hoopifront/nginx/nginx.conf ec2-user@$SSH_HOST:/home/ec2-user/nginx.conf
 
           # SSH into the server, move the nginx.conf to the correct location and restart nginx
