@@ -17,7 +17,7 @@ jobs:
           cd ./hoopi/src/main/resources
           echo "${{ secrets.PROPERTIES }}" > application.yml
         shell: bash
-      
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -60,9 +60,9 @@ jobs:
           echo "$SSH_KEY" > /tmp/id_rsa
           chmod 600 /tmp/id_rsa
 
-          # Copy docker-compose.yml to the server, overwrite
+          # Copy docker-compose.yml to the server, overwrite if exists
           scp -o StrictHostKeyChecking=no -i /tmp/id_rsa docker-compose.yml ec2-user@$SSH_HOST:/home/ec2-user/docker-compose.yml
-      
+
       - name: Deploy to EC2
         env:
           SSH_KEY: ${{ secrets.SSH_KEY }}
@@ -76,5 +76,16 @@ jobs:
             cd /home/ec2-user
             docker-compose down
             docker-compose pull
-            docker-compose up -d
+
+            # Try to start the services, retrying if necessary
+            for i in {1..5}; do
+              docker-compose up -d && break || sleep 10
+            done
+
+            # Check the logs of the nginx container if it's unhealthy
+            if [ "$(docker inspect -f '{{.State.Health.Status}}' ec2-user_nginx_1)" != "healthy" ]; then
+              echo "Nginx container logs:"
+              docker logs ec2-user_nginx_1
+              exit 1
+            fi
           EOF
