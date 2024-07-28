@@ -51,7 +51,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_REPO }}/my-nginx:latest
 
-      - name: Deploy to EC2
+      - name: Copy docker-compose.yml to EC2
         env:
           SSH_KEY: ${{ secrets.SSH_KEY }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
@@ -62,22 +62,30 @@ jobs:
 
           # Copy docker-compose.yml to the server, overwrite if exists
           scp -o StrictHostKeyChecking=no -i /tmp/id_rsa docker-compose.yml ec2-user@$SSH_HOST:/home/ec2-user/docker-compose.yml
+
+      - name: Deploy to EC2
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+        run: |
+          # Save SSH private key to a file
+          echo "$SSH_KEY" > /tmp/id_rsa
+          chmod 600 /tmp/id_rsa
+        
+          ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ec2-user@$SSH_HOST << EOF
             cd /home/ec2-user
             docker-compose down
             docker-compose pull
-            docker-compose up -d
 
-            # Check the health status of the nginx container
+            # Try to start the services, retrying if necessary
             for i in {1..5}; do
-              if [ "$(docker inspect -f '{{.State.Health.Status}}' ec2-user_nginx)" == "healthy" ]; then
-                echo "Nginx container is healthy."
-                exit 0
-              fi
-              echo "Waiting for Nginx container to become healthy..."
-              sleep 10
+              docker-compose up -d && break || sleep 10
             done
 
-            echo "Nginx container failed to become healthy."
-            docker logs ec2-user_nginx
-            exit 1
+            # Check the logs of the nginx container if it's unhealthy
+            if [ "$(docker inspect -f '{{.State.Health.Status}}' ec2-user_nginx)" != "healthy" ]; then
+              echo "Nginx container logs:"
+              docker logs ec2-user_nginx
+              exit 1
+            fi
           EOF
