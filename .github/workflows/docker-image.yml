@@ -17,7 +17,6 @@ jobs:
           cd ./hoopi/src/main/resources
           echo "${{ secrets.PROPERTIES }}" > ./application.yml
           cat ./application.yml
-        shell: bash
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -43,6 +42,10 @@ jobs:
           file: ./hoopi/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_REPO }}/my-spring-boot-app:latest
+          script: |
+            cd ./hoopi/src/main/resources
+            echo "${{ secrets.PROPERTIES }}" > ./application.yml
+            cat ./application.yml
 
       - name: Build and push Nginx Docker image
         uses: docker/build-push-action@v4
