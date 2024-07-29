@@ -8,5 +8,4 @@ RUN npm run build
 
 # Stage 2: Serve
 FROM nginx:alpine
-COPY ../nginx/nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /front/build /usr/share/nginx/html
