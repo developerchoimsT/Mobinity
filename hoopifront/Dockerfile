@@ -11,6 +11,6 @@ RUN npm run build
 # Stage 2: Serve
 FROM nginx:alpine
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
-COPY --from=build build /usr/share/nginx/html
+COPY --from=build /app/build/* /usr/share/nginx/html
 
 CMD ["nginx", "-g", "daemon off;"]
