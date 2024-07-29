@@ -62,19 +62,6 @@ jobs:
           # Copy docker-compose.yml to the server, overwrite if exists
           scp -o StrictHostKeyChecking=no -i /tmp/id_rsa docker-compose.yml ec2-user@$SSH_HOST:/home/ec2-user/docker-compose.yml
 
-      - name: Copy nginx.conf to EC2
-        env:
-          SSH_KEY: ${{ secrets.SSH_KEY }}
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-        run: |
-          # Save SSH private key to a file
-          echo "$SSH_KEY" > /tmp/id_rsa
-          chmod 600 /tmp/id_rsa
-          # Create nginx directory if it doesn't exist
-          ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ec2-user@$SSH_HOST 'mkdir -p /home/ec2-user/nginx'
-          # Copy nginx.conf to the server, overwrite if exists
-          scp -o StrictHostKeyChecking=no -i /tmp/id_rsa ./hoopifront/nginx/nginx.conf ec2-user@$SSH_HOST:/home/ec2-user/nginx/nginx.conf
-
       - name: Deploy to EC2
         env:
           SSH_KEY: ${{ secrets.SSH_KEY }}
