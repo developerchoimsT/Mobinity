@@ -16,7 +16,7 @@ jobs:
         run: |
           cd ./hoopi/src/main/resources
           touch ./application.yml
-          echo "${{ secrets.PROPERTIES }}" | base64 --decode >  ./application.yml
+          echo "${{ secrets.PROPERTIES }}" | base64 --decode > ./application.yml
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -59,8 +59,8 @@ jobs:
           # Save SSH private key to a file
           echo "$SSH_KEY" > /tmp/id_rsa
           chmod 600 /tmp/id_rsa
-        
-          ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ec2-user@$SSH_HOST
+
+          ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ec2-user@$SSH_HOST << EOF
             cd /home/ec2-user/jwtProject
             docker-compose down
             docker-compose pull
