@@ -2,7 +2,7 @@
 FROM node:18 AS build
 WORKDIR /hoopifront
 
-COPY package*.json ./
+COPY package*.json .
 RUN npm install
 
 COPY . .
@@ -10,6 +10,6 @@ RUN npm run build
 
 # Stage 2: Serve
 FROM nginx:alpine
-COPY nginx/nginx.conf /etc/nginx/nginx.conf
+COPY /hoopifront/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /hoopifront/build /usr/share/nginx/html
 CMD ["nginx", "-g", "daemon off;"]
