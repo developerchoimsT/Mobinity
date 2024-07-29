@@ -1,6 +1,6 @@
-# Backend Dockerfile for Spring Boot application
+# Backend Dockerfile for Spring Boot application using Gradle
 
 FROM openjdk:17-jdk-slim
 VOLUME /tmp
-COPY target/*.jar app.jar
+COPY build/libs/*.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
