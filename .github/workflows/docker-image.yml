@@ -16,7 +16,7 @@ jobs:
         run: |
           cd ./hoopi/src/main/resources
           echo "${{ secrets.PROPERTIES }}" > ./application.yml
-          cat application.yml
+          cat ./application.yml
         shell: bash
 
       - name: Set up Docker Buildx
@@ -61,12 +61,13 @@ jobs:
           # Save SSH private key to a file
           echo "$SSH_KEY" > /tmp/id_rsa
           chmod 600 /tmp/id_rsa
-          
+        
           ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ec2-user@$SSH_HOST << 'EOF'
             cd /home/ec2-user/jwtProject
             docker-compose down
             docker-compose pull
             # Update application.yml
             echo "$PROPERTIES" > ./hoopi/src/main/resources/application.yml
+            cat ./hoopi/src/main/resources/application.yml
             docker-compose up -d
           EOF
