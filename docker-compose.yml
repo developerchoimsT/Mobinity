@@ -1,9 +1,9 @@
 version: '3.8'
 
 services:
-  backend:
+  spring:
     build:
-      context: ./backend
+      context: ./hoopi
       dockerfile: Dockerfile
     container_name: spring_app
     ports:
@@ -11,13 +11,11 @@ services:
     networks:
       - my-network
 
-  frontend:
+  react:
     build:
-      context: ./frontend
+      context: ./hoopifront
       dockerfile: Dockerfile
     container_name: react_app
-    ports:
-      - "3000:80"  # 브라우저에서 3000번 포트로 접근 시 Nginx가 80번 포트로 응답
     networks:
       - my-network
 
@@ -29,8 +27,8 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - backend
-      - frontend
+      - react
+      - spring
     networks:
       - my-network
 
