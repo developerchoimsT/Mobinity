@@ -60,7 +60,7 @@ jobs:
           echo "$SSH_KEY" > /tmp/id_rsa
           chmod 600 /tmp/id_rsa
           # Copy docker-compose.yml to the server, overwrite if exists
-          scp -o StrictHostKeyChecking=no -i /tmp/id_rsa docker-compose.yml ec2-user@$SSH_HOST:/home/ec2-user/docker-compose.yml
+          scp -o StrictHostKeyChecking=no -i /tmp/id_rsa docker-compose.yml ec2-user@$SSH_HOST:/home/ec2-user/jwtProject/docker-compose.yml
 
       - name: Deploy to EC2
         env:
@@ -72,7 +72,7 @@ jobs:
           chmod 600 /tmp/id_rsa
         
           ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ec2-user@$SSH_HOST << EOF
-            cd /home/ec2-user
+            cd /home/ec2-user/jwtProject
             docker-compose down
             docker-compose pull
             docker-compose up -d
