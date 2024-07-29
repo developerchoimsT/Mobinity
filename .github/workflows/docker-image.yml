@@ -60,7 +60,7 @@ jobs:
           echo "$SSH_KEY" > /tmp/id_rsa
           chmod 600 /tmp/id_rsa
         
-          ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ec2-user@$SSH_HOST << EOF
+          ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ec2-user@$SSH_HOST
             cd /home/ec2-user/jwtProject
             docker-compose down
             docker-compose pull
