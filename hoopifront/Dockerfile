@@ -10,6 +10,7 @@ RUN npm run build
 
 # Stage 2: Serve
 FROM nginx:alpine
-COPY nginx/nginx.conf /etc/nginx/nginx.conf
+WORKDIR /app
 COPY --from=build /app/build /usr/share/nginx/html
+
 CMD ["nginx", "-g", "daemon off;"]
