@@ -15,7 +15,6 @@ jobs:
       - name: Create application.yml
         run: |
           cd ./hoopi/src/main/resources
-          touch ./application.yml
           echo "${{ secrets.PROPERTIES }}" > ./application.yml
           cat application.yml
         shell: bash
@@ -62,14 +61,12 @@ jobs:
           # Save SSH private key to a file
           echo "$SSH_KEY" > /tmp/id_rsa
           chmod 600 /tmp/id_rsa
-        
-          ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ec2-user@$SSH_HOST << EOF
+          
+          ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ec2-user@$SSH_HOST << 'EOF'
             cd /home/ec2-user/jwtProject
             docker-compose down
             docker-compose pull
-
             # Update application.yml
             echo "$PROPERTIES" > ./hoopi/src/main/resources/application.yml
-
             docker-compose up -d
           EOF
