@@ -14,7 +14,7 @@ jobs:
 
       - name: Create application.yml
         run: |
-          cd ./src/main/resources
+          cd .hoopi/src/main/resources
           touch ./application.yml
           echo "${{ secrets.PROPERTIES }}" > ./application.yml
         shell: bash
