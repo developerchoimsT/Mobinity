@@ -1,6 +1,6 @@
 # Stage 1: Build
 FROM node:18 AS build
-WORKDIR /front
+WORKDIR /app
 
 COPY package*.json .
 RUN npm install
@@ -10,6 +10,6 @@ RUN npm run build
 
 # Stage 2: Serve
 FROM nginx:alpine
-COPY --from=build /hoopifront/build /usr/share/nginx/html
+COPY --from=build /app/build/* /usr/share/nginx/html
 
 CMD ["nginx", "-g", "daemon off;"]
