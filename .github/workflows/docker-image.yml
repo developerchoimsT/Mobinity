@@ -46,8 +46,8 @@ jobs:
       - name: Build and push Nginx Docker image
         uses: docker/build-push-action@v4
         with:
-          context: ./hoopifront/nginx
-          file: ./hoopifront/nginx/Dockerfile
+          context: ./nginx
+          file: ./nginx/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_REPO }}/my-nginx:latest
 
