@@ -1,39 +1,36 @@
 version: '3.8'
 
 services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: spring_app
+    ports:
+      - "8080:8080"
+    networks:
+      - my-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: react_app
+    ports:
+      - "3000:80"  # 브라우저에서 3000번 포트로 접근 시 Nginx가 80번 포트로 응답
+    networks:
+      - my-network
+
   nginx:
-    image: developerchoims/my-nginx:latest
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: nginx
     ports:
       - "80:80"
     depends_on:
-      - react
-      - spring
-    networks:
-      - my-network
-
-  react:
-    image: developerchoims/my-react-app:latest
-    ports:
-      - "3000:80"
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:3000 || exit 1"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-    networks:
-      - my-network
-
-  spring:
-    image: developerchoims/my-spring-boot-app:latest
-    ports:
-      - "8080:8080"
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8080 || exit 1"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-    depends_on:
-      - react
+      - backend
+      - frontend
     networks:
       - my-network
 

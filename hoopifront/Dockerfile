@@ -1,3 +1,4 @@
+# Stage 1: Build
 FROM node:alpine as build
 WORKDIR /front
 COPY package.json .
@@ -5,7 +6,8 @@ RUN npm install
 COPY ./ ./
 RUN npm run build
 
-FROM nginx
-EXPOSE 3000
+# Stage 2: Serve with Nginx
+FROM nginx:alpine
+EXPOSE 80
 COPY ../nginx/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=build app/build /usr/share/nginx/html
+COPY --from=build /front/build /usr/share/nginx/html
