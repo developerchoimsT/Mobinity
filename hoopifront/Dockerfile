@@ -10,7 +10,6 @@ RUN npm run build
 
 # Stage 2: Serve
 FROM nginx:alpine
-WORKDIR /front
-COPY --from=build /front/build /usr/share/nginx/html
+COPY --from=build /hoopifront/build /usr/share/nginx/html
 
-CMD ["nginx", "-g", "daemon off;"]<build_ima
+CMD ["nginx", "-g", "daemon off;"]
