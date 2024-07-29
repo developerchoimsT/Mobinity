@@ -56,5 +56,5 @@ tasks.named('test') {
 }
 
 bootJar {
-    archiveFileName.set('app.jar')
+    archiveFileName = 'app.jar'
 }
