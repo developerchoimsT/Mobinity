@@ -1,6 +1,22 @@
-# Backend Dockerfile for Spring Boot application using Gradle
+# Stage 1: Build
+FROM gradle:8.8-jdk17 AS build
+WORKDIR /app
 
-FROM openjdk:17-jdk-slim
-VOLUME /tmp
-COPY build/libs/*.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+# Copy source code and build
+COPY gradlew .
+COPY gradle gradle
+COPY build.gradle .
+COPY settings.gradle .
+COPY src src
+
+# Make gradlew executable
+RUN chmod +x ./gradlew
+
+# Run Gradle build
+RUN ./gradlew bootJar
+
+# Stage 2: Run
+FROM amazoncorretto:17
+WORKDIR /app
+COPY --from=build /app/build/libs/*.jar app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
