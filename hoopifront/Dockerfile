@@ -1,6 +1,6 @@
 # Stage 1: Build
 FROM node:18 AS build
-WORKDIR /app
+WORKDIR /front
 
 COPY package*.json .
 RUN npm install
@@ -10,7 +10,7 @@ RUN npm run build
 
 # Stage 2: Serve
 FROM nginx:alpine
-WORKDIR /app
+WORKDIR /front
 COPY --from=build /app/build /usr/share/nginx/html
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]<build_ima
