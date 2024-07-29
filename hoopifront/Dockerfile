@@ -1,10 +1,8 @@
 # Stage 1: Build
-FROM node:18 AS build
+FROM node:alpine AS build
 WORKDIR /front
-
-COPY package*.json .
+COPY package*.json ./
 RUN npm install
-
 COPY . .
 RUN npm run build
 
@@ -12,5 +10,3 @@ RUN npm run build
 FROM nginx:alpine
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /front/build /usr/share/nginx/html
-
-CMD ["nginx", "-g", "daemon off;"]
