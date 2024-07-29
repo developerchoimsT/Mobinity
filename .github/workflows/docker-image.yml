@@ -15,7 +15,7 @@ jobs:
       - name: Create application.yml
         run: |
           cd ./hoopi/src/main/resources
-          echo "${{ secrets.PROPERTIES }}" > ./application.yml
+          echo ${{ secrets.PROPERTIES }} > ./application.yml
           cat ./application.yml
 
       - name: Set up Docker Buildx
@@ -42,10 +42,6 @@ jobs:
           file: ./hoopi/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_REPO }}/my-spring-boot-app:latest
-          script: |
-            cd ./hoopi/src/main/resources
-            echo "${{ secrets.PROPERTIES }}" > ./application.yml
-            cat ./application.yml
 
       - name: Build and push Nginx Docker image
         uses: docker/build-push-action@v4
@@ -69,8 +65,5 @@ jobs:
             cd /home/ec2-user/jwtProject
             docker-compose down
             docker-compose pull
-            # Update application.yml
-            echo "\$PROPERTIES" > ./hoopi/src/main/resources/application.yml
-            cat ./hoopi/src/main/resources/application.yml
             docker-compose up -d
           EOF
