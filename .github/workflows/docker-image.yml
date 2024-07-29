@@ -51,17 +51,6 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_REPO }}/my-nginx:latest
 
-      - name: Copy docker-compose.yml to EC2
-        env:
-          SSH_KEY: ${{ secrets.SSH_KEY }}
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-        run: |
-          # Save SSH private key to a file
-          echo "$SSH_KEY" > /tmp/id_rsa
-          chmod 600 /tmp/id_rsa
-          # Copy docker-compose.yml to the server, overwrite if exists
-          scp -o StrictHostKeyChecking=no -i /tmp/id_rsa docker-compose.yml ec2-user@$SSH_HOST:/home/ec2-user/jwtProject/docker-compose.yml
-
       - name: Deploy to EC2
         env:
           SSH_KEY: ${{ secrets.SSH_KEY }}
