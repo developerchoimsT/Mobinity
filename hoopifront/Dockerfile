@@ -1,10 +1,12 @@
-# Build stage
-FROM node:14 AS build
+# Stage 1: Build React app
+FROM node:18 AS build
 WORKDIR /app
-COPY . .
+COPY package*.json ./
 RUN npm install
+COPY . .
 RUN npm run build
 
-# Nginx stage
-FROM nginx:alpine
-COPY --from=build /app/build /usr/share/nginx/html
+# Output the build files to a folder
+RUN mkdir -p /app/build && cp -r /app/build /app/build
+
+# No need to expose a port here, as this is just for building the app
