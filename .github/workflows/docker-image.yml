@@ -18,7 +18,7 @@ jobs:
         run: |
           cd ./hoopi/src/main/resources
           touch ./application.yml
-          echo "$PROP" | base64 --decode > ./application.yml
+          echo "$PROP" > ./application.yml
           cat application.yml
 
       - name: Set up Docker Buildx
