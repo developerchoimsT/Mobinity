@@ -13,12 +13,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Create application.yml
+        env:
+          PROP: ${{ secrets.PROPERTIES }}
         run: |
           cd ./hoopi/src/main/resources
           touch ./application.yml
-          echo "${{ secrets.PROPERTIES }}" > ./application.yml
+          echo "$PROP" | base64 --decode > ./application.yml
           cat application.yml
-        shell: bash
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -61,10 +62,11 @@ jobs:
           # Save SSH private key to a file
           echo "$SSH_KEY" > /tmp/id_rsa
           chmod 600 /tmp/id_rsa
-        
+
           ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ec2-user@$SSH_HOST << EOF
             cd /home/ec2-user/jwtProject
-            docker-compose down
-            docker-compose pull
-            docker-compose up -d
+            docker-compose down --remove-orphans
+            docker pull
+            docker system prune -f
+            docker-compose up -d --build
           EOF
