@@ -48,6 +48,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'mysql:mysql-connector-java'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
@@ -57,4 +58,5 @@ tasks.named('test') {
 
 bootJar {
     archiveFileName = 'app.jar'
+    mainClassName = 'com.ms.hoopi.HoopiApplication'
 }
