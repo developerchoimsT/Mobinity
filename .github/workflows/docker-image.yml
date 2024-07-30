@@ -17,6 +17,7 @@ jobs:
         env:
           PROP: ${{ secrets.PROPERTIES }}
         run: |
+          touch ./hoopi/src/main/resources/application.yml
           echo "$PROP" | base64 --decode > ./hoopi/src/main/resources/application.yml
 
 
