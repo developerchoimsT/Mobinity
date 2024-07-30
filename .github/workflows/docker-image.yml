@@ -75,8 +75,9 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ec2-user@$SSH_HOST << 'EOF'
             cd /home/ec2-user/jwtProject
             docker-compose down --remove-orphans
-            docker pull
-            docker-compose up -d --build
+            docker-compose pull
+            docker-compose build --no-cache
+            docker-compose up -d
             sleep 10
             docker-compose exec spring cat /app/application.yml
           EOF
