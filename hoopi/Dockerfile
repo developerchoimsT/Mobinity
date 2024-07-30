@@ -14,7 +14,7 @@ COPY src src
 RUN chmod +x ./gradlew
 
 # Run Gradle build
-RUN ./gradlew clean build bootJar -x test
+RUN ./gradlew clean build -x test
 
 # Stage 2: Run
 FROM amazoncorretto:17
