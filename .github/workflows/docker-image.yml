@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -37,6 +38,8 @@ jobs:
           file: ./hoopifront/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_REPO }}/my-react-app:latest
+          cache-from: type=registry,ref=${{ secrets.DOCKER_REPO }}/my-react-app:cache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_REPO }}/my-react-app:cache,mode=max
 
       - name: Build and push Spring Boot Docker image
         uses: docker/build-push-action@v4
@@ -45,6 +48,8 @@ jobs:
           file: ./hoopi/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_REPO }}/my-spring-boot-app:latest
+          cache-from: type=registry,ref=${{ secrets.DOCKER_REPO }}/my-spring-boot-app:cache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_REPO }}/my-spring-boot-app:cache,mode=max
 
       - name: Build and push Nginx Docker image
         uses: docker/build-push-action@v4
@@ -53,6 +58,8 @@ jobs:
           file: ./nginx/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_REPO }}/my-nginx:latest
+          cache-from: type=registry,ref=${{ secrets.DOCKER_REPO }}/my-nginx:cache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_REPO }}/my-nginx:cache,mode=max
 
       - name: Deploy to EC2
         env:
@@ -62,11 +69,9 @@ jobs:
           # Save SSH private key to a file
           echo "$SSH_KEY" > /tmp/id_rsa
           chmod 600 /tmp/id_rsa
-
           ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ec2-user@$SSH_HOST << EOF
             cd /home/ec2-user/jwtProject
             docker-compose down --remove-orphans
             docker pull
-            docker system prune -f
             docker-compose up -d --build
           EOF
