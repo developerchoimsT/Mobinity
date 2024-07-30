@@ -72,9 +72,11 @@ jobs:
           # Save SSH private key to a file
           echo "$SSH_KEY" > /tmp/id_rsa
           chmod 600 /tmp/id_rsa
-          ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ec2-user@$SSH_HOST << EOF
+          ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ec2-user@$SSH_HOST << 'EOF'
             cd /home/ec2-user/jwtProject
             docker-compose down --remove-orphans
             docker pull
             docker-compose up -d --build
+            sleep 10
+            docker-compose exec spring cat /app/application.yml
           EOF
