@@ -50,7 +50,15 @@ jobs:
           tags: ${{ secrets.DOCKER_REPO }}/my-spring-boot-app:latest
           cache-from: type=registry,ref=${{ secrets.DOCKER_REPO }}/my-spring-boot-app:cache
           cache-to: type=registry,ref=${{ secrets.DOCKER_REPO }}/my-spring-boot-app:cache,mode=max
-
+          
+      - name: Build project
+        run: |
+          # Example build step
+          ./build-script.sh
+          
+          # Check file content after build
+          cat ./hoopi/src/main/resources/application.yml
+          
       - name: Build and push Nginx Docker image
         uses: docker/build-push-action@v4
         with:
