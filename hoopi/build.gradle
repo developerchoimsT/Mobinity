@@ -56,8 +56,8 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-springBoot {
-    mainClass = 'com.ms.hoopi.HoopiApplication'
+jar {
+    enabled = false
 }
 
 bootJar {
