@@ -8,6 +8,8 @@ on:
 jobs:
   checkout:
     runs-on: ubuntu-latest
+    outputs:
+      app-yml-path: ${{ steps.create-app-yml.outputs.app-yml-path }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -18,14 +20,26 @@ jobs:
           PROP: ${{ secrets.PROPERTIES }}
         run: |
           mkdir -p ./hoopi/src/main/resources
-          touch ./hoopi/src/main/resources/application.yml
           echo "$PROP" | base64 --decode > ./hoopi/src/main/resources/application.yml
+          echo "app-yml-path=./hoopi/src/main/resources/application.yml" >> $GITHUB_ENV
           cat ./hoopi/src/main/resources/application.yml
 
-  build-react:
+  build_and_push:
     runs-on: ubuntu-latest
     needs: checkout
     steps:
+      - name: Check the application.yml path
+        run: cat ${{ env.app-yml-path }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_ID }}
+          password: ${{ secrets.DOCKER_PWD }}
+
       - name: Build and push React Docker image
         uses: docker/build-push-action@v4
         with:
@@ -34,10 +48,6 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_REPO }}/my-react-app:latest
 
-  build-spring:
-    runs-on: ubuntu-latest
-    needs: checkout
-    steps:
       - name: Build and push Spring Boot Docker image
         uses: docker/build-push-action@v4
         with:
@@ -46,10 +56,6 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_REPO }}/my-spring-boot-app:latest
 
-  build-nginx:
-    runs-on: ubuntu-latest
-    needs: checkout
-    steps:
       - name: Build and push Nginx Docker image
         uses: docker/build-push-action@v4
         with:
@@ -60,14 +66,13 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [build-react, build-spring, build-nginx]
-    env:
-      SSH_KEY: ${{ secrets.SSH_KEY }}
-      SSH_HOST: ${{ secrets.SSH_HOST }}
+    needs: build_and_push
     steps:
       - name: Deploy to EC2
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
         run: |
-          # Save SSH private key to a file
           echo "$SSH_KEY" > /tmp/id_rsa
           chmod 600 /tmp/id_rsa
           ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ec2-user@$SSH_HOST << 'EOF'
