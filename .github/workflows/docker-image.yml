@@ -17,8 +17,10 @@ jobs:
         env:
           PROP: ${{ secrets.PROPERTIES }}
         run: |
+          mkdir -p ./hoopi/src/main/resources
+          touch ./hoopi/src/main/resources/application.yml
           echo "$PROP" | base64 --decode > ./hoopi/src/main/resources/application.yml
-
+          cat ./hoopi/src/main/resources/application.yml
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -49,6 +51,9 @@ jobs:
           cache-from: type=registry,ref=${{ secrets.DOCKER_REPO }}/my-spring-boot-app:cache
           cache-to: type=registry,ref=${{ secrets.DOCKER_REPO }}/my-spring-boot-app:cache,mode=max
 
+      - name: Output application.yml content
+        run: cat ./hoopi/src/main/resources/application.yml
+          
       - name: Build and push Nginx Docker image
         uses: docker/build-push-action@v4
         with:
@@ -67,9 +72,11 @@ jobs:
           # Save SSH private key to a file
           echo "$SSH_KEY" > /tmp/id_rsa
           chmod 600 /tmp/id_rsa
-          ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ec2-user@$SSH_HOST << EOF
+          ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ec2-user@$SSH_HOST << 'EOF'
             cd /home/ec2-user/jwtProject
             docker-compose down --remove-orphans
             docker pull
             docker-compose up -d --build
+            sleep 10
+            docker-compose exec spring cat /app/application.yml
           EOF
