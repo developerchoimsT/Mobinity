@@ -1,4 +1,4 @@
-package com.ms.hoopi;
+package main.java.com.ms.hoopi;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
