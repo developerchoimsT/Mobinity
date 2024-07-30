@@ -79,5 +79,5 @@ jobs:
             docker-compose build --no-cache
             docker-compose up -d
             sleep 10
-            docker-compose exec spring cat /app/application.yml
+            docker-compose -T exec spring cat /app/application.yml
           EOF
