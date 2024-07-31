@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - main
+    paths:
+      - '**/**.java'
+      - '**/**/build.gradle*'
+      - '**/**/settings.gradle*'
+      - '**/**/application.yml'
 
 jobs:
   build:
@@ -17,9 +22,9 @@ jobs:
         env:
           PROP: ${{ secrets.PROPERTIES }}
         run: |
-          mkdir -p ./hoopi/src/main/resources
-          echo "$PROP" | base64 --decode > ./hoopi/src/main/resources/application.yml
-          cat ./hoopi/src/main/resources/application.yml
+          mkdir -p hoopi/src/main/resources
+          echo "$PROP" | base64 --decode > hoopi/src/main/resources/application.yml
+          cat hoopi/src/main/resources/application.yml
         
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
