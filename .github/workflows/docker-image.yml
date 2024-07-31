@@ -66,12 +66,4 @@ jobs:
             docker-compose pull
             docker-compose build
             docker-compose up -d
-            # Wait until the spring container is ready
-            until docker-compose exec spring curl -sSf http://localhost:8080/health; do
-              echo "Waiting for the spring container to be ready..."
-              sleep 5
-            done
-            
-            # Once ready, print the application.yml file
-            docker-compose exec spring cat /app/application.yml
           EOF
