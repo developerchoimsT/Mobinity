@@ -31,8 +31,8 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - spring
       - react
+      - spring
     networks:
       - my-network
 

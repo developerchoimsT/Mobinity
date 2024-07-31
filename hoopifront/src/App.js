@@ -1,6 +1,4 @@
 import './App.css';
-import { useState, useEffect} from 'react';
-import axios from 'axios';
 import { BrowserRouter as Router, Link, Routes, Route } from 'react-router-dom';
 import Join from './Join';
 import Login from './Login';
