@@ -1,13 +1,22 @@
 # Stage 1: Build
-# Use a base image that contains JDK if needed, but no Gradle installation
-FROM amazoncorretto:17-alpine AS build
+FROM gradle:8.8-jdk17-alpine AS build
 WORKDIR /app
 
-# Copy the built JAR file from your local build directory
-COPY build/libs/*. /app/app.jar
+# Copy source code and build
+COPY gradlew .
+COPY gradle gradle
+COPY build.gradle .
+COPY settings.gradle .
+COPY src src
+
+# Make gradlew executable
+RUN chmod +x ./gradlew
+
+# Run Gradle build
+RUN ./gradlew clean build -x test --no-daemon
 
 # Stage 2: Run
-FROM amazoncorretto:17-alpine
+FROM gradle:8.8-jdk17-alpine
 WORKDIR /app
-COPY --from=build /app/app.jar app.jar
+COPY --from=build /app/build/libs/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
