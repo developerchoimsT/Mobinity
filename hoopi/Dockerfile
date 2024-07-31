@@ -12,8 +12,11 @@ COPY src src
 # Make gradlew executable
 RUN chmod +x ./gradlew
 
+# Use Gradle daemon for better performance and reduce memory usage
+ENV GRADLE_OPTS="-Dorg.gradle.daemon=true -Dorg.gradle.parallel=true -Dorg.gradle.configureondemand=true"
+
 # Run Gradle build
-RUN ./gradlew clean build -x test
+RUN ./gradlew clean build -x test --no-daemon
 
 # Stage 2: Run
 FROM amazoncorretto:17-alpine
