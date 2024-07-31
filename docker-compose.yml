@@ -5,6 +5,7 @@ services:
     build:
       context: ./hoopi
       dockerfile: Dockerfile
+    image: developerchoims/spring:latest
     container_name: spring
     ports:
       - "8080:8080"
@@ -21,6 +22,7 @@ services:
     build:
       context: ./hoopifront
       dockerfile: Dockerfile
+    image: developerchoims/react:latest
     container_name: react
     ports:
       - "3000:80"
@@ -37,6 +39,7 @@ services:
     build:
       context: ./nginx
       dockerfile: Dockerfile
+    image: developerchoims/nginx:latest
     container_name: nginx
     ports:
       - "80:80"
