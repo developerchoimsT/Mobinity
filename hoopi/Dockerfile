@@ -2,7 +2,6 @@
 FROM gradle:8.8-jdk17-alpine AS build
 WORKDIR /app
 
-RUN cat src/main/resources/application.yml
 # Copy source code and build
 COPY gradlew .
 COPY gradle gradle
