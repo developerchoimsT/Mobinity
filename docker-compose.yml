@@ -12,6 +12,12 @@ services:
       - "8080:8080"
     networks:
       - my-network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'     # CPU 사용량 제한
+          memory: 512M    # 메모리 사용량 제한
+
 
   react:
     build:
@@ -22,6 +28,12 @@ services:
       - "3000:80"
     networks:
       - my-network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'     # CPU 사용량 제한
+          memory: 512M    # 메모리 사용량 제한
+
 
   nginx:
     build:
@@ -35,6 +47,12 @@ services:
       - spring
     networks:
       - my-network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'     # CPU 사용량 제한
+          memory: 512M    # 메모리 사용량 제한
+
 
 networks:
   my-network:
