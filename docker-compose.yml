@@ -5,8 +5,6 @@ services:
     build:
       context: ./hoopi
       dockerfile: Dockerfile
-    volumes:
-      - ./hoopi/src/main/resources/application.yml:/app/application.yml
     container_name: spring
     ports:
       - "8080:8080"
