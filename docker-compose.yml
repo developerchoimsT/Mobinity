@@ -21,8 +21,8 @@ services:
 
   nginx:
     build:
-      context: ./nginx
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./nginx/Dockerfile
     image: developerchoims/my-nginx:latest
     container_name: nginx
     ports:
