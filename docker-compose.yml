@@ -29,6 +29,9 @@ services:
       - "80:80"
     depends_on:
       - spring
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     networks:
       - my-network
     deploy:
