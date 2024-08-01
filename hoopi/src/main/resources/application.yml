@@ -24,6 +24,8 @@ spring:
       host: ${REDIS_HOST}
       port: 15250
       password: ${RDS_PWD}
+      username: Default
+
   jpa:
     hibernate:
       ddl-auto: update

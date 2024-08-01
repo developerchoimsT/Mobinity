@@ -11,6 +11,7 @@ services:
       - "8080:8080"
     volumes:
       - ./src/main/resources/application.yml:/app/config/application.yml
+      - ./src/main/java/com/ms/hoopi/RedisConfig.java:/app/config/RedisConfig.java
     networks:
       - my-network
     deploy:
