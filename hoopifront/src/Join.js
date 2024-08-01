@@ -73,7 +73,7 @@ function Join() {
             return false;
         }
         
-        axios.post("api/hoopi/email", null, {
+        axios.post("/api/hoopi/email", null, {
                 params: {
                    email: email
                 }
@@ -103,7 +103,7 @@ function Join() {
 
     //핸드폰 인증하기
     const handlePhone = () => {
-        axios.post("api/hoopi/phone", null ,{
+        axios.post("/api/hoopi/phone", null ,{
             params: {
                 phone: phone
             }
@@ -134,7 +134,7 @@ function Join() {
 
     //회원가입 신청
     const handleJoin = () => {
-        axios.post("api/hoopi/join", users)
+        axios.post("/api/hoopi/join", users)
         .then(response => {
             console.log(users);
             if(response.status != 200){
