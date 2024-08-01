@@ -20,11 +20,11 @@ public class MySecurityConfiguration {
         log.info("시큐리티작동중?");
         http.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/**", "api/hoopi/**").permitAll()
+                .requestMatchers("/**", "/hoopi/**").permitAll()
                 .anyRequest().authenticated())
             .formLogin(formLogin -> formLogin.disable())
             .logout(logout -> {
-                                    logout.logoutUrl("/api/hoopi/logout");
+                                    logout.logoutUrl("/hoopi/logout");
                                     logout.logoutSuccessUrl("/");
                                 });
         return http.build();

@@ -39,10 +39,10 @@ public class MyCorsConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         log.info("되는 거야...?");
         registry.addInterceptor(authInterceptor)
-                .addPathPatterns("/api/**")
-                .excludePathPatterns("/api/hoopi/email/**", "/api/hoopi/join/**", "/api/hoopi/phone/**", "/api/hoopi/login/**");
+                .addPathPatterns("/hoopi/**")
+                .excludePathPatterns("/hoopi/email/**", "/hoopi/join/**", "/hoopi/phone/**", "/hoopi/login/**");
 
         registry.addInterceptor(adminInterceptor)
-                .addPathPatterns("/api/admin/**");
+                .addPathPatterns("/admin/**");
     }
 }
