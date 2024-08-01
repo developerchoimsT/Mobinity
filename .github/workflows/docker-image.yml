@@ -36,15 +36,6 @@ jobs:
           username: ${{ secrets.DOCKER_ID }}
           password: ${{ secrets.DOCKER_PWD }}
 
-      - name: Build and push React Docker image
-        uses: docker/build-push-action@v4
-        with:
-          context: ./hoopifront
-          file: ./hoopifront/Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKER_REPO }}/my-react-app:latest
-          no-cache: true
-
       - name: Build and push Spring Boot Docker image
         uses: docker/build-push-action@v4
         with:
