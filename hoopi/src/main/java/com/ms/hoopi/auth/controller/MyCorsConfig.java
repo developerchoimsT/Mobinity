@@ -29,7 +29,7 @@ public class MyCorsConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         log.info("되는 중?");
         registry.addMapping("/**")
-                .allowedOriginPatterns("http://localhost:3000") // 여기에 필요한 원본 패턴을 추가
+                .allowedOriginPatterns("http://3.36.165.78") // 여기에 필요한 원본 패턴을 추가
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);
