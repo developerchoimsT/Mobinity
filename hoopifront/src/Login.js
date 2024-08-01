@@ -31,7 +31,7 @@ const Login = () => {
             return false;
         }
 
-        axios.post("http://3.36.165.78/api/hoopi/login", users)
+        axios.post("api/hoopi/login", users)
             .then(response => {
                 if(response.status >= 200 && response.status < 300){
                     alert("로그인에 성공하셨습니다.");
