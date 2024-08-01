@@ -10,23 +10,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - /src/main/resources/application.yml:/app/config/application.yml
-    networks:
-      - my-network
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 512M
-
-  react:
-    build:
-      context: ./hoopifront
-      dockerfile: Dockerfile
-    image: developerchoims/my-react-app:latest
-    container_name: react
-    ports:
-      - "3000:80"
+      - ./src/main/resources/application.yml:/app/config/application.yml
     networks:
       - my-network
     deploy:
@@ -44,7 +28,6 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - react
       - spring
     networks:
       - my-network
