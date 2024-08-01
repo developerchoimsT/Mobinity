@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/hoopi")
+@RequestMapping("hoopi")
 public class LoginController {
 
     @Autowired

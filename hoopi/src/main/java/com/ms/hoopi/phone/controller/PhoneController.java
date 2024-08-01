@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Random;
 
 @RestController
-@RequestMapping("/api/hoopi")
+@RequestMapping("hoopi")
 public class PhoneController {
 
     private final PhoneService phoneService;
