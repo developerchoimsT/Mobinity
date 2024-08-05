@@ -1,0 +1,11 @@
+.job-posting{
+    justify-content: center;
+}
+
+.job-posting div:first-child{
+    display: flex;
+}
+
+.job-posting div:last-child{
+    display: block;
+}

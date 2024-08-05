@@ -35,7 +35,7 @@ const Login = () => {
             .then(response => {
                 if(response.status >= 200 && response.status < 300){
                     alert("로그인에 성공하셨습니다.");
-                    navigate("/hoopi")
+                    navigate("/")
                 } else {
                     alert('다시 시도해주세요.');
                 }

@@ -36,3 +36,39 @@
     transform: rotate(360deg);
   }
 }
+.mainNav {
+  display: flex;
+  justify-content: center;
+  border-bottom: black;
+  background: lightskyblue;
+}
+
+.mainNav ul{
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+
+.mainNav ul:first-child{
+  font-size: calc(10px + 1.5vmin);
+  font-weight: bold;
+}
+
+.mainNav ul:last-child{
+  font-size: calc(5px + 1.5vmin);
+  font-weight: bold;
+}
+
+.mainNav ul li{
+  padding-left: calc(5px + 0.5vmin);
+}
+
+.mainNav a{
+  text-decoration-line: none;
+  color: darkslategray;
+}
+
+.main-box {
+  display: flex;
+  justify-content: center;
+}
