@@ -53,7 +53,7 @@ public class LoginServiceImpl implements LoginService {
                     System.out.println("통과3");
                     //아이디, 비밀번호가 일치하는 경우, 쿠키 중 다른 아이디의 rfrToken발견해 삭제시킴
                     deleteToken(request, response, id);
-                    
+
                     //비밀번호 일치하는 경우, 액세스, 리프레시 토큰 생성
                     String acsToken = jwtTokenService.createAcs(id);
                     String rfrToken = jwtTokenService.createRfr(id);
@@ -94,10 +94,10 @@ public class LoginServiceImpl implements LoginService {
                         cookie.setPath("/");
                         cookie.setMaxAge(0);
                         response.addCookie(cookie);
+                        redisService.deleteJwtToken(id);
                     }
                 }
             }
         }
-        redisService.deleteJwtToken(id);
     }
 }
