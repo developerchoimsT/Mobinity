@@ -87,7 +87,7 @@ public class LoginServiceImpl implements LoginService {
             for(Cookie cookie : cookies){
                 if(cookie.getName().equals("rfrToken")){
                     //쿠키들 중 rfrToken이 존재하는지 확인
-                    DecodedJWT jwt = JWT.decode((cookie.toString()));
+                    DecodedJWT jwt = JWT.decode((cookie.getValue()));
                     System.out.println(jwt.getSubject());
                     if(!jwt.getSubject().equals(id)){
                         //쿠키들 중 현재 로그인한 아이디와 다른 아이디의 jwtToken이 존재한다면 삭제
