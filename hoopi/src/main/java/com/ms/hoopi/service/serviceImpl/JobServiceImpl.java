@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
 public class JobServiceImpl implements JobService {
     @Autowired
@@ -20,8 +18,6 @@ public class JobServiceImpl implements JobService {
     private final DtoEntMapper dtoEntMapper;
     @Autowired
     private final UserRepository userRepository;
-
-    private UUID uuid;
 
     public JobServiceImpl(JobPostingRepository jobPostingRepository, DtoEntMapper dtoEntMapper, UserRepository userRepository) {
         this.jobPostingRepository = jobPostingRepository;
