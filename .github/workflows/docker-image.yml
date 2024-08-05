@@ -20,6 +20,13 @@ jobs:
           mkdir -p hoopi/src/main/resources
           echo "$PROP" | base64 --decode > hoopi/src/main/resources/application.yml
 
+      - name: Create RedisConfig.java from encoded secret
+        env:
+          CON: ${{ secrets.REDIS_CONFIG }}
+        run: |
+          mkdir -p hoopi/src/java/com/ms/hoopi
+          echo "$CON" | base64 --decode > hoopi/src/java/com/ms/hoopi/RedisConfig.java
+
       - name: Upload application.yml artifact
         uses: actions/upload-artifact@v4
         with:
