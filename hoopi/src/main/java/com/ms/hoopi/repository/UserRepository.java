@@ -5,15 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<Users, String> {
 
-    default String findRoleByUserId(String id){
-        Users users = findByUsersId(id);
-        String role = users.getUsersRole();
-        return role;
-    }
+    Users findByUsersId(String id);
 
-    default Users findByUsersId(String id){
+    default String findRoleByUserId(String id) {
         Users users = findByUsersId(id);
-        return users;
-    };
+        return users.getUsersRole();
+    }
 
 }
