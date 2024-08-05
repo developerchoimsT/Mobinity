@@ -45,6 +45,7 @@ public class AuthInterceptor implements HandlerInterceptor {
             rfrTokenCookie.setHttpOnly(true); // 클라이언트 측 스크립트에서 접근 불가
             rfrTokenCookie.setPath("/"); // 모든 경로에서 접근 가능
             rfrTokenCookie.setMaxAge(7 * 24 * 3600); // 7일 (초 단위)
+            response.addCookie(rfrTokenCookie);
             return true;
         } else {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
