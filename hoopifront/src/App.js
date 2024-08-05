@@ -36,7 +36,7 @@ function App() {
                 <Route path='/login' element={<Login />}/>
                 <Route path='/jobPosting' element={<JobPosting />}/>
                 <Route path='/' element={<JobPosting />}/>
-                <Route path='/postJobs' element={<PostJobs users={usersId}/>}/>
+                <Route path='/postJobs' element={<PostJobs usersId={usersId}/>}/>
             </Routes>
         </div>
     </Router>
