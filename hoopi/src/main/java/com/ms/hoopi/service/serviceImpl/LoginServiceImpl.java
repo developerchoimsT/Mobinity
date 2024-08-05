@@ -69,6 +69,7 @@ public class LoginServiceImpl implements LoginService {
                     rfrTokenCookie.setHttpOnly(true); // 클라이언트 측 스크립트에서 접근 불가
                     rfrTokenCookie.setPath("/"); // 모든 경로에서 접근 가능
                     rfrTokenCookie.setMaxAge(7 * 24 * 3600);
+                    response.addCookie(rfrTokenCookie);
                     log.info("통과2에서 확인"+rfrTokenCookie.getValue());
                     return true;
                 } else if (redisService.getAcsToken(id) != null && redisService.getAcsToken(id) == null){
