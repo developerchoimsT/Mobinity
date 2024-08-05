@@ -42,7 +42,7 @@ public class LoginController {
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if ("rfrToken".equals(cookie.getName())) {
-                    DecodedJWT jwt = JWT.decode(cookie.toString());
+                    DecodedJWT jwt = JWT.decode(cookie.getValue());
                     usersId = jwt.getSubject();
                     break;
                 }
