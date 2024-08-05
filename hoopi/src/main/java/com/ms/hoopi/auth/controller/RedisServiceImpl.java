@@ -1,5 +1,6 @@
 package com.ms.hoopi.auth.controller;
 
+import com.ms.hoopi.RedisConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -10,8 +11,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class RedisServiceImpl implements RedisService{
 
-        @Autowired
-        private final RedisTemplate<String, String> redisTemplate;
+    private final RedisTemplate<String, String> redisTemplate;
 
         public RedisServiceImpl(RedisTemplate<String, String> redisTemplate) {
             this.redisTemplate = redisTemplate;
@@ -29,7 +29,7 @@ public class RedisServiceImpl implements RedisService{
             return redisTemplate.opsForValue().get(id+"_rfr");
         }
 
-    public String getAcsToken(String id) {
+            public String getAcsToken(String id) {
         return redisTemplate.opsForValue().get(id+"_acs");
     }
 
