@@ -69,6 +69,7 @@ public class LoginServiceImpl implements LoginService {
                     rfrTokenCookie.setHttpOnly(true); // 클라이언트 측 스크립트에서 접근 불가
                     rfrTokenCookie.setPath("/"); // 모든 경로에서 접근 가능
                     rfrTokenCookie.setMaxAge(7 * 24 * 3600);
+                    log.info("통과2에서 확인"+rfrTokenCookie.getValue());
                     return true;
                 } else if (redisService.getAcsToken(id) != null && redisService.getAcsToken(id) == null){
                     System.out.println("통과4");
@@ -87,9 +88,10 @@ public class LoginServiceImpl implements LoginService {
         Cookie[] cookies = request.getCookies();
         if(cookies != null){
             for(Cookie cookie : cookies){
+                System.out.println("쿠키이름:"+cookie.getName());
                 if(cookie.getName().equals("rfrToken")){
-                    log.info("rfrToken쿠키 확인");
-                    log.info("rfrToken쿠키 값:"+cookie.getValue());
+                    System.out.println("rfrToken쿠키 확인");
+                    System.out.println("rfrToken쿠키 값:"+cookie.getValue());
                     //쿠키들 중 rfrToken이 존재하는지 확인
                     DecodedJWT jwt = JWT.decode((cookie.getValue()));
                     System.out.println(jwt.getSubject());
