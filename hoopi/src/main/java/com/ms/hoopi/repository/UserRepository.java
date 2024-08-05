@@ -11,6 +11,9 @@ public interface UserRepository extends JpaRepository<Users, String> {
         return role;
     }
 
-    Users findByUsersId(String id);
+    default Users findByUsersId(String id){
+        Users users = findByUsersId(id);
+        return users;
+    };
 
 }

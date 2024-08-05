@@ -8,13 +8,13 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 
 function App() {
-    const [usersId, setUsersId] = useState();
+    const [usersId, setUsersId] = useState('');
 
     useEffect(() => {
         const userInfo = async () => {
             await axios.get("http://hoopi.p-e.kr/api/hoopi/userInfo")
                 .then((res) => {
-                    if(res.data != null){
+                    if(res.data != null && res.data != ''){
                         console.log(res.data);
                         setUsersId(res.data);
                     }
