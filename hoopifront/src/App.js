@@ -12,6 +12,7 @@ function App() {
 
     useEffect(async () => {
         const userInfo = await UserInfo();
+        console.log(userInfo);
         if(userInfo != null){
             setUsersId(userInfo);
         }
