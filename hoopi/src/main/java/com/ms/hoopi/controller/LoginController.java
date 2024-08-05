@@ -44,6 +44,7 @@ public class LoginController {
                 if ("rfrToken".equals(cookie.getName())) {
                     DecodedJWT jwt = JWT.decode(cookie.getValue());
                     usersId = jwt.getSubject();
+                    System.out.println(usersId);
                     break;
                 }
             }
