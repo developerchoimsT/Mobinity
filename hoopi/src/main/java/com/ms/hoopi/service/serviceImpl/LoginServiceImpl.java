@@ -94,7 +94,7 @@ public class LoginServiceImpl implements LoginService {
                         cookie.setPath("/");
                         cookie.setMaxAge(0);
                         response.addCookie(cookie);
-                        redisService.deleteJwtToken(id);
+                        redisService.deleteJwtToken(jwt.getSubject());
                     }
                 }
             }
