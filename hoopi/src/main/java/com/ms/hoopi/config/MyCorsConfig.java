@@ -42,7 +42,12 @@ public class MyCorsConfig implements WebMvcConfigurer {
         log.info("되는 거야...?");
         registry.addInterceptor(authInterceptor)
                 .addPathPatterns("hoopi/**")
-                .excludePathPatterns("hoopi/email/**", "hoopi/join/**", "hoopi/phone/**", "hoopi/login/**");
+                .excludePathPatterns("hoopi/email/**"
+                                    , "hoopi/join/**"
+                                    , "hoopi/phone/**"
+                                    , "hoopi/login/**"
+                                    , "hoopi/userInfo"
+                                    , "hoopi/job");
 
         registry.addInterceptor(adminInterceptor)
                 .addPathPatterns("hoopi/admin/**");

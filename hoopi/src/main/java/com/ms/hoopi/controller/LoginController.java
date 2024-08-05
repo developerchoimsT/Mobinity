@@ -4,6 +4,7 @@ import com.ms.hoopi.model.dto.UsersDto;
 import com.ms.hoopi.service.LoginService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +24,9 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UsersDto users) throws IOException {
+    public ResponseEntity<String> login(HttpServletResponse response, HttpServletRequest request, @RequestBody UsersDto users) throws IOException {
         if(users != null){
-            if(loginService.validateUser(users)){
+            if(loginService.validateUser(response, request, users)){
                 return ResponseEntity.status(HttpStatus.CREATED).body("Login successful");
             }
         }

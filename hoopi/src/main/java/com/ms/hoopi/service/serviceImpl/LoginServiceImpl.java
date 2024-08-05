@@ -1,5 +1,7 @@
 package com.ms.hoopi.service.serviceImpl;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.ms.hoopi.model.entity.Users;
 import com.ms.hoopi.repository.UserRepository;
 import com.ms.hoopi.model.dto.UsersDto;
@@ -7,7 +9,10 @@ import com.ms.hoopi.service.JwtTokenService;
 import com.ms.hoopi.service.LoginService;
 import com.ms.hoopi.service.RedisService;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +41,7 @@ public class LoginServiceImpl implements LoginService {
         this.redisService = redisService;
     }
     @Override
-    public boolean validateUser(UsersDto user) {
+    public boolean validateUser(HttpServletResponse response, HttpServletRequest request, UsersDto user) {
         String id = user.getUsersId();
         Users users = userRepository.findByUsersId(id);
         if(users != null){
@@ -46,6 +51,9 @@ public class LoginServiceImpl implements LoginService {
                 //레디스에 액세스, 리프레시 토큰이 존재하지 않는 경우
                 if(redisService.getRfrToken(id) == null && redisService.getAcsToken(id) == null){
                     System.out.println("통과3");
+                    //아이디, 비밀번호가 일치하는 경우, 쿠키 중 다른 아이디의 rfrToken발견해 삭제시킴
+                    deleteToken(request, response, id);
+                    
                     //비밀번호 일치하는 경우, 액세스, 리프레시 토큰 생성
                     String acsToken = jwtTokenService.createAcs(id);
                     String rfrToken = jwtTokenService.createRfr(id);
@@ -60,14 +68,36 @@ public class LoginServiceImpl implements LoginService {
                     rfrTokenCookie.setPath("/"); // 모든 경로에서 접근 가능
                     rfrTokenCookie.setMaxAge(7 * 24 * 3600);
                     return true;
-                } else if (redisService.getAcsToken(id) == null){
+                } else if (redisService.getAcsToken(id) != null && redisService.getAcsToken(id) == null){
                     System.out.println("통과4");
+                    deleteToken(request, response, id);
                     String acsToken = jwtTokenService.createAcs(id);
                     redisService.saveAcsToken(id, acsToken);
                     return true;
                 }
+                System.out.println("통과 못함");
             }
         }
         return false;
+    }
+
+    public void deleteToken(HttpServletRequest request, HttpServletResponse response, String id) {
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null){
+            for(Cookie cookie : cookies){
+                if(cookie.getName().equals("rfrToken")){
+                    //쿠키들 중 rfrToken이 존재하는지 확인
+                    DecodedJWT jwt = JWT.decode((cookie.toString()));
+                    if(!jwt.getSubject().equals(id)){
+                        //쿠키들 중 현재 로그인한 아이디와 다른 아이디의 jwtToken이 존재한다면 삭제
+                        cookie.setValue("");
+                        cookie.setPath("/");
+                        cookie.setMaxAge(0);
+                        response.addCookie(cookie);
+                    }
+                }
+            }
+        }
+        redisService.deleteJwtToken(id);
     }
 }

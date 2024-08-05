@@ -16,24 +16,25 @@ public class RedisServiceImpl implements RedisService {
             this.redisTemplate = redisTemplate;
         }
 
-            public void saveRfrToken(String id, String token) {
+        public void saveRfrToken(String id, String token) {
             redisTemplate.opsForValue().set(id+"_rfr", token, 7, TimeUnit.DAYS); // 7일 유효기간
         }
 
-            public void saveAcsToken(String id, String token) {
+        public void saveAcsToken(String id, String token) {
             redisTemplate.opsForValue().set(id+"_acs", token, 1, TimeUnit.HOURS); // 7일 유효기간
         }
 
-            public String getRfrToken(String id) {
+        public String getRfrToken(String id) {
             return redisTemplate.opsForValue().get(id+"_rfr");
         }
 
-            public String getAcsToken(String id) {
+        public String getAcsToken(String id) {
         return redisTemplate.opsForValue().get(id+"_acs");
     }
 
-            public void deleteJwtToken(String id) {
-            redisTemplate.delete(id);
+        public void deleteJwtToken(String id) {
+            redisTemplate.delete(id+"_rfr");
+            redisTemplate.delete(id+"_acs");
         }
 
     }
