@@ -30,7 +30,7 @@ public class JobServiceImpl implements JobService {
             String usersId = jobPosting.getCompanyCd();
             Users user = userRepository.findByUsersId(usersId);
             jobPosting.setCompanyCd(user.getUsersCd());
-            jobPostingRepository.save(jobPosting);
+            jobPostingRepository.save(dtoEntMapper.toEntity(jobPosting));
             return ResponseEntity.ok("귀사가 바라는 인재가 지원하기를 기원합니다.");
         }catch (Exception e){
             e.printStackTrace();
