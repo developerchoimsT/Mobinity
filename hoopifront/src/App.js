@@ -5,17 +5,21 @@ import Login from './Login';
 import JobPosting from "./JobPosting";
 import PostJobs from "./PostJobs";
 import {useEffect, useState} from "react";
-import UserInfo from "./userInfo";
+import axios from "axios";
 
 function App() {
     const [usersId, setUsersId] = useState();
 
-    useEffect(async () => {
-        const userInfo = await UserInfo();
-        console.log(userInfo);
-        if(userInfo != null){
-            setUsersId(userInfo);
-        }
+    useEffect(() => {
+        const userInfo = async () => {
+            await axios.get("http://hoopi.p-e.kr/api/hoopi/userInfo")
+                .then((res) => {
+                    if(res.data != null){
+                        setUsersId(res.data);
+                    }
+                })
+        };
+        userInfo();
     })
 
   return (
