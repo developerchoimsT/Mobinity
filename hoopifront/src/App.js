@@ -15,6 +15,7 @@ function App() {
             await axios.get("http://hoopi.p-e.kr/api/hoopi/userInfo")
                 .then((res) => {
                     if(res.data != null){
+                        console.log(res.data);
                         setUsersId(res.data);
                     }
                 })
