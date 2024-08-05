@@ -11,11 +11,13 @@ import com.ms.hoopi.service.RedisService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class LoginServiceImpl implements LoginService {
 
@@ -86,6 +88,8 @@ public class LoginServiceImpl implements LoginService {
         if(cookies != null){
             for(Cookie cookie : cookies){
                 if(cookie.getName().equals("rfrToken")){
+                    log.info("rfrToken쿠키 확인");
+                    log.info("rfrToken쿠키 값:"+cookie.getValue());
                     //쿠키들 중 rfrToken이 존재하는지 확인
                     DecodedJWT jwt = JWT.decode((cookie.getValue()));
                     System.out.println(jwt.getSubject());
