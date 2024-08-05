@@ -1,5 +1,7 @@
 package com.ms.hoopi.controller;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.ms.hoopi.model.dto.UsersDto;
 import com.ms.hoopi.service.LoginService;
 import jakarta.servlet.http.Cookie;
@@ -39,8 +41,9 @@ public class LoginController {
         String usersId = "";
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if ("id".equals(cookie.getName())) {
-                    usersId = cookie.getValue();
+                if ("rfrToken".equals(cookie.getName())) {
+                    DecodedJWT jwt = JWT.decode(cookie.toString());
+                    usersId = jwt.getSubject();
                     break;
                 }
             }
