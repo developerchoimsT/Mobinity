@@ -10,8 +10,11 @@ import UserInfo from "./userInfo";
 function App() {
     const [usersId, setUsersId] = useState();
 
-    useEffect(()=>{
-        setUsersId(UserInfo);
+    useEffect(async () => {
+        const userInfo = await UserInfo();
+        if(userInfo != null){
+            setUsersId(userInfo);
+        }
     })
 
   return (
