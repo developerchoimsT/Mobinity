@@ -4,7 +4,7 @@ import cookies from "js-cookie";
 
 const PostJobs = ({usersId}) => {
 
-    const [jobPosting, setJobPosting] = useState([{"companyCd" : usersId}]);
+    const [jobPosting, setJobPosting] = useState({"companyCd" : usersId});
 
     const postJob = (e) => {
         switch (e.target.id) {
