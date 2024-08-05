@@ -32,10 +32,10 @@ function App() {
         </nav>
         <div className='main-box'>
             <Routes>
-                <Route path='/join' Component={Join}/>
-                <Route path='/login' Component={Login}/>
-                <Route path='/jobPosting' Component={JobPosting}/>
-                <Route path='/' Component={JobPosting}/>
+                <Route path='/join' element={<Join />}/>
+                <Route path='/login' element={<Login />}/>
+                <Route path='/jobPosting' element={<JobPosting />}/>
+                <Route path='/' element={<JobPosting />}/>
                 <Route path='/postJobs' element={<PostJobs users={usersId}/>}/>
             </Routes>
         </div>
