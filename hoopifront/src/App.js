@@ -4,8 +4,15 @@ import Join from './Join';
 import Login from './Login';
 import JobPosting from "./JobPosting";
 import PostJobs from "./PostJobs";
+import {useEffect, useState} from "react";
+import UserInfo from "./userInfo";
 
 function App() {
+    const [usersId, setUsersId] = useState();
+
+    useEffect(()=>{
+        setUsersId(UserInfo);
+    })
 
   return (
     
@@ -25,7 +32,7 @@ function App() {
                 <Route path='/login' Component={Login}/>
                 <Route path='/jobPosting' Component={JobPosting}/>
                 <Route path='/' Component={JobPosting}/>
-                <Route path='/postJobs' Component={PostJobs}/>
+                <Route path='/postJobs' element={<PostJobs users={usersId}/>}/>
             </Routes>
         </div>
     </Router>

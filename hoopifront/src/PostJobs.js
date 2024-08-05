@@ -1,9 +1,10 @@
 import {useState} from "react";
 import axios from "axios";
+import cookies from "js-cookie";
 
-const PostJobs = () => {
+const PostJobs = ({usersId}) => {
 
-    const [jobPosting, setJobPosting] = useState([{"companyCd" : ""}]);
+    const [jobPosting, setJobPosting] = useState([{"companyCd" : usersId}]);
 
     const postJob = (e) => {
         switch (e.target.id) {
@@ -31,7 +32,7 @@ const PostJobs = () => {
     }
 
     const submitJobPost = () => {
-        axios.post("https://localhost:5000/api/job", jobPosting)
+        axios.post("http://hoopi.p-e.kr/api/hoopi/job", jobPosting)
             .then(res => {
                 alert(res.data);
             })
