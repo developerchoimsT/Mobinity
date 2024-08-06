@@ -15,7 +15,7 @@ public interface DtoEntMapper {
 
     UsersDto toDto(Users entity);
 
-    JobPostingDto toEntity(JobPostingDto dto);
+    JobPosting toEntity(JobPostingDto dto);
 
-    JobPosting toDto(JobPosting entity);
+    JobPostingDto toDto(JobPosting entity);
 }
