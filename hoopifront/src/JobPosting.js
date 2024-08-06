@@ -12,10 +12,9 @@ const JobPosting = () => {
     useEffect(()=>{
         const fetchJobPosting = async () => {
             try {
-                const response = await axios.get({
-                                                                        url: "http://hoopi.p-e.kr/api/hoopi/job"
-                                                                        , search:search
-                                                                    });
+                const response = await axios.get("http://hoopi.p-e.kr/api/hoopi/job", {
+                                                                    params: { search: search }
+                                                                });
                 setJobPostings(response.data.jobPostings);
                 setCompanies(response.data.companies);
                 console.log(response.data);
