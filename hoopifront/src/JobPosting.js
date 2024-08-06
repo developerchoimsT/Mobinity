@@ -7,11 +7,15 @@ const JobPosting = () => {
 
     const [jobPostings, setJobPostings] = useState([]);
     const [companies, setCompanies] = useState([]);
+    const [search, setSearch] = useState("");
 
     useEffect(()=>{
         const fetchJobPosting = async () => {
             try {
-                const response = await axios.get("http://hoopi.p-e.kr/api/hoopi/job");
+                const response = await axios.get({
+                                                                        url: "http://hoopi.p-e.kr/api/hoopi/job"
+                                                                        , search:search
+                                                                    });
                 setJobPostings(response.data.jobPostings);
                 setCompanies(response.data.companies);
                 console.log(response.data);

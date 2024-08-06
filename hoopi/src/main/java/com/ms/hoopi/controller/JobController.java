@@ -18,6 +18,7 @@ public class JobController {
     public JobController(JobService jobService) {
         this.jobService = jobService;
     }
+
     @PostMapping("/job")
     public ResponseEntity<String> insertPostJob(@RequestBody JobPostingDto jobPosting) {
         return jobService.insertJob(jobPosting);
