@@ -29,6 +29,7 @@ const PostJobs = ({usersId}) => {
             }));
                 break;
         }
+        console.log(jobPosting);
     }
 
     const submitJobPost = () => {
