@@ -64,4 +64,5 @@ function App() {
     );
 }
 
-export {App, UserContext};
+export default App;
+export {UserContext};
