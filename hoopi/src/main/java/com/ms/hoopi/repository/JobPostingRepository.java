@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface JobPostingRepository extends JpaRepository<JobPosting, Integer> {
 
-    JobPosting findJobPostingByCompanyCd(String CompanyCd);
+    JobPosting findJobPostingByCompanyCd(String CompanyCd, String search);
 
 }

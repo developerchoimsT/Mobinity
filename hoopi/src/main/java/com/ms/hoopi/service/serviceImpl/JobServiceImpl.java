@@ -67,7 +67,7 @@ public class JobServiceImpl implements JobService {
             CompanyDto companyDto = dtoEntMapper.toDto(company);
             map.put("companyDto", companyDto);
 
-            JobPosting jobPosting = jobPostingRepository.findJobPostingByCompanyCd(usersId);
+            JobPosting jobPosting = jobPostingRepository.findJobPostingByCompanyCd(usersId, search);
             JobPostingDto jobPostingDto = dtoEntMapper.toDto(jobPosting);
             map.put("jobPostingDto", jobPostingDto);
 
