@@ -10,7 +10,7 @@ const JobPosting = () => {
     useEffect(()=>{
         const fetchJobPosting = async () => {
             try {
-                const response = await axios.get("http://hoopi.p-e.kr/api/hoopi/job");
+                const response = await axios.post("http://hoopi.p-e.kr/api/hoopi/jobposting");
                 setJobPosting(response.data);
             } catch (error) {
                 console.log("채용 공고를 불러오지 못했습니다.", error);

@@ -24,7 +24,7 @@ public class JobController {
     public ResponseEntity<String> insertPostJob(@RequestBody JobPostingDto jobPosting) {
         return jobService.insertJob(jobPosting);
     }
-    @GetMapping("/job")
+    @PostMapping("/jobposting")
     public ResponseEntity<Map<String, Object>> getJob(@RequestBody HttpServletRequest request, String userId, String search) {
         Map map = jobService.getJob(request, search);
         return ResponseEntity.ok(map);
