@@ -1,10 +1,7 @@
 package com.ms.hoopi.model.entity;
 
 import com.ms.hoopi.model.dto.CompanyDto;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
@@ -12,9 +9,10 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name="jobPosting")
+@Table(name="job_posting")
 public class JobPosting {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int jobPostingCd;
     @Column(nullable = false)
     private String jobPostingPosition;
