@@ -23,7 +23,7 @@ const JobPosting = () => {
             }
         };
         fetchJobPosting();
-    })
+    }, [search])
 
     return(
         <div className="job-posting">
