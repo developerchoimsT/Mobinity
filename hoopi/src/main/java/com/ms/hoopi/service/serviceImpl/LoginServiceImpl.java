@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -83,6 +82,23 @@ public class LoginServiceImpl implements LoginService {
             }
         }
         return false;
+    }
+
+    @Override
+    public String getUserInfo(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        String usersId = "";
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("rfrToken".equals(cookie.getName())) {
+                    DecodedJWT jwt = JWT.decode(cookie.getValue());
+                    usersId = jwt.getSubject();
+                    System.out.println(usersId);
+                    break;
+                }
+            }
+        }
+        return usersId;
     }
 
     public void deleteToken(HttpServletRequest request, HttpServletResponse response, String id) {

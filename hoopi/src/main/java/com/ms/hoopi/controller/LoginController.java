@@ -37,18 +37,8 @@ public class LoginController {
 
     @GetMapping("/userInfo")
     public ResponseEntity<String> getUserInfo(HttpServletRequest request){
-        Cookie[] cookies = request.getCookies();
         String usersId = "";
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("rfrToken".equals(cookie.getName())) {
-                    DecodedJWT jwt = JWT.decode(cookie.getValue());
-                    usersId = jwt.getSubject();
-                    System.out.println(usersId);
-                    break;
-                }
-            }
-        }
+        usersId = loginService.getUserInfo(request);
         return ResponseEntity.ok().body(usersId);
     }
 }

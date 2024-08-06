@@ -1,10 +1,12 @@
 import {useState} from "react";
 import axios from "axios";
-import cookies from "js-cookie";
+import {useNavigate} from "react-router-dom";
 
 const PostJobs = ({usersId}) => {
 
     const [jobPosting, setJobPosting] = useState({"companyCd" : usersId});
+
+    const navigate = useNavigate();
 
     const postJob = (e) => {
         switch (e.target.id) {
@@ -36,6 +38,7 @@ const PostJobs = ({usersId}) => {
         axios.post("http://hoopi.p-e.kr/api/hoopi/job", jobPosting)
             .then(res => {
                 alert(res.data);
+                navigate('/');
             })
     }
 

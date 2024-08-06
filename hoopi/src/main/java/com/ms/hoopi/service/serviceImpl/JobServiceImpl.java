@@ -1,28 +1,42 @@
 package com.ms.hoopi.service.serviceImpl;
 
+import com.ms.hoopi.model.dto.CompanyDto;
 import com.ms.hoopi.model.dto.JobPostingDto;
+import com.ms.hoopi.model.dto.UsersDto;
+import com.ms.hoopi.model.entity.Company;
+import com.ms.hoopi.model.entity.JobPosting;
 import com.ms.hoopi.model.entity.Users;
+import com.ms.hoopi.repository.CompanyRepository;
 import com.ms.hoopi.repository.DtoEntMapper;
 import com.ms.hoopi.repository.JobPostingRepository;
 import com.ms.hoopi.repository.UserRepository;
 import com.ms.hoopi.service.JobService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ms.hoopi.service.LoginService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class JobServiceImpl implements JobService {
-    @Autowired
     private final JobPostingRepository jobPostingRepository;
-    @Autowired
     private final DtoEntMapper dtoEntMapper;
-    @Autowired
     private final UserRepository userRepository;
+    private final LoginService loginService;
+    private final CompanyRepository companyRepository;
 
-    public JobServiceImpl(JobPostingRepository jobPostingRepository, DtoEntMapper dtoEntMapper, UserRepository userRepository) {
+    public JobServiceImpl(JobPostingRepository jobPostingRepository
+                        , DtoEntMapper dtoEntMapper
+                        , UserRepository userRepository
+                        , LoginService loginService
+                        , CompanyRepository companyRepository) {
         this.jobPostingRepository = jobPostingRepository;
         this.dtoEntMapper = dtoEntMapper;
         this.userRepository = userRepository;
+        this.loginService = loginService;
+        this.companyRepository = companyRepository;
     }
     @Override
     public ResponseEntity<String> insertJob(JobPostingDto jobPosting) {
@@ -35,6 +49,32 @@ public class JobServiceImpl implements JobService {
         }catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.badRequest().body("잠시 뒤에 다시 시도해주세요.");
+        }
+    }
+
+    @Override
+    public Map<String, Object> getJob(HttpServletRequest request, String search) {
+
+        Map map = new HashMap();
+
+        try{
+            if(search == null || search.isEmpty()){
+                search = "";
+            }
+
+            String usersId = loginService.getUserInfo(request);
+            Company company = companyRepository.findByCompanyCd(usersId);
+            CompanyDto companyDto = dtoEntMapper.toDto(company);
+            map.put("companyDto", companyDto);
+
+            JobPosting jobPosting = jobPostingRepository.findJobPostingByCompanyCd(usersId);
+            JobPostingDto jobPostingDto = dtoEntMapper.toDto(jobPosting);
+            map.put("jobPostingDto", jobPostingDto);
+
+            return  map;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
         }
     }
 }
