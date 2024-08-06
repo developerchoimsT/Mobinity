@@ -16,7 +16,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -53,24 +55,27 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public Map<String, Object> getJob(HttpServletRequest request, String search) {
+    public Map<String, Object> getJob(String search) {
 
         Map map = new HashMap();
+        List<JobPostingDto> jobPostings = new ArrayList();
+        List<CompanyDto> companies = new ArrayList();
 
         try{
             if(search == null || search.isEmpty()){
-                search = "";
+                jobPostings = dtoEntMapper.toDtoList(jobPostingRepository.findAll());
+                companies = dtoEntMapper.toCompanyDtoList(companyRepository.findAll());
+            } else {
+                jobPostings = dtoEntMapper.toDtoList(jobPostingRepository.searchJobPostings(search));
+                for (JobPostingDto job : jobPostings) {
+                    Company company = companyRepository.findByCompanyCd(job.getCompanyCd());
+                    if (company != null) {
+                        companies.add(dtoEntMapper.toDto(company));
+                    }
+                }
             }
-
-            String usersId = loginService.getUserInfo(request);
-            Company company = companyRepository.findByCompanyCd(usersId);
-            CompanyDto companyDto = dtoEntMapper.toDto(company);
-            map.put("companyDto", companyDto);
-
-            JobPosting jobPosting = jobPostingRepository.findJobPostingByCompanyCd(usersId, search);
-            JobPostingDto jobPostingDto = dtoEntMapper.toDto(jobPosting);
-            map.put("jobPostingDto", jobPostingDto);
-
+            map.put("jobPostings", jobPostings);
+            map.put("companies", companies);
             return  map;
         }catch (Exception e){
             e.printStackTrace();

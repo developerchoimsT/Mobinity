@@ -22,9 +22,9 @@ public class JobController {
     public ResponseEntity<String> insertPostJob(@RequestBody JobPostingDto jobPosting) {
         return jobService.insertJob(jobPosting);
     }
-    @PostMapping("/jobposting")
-    public ResponseEntity<Map<String, Object>> getJob(@RequestBody HttpServletRequest request, String userId, String search) {
-        Map map = jobService.getJob(request, search);
+    @GetMapping("/job")
+    public ResponseEntity<Map<String, Object>> getJob(@RequestParam String search) {
+        Map map = jobService.getJob(search);
         return ResponseEntity.ok(map);
     }
 }

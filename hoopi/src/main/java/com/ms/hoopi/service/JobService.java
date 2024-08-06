@@ -10,5 +10,5 @@ import java.util.Map;
 public interface JobService {
     public ResponseEntity<String> insertJob(JobPostingDto jobPosting);
 
-    Map<String, Object> getJob(HttpServletRequest request, String search);
+    Map<String, Object> getJob(String search);
 }

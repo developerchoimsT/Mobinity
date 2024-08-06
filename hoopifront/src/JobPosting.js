@@ -5,13 +5,16 @@ import './JobPosting.css';
 
 const JobPosting = () => {
 
-    const [jobPosting, setJobPosting] = useState([]);
+    const [jobPostings, setJobPostings] = useState([]);
+    const [companies, setCompanies] = useState([]);
 
     useEffect(()=>{
         const fetchJobPosting = async () => {
             try {
-                const response = await axios.post("http://hoopi.p-e.kr/api/hoopi/jobposting");
-                setJobPosting(response.data);
+                const response = await axios.get("http://hoopi.p-e.kr/api/hoopi/job");
+                setJobPostings(response.data.jobPostings);
+                setCompanies(response.data.companies);
+                console.log(response.data);
             } catch (error) {
                 console.log("채용 공고를 불러오지 못했습니다.", error);
             }
@@ -29,23 +32,31 @@ const JobPosting = () => {
                 <table>
                     <thead>
                         <tr>
+                            <th>채용 번호</th>
                             <th>채용 공고</th>
                             <th>회사 명</th>
+                            <th>국가</th>
                             <th>위치</th>
-                            <th>자격 요건</th>
                             <th>지원</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {jobPosting.map((job, index) => (
-                            <tr key={index}>
-                                <td>{index + 1}</td>
-                                <td>{job.companyNm}</td>
-                                <td>{job.location}</td>
-                                <td>{job.qualification}</td>
-                                <td><button>지원</button></td>
-                            </tr>
-                            ))
+                        {
+                            jobPostings.map((job, index) => {
+                                const company = companies.find(com => com.companyCd === job.companyCd);
+                                return company ? (
+                                    <tr key={index}>
+                                        <td>{index + 1}</td>
+                                        <td>{job.jobPostingPosition}</td>
+                                        <td>{company.companyName}</td>
+                                        <td>{company.companyNation}</td>
+                                        <td>{company.companyLocation}</td>
+                                        <td>
+                                            <button>지원</button>
+                                        </td>
+                                    </tr>
+                                ) : null;
+                            })
                         }
                     </tbody>
                 </table>
