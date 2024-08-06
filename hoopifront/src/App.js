@@ -5,6 +5,7 @@ import Login from './Login';
 import Join from './Join';
 import JobPosting from './JobPosting';
 import PostJobs from './PostJobs';
+import './App.css';
 
 // Context 생성
 const UserContext = createContext(null);

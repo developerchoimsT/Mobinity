@@ -64,14 +64,13 @@ public class JobServiceImpl implements JobService {
         try{
             if(search == null || search.isEmpty()){
                 jobPostings = dtoEntMapper.toDtoList(jobPostingRepository.findAll());
-                companies = dtoEntMapper.toCompanyDtoList(companyRepository.findAll());
             } else {
                 jobPostings = dtoEntMapper.toDtoList(jobPostingRepository.searchJobPostings(search));
-                for (JobPostingDto job : jobPostings) {
-                    Company company = companyRepository.findByCompanyCd(job.getCompanyCd());
-                    if (company != null) {
-                        companies.add(dtoEntMapper.toDto(company));
-                    }
+            }
+            for (JobPostingDto job : jobPostings) {
+                Company company = companyRepository.findByCompanyCd(job.getCompanyCd());
+                if (company != null) {
+                    companies.add(dtoEntMapper.toDto(company));
                 }
             }
             map.put("jobPostings", jobPostings);
