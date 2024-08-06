@@ -45,6 +45,9 @@ public class JobServiceImpl implements JobService {
         try{
             String usersId = jobPosting.getCompanyCd();
             Users user = userRepository.findByUsersId(usersId);
+            if(user == null) {
+                return ResponseEntity.ofNullable("등록자를 인식할 수 없습니다.");
+            }
             jobPosting.setCompanyCd(user.getUsersCd());
             jobPostingRepository.save(dtoEntMapper.toEntity(jobPosting));
             return ResponseEntity.ok("귀사가 바라는 인재가 지원하기를 기원합니다.");

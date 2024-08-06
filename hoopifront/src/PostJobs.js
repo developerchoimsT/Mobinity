@@ -1,8 +1,11 @@
-import {useState} from "react";
+import {useContext, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {UserContext} from "./App";
 
-const PostJobs = ({usersId}) => {
+const PostJobs = () => {
+
+    const {usersId, setUsersId} = useContext(UserContext);
 
     const [jobPosting, setJobPosting] = useState({"companyCd" : usersId});
 
