@@ -9,7 +9,6 @@ import axios from "axios";
 
 function App() {
     const [usersId, setUsersId] = useState('');
-    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUserInfo = async () => {
