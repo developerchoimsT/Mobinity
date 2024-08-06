@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import UserContext from "./contexts/UserContext";
 
 const Login = () => {
     const [users, setUsers] = useState({ 'usersId': '', 'usersPw': '' });
     const navigate = useNavigate(); // useNavigate 훅을 사용하여 네비게이션 처리
+    const { setUsersId } = useContext(UserContext);
 
     const handleUsers = (e) => {
         switch(e.target.id) {
@@ -35,6 +37,7 @@ const Login = () => {
             .then(response => {
                 if(response.status >= 200 && response.status < 300){
                     alert("로그인에 성공하셨습니다.");
+                    setUsersId(users.usersId);
                     navigate("/")
                 } else {
                     alert('다시 시도해주세요.');
