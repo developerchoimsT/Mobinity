@@ -4,7 +4,7 @@ import Join from './Join';
 import Login from './Login';
 import JobPosting from "./JobPosting";
 import PostJobs from "./PostJobs";
-import {useEffect, useState} from "react";
+import {useEffect, createContext, useState} from "react";
 import axios from "axios";
 // Context 생성
 const UserContext = createContext(null);
