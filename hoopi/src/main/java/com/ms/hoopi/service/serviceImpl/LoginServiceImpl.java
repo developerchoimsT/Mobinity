@@ -48,12 +48,12 @@ public class LoginServiceImpl implements LoginService {
         if(users != null){
             System.out.println("통과1");
             if(encoder.matches(user.getUsersPw(), users.getUsersPw())){
+                //아이디, 비밀번호가 일치하는 경우, 쿠키 중 다른 아이디의 rfrToken발견해 삭제시킴
+                deleteToken(request, response, id);
                 System.out.println("통과2");
                 //레디스에 액세스, 리프레시 토큰이 존재하지 않는 경우
                 if(redisService.getRfrToken(id) == null && redisService.getAcsToken(id) == null){
                     System.out.println("통과3");
-                    //아이디, 비밀번호가 일치하는 경우, 쿠키 중 다른 아이디의 rfrToken발견해 삭제시킴
-                    deleteToken(request, response, id);
 
                     //비밀번호 일치하는 경우, 액세스, 리프레시 토큰 생성
                     String acsToken = jwtTokenService.createAcs(id);
@@ -73,7 +73,6 @@ public class LoginServiceImpl implements LoginService {
                     return true;
                 } else if (redisService.getAcsToken(id) != null && redisService.getAcsToken(id) == null){
                     System.out.println("통과4");
-                    deleteToken(request, response, id);
                     String acsToken = jwtTokenService.createAcs(id);
                     redisService.saveAcsToken(id, acsToken);
                     return true;
