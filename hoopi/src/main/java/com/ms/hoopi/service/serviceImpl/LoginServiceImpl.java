@@ -50,34 +50,22 @@ public class LoginServiceImpl implements LoginService {
             if(encoder.matches(user.getUsersPw(), users.getUsersPw())){
                 //아이디, 비밀번호가 일치하는 경우, 쿠키 중 다른 아이디의 rfrToken발견해 삭제시킴
                 deleteToken(request, response, id);
-                System.out.println("통과2");
-                //레디스에 액세스, 리프레시 토큰이 존재하지 않는 경우
-                if(redisService.getRfrToken(id) == null && redisService.getAcsToken(id) == null){
-                    System.out.println("통과3");
 
-                    //비밀번호 일치하는 경우, 액세스, 리프레시 토큰 생성
-                    String acsToken = jwtTokenService.createAcs(id);
-                    String rfrToken = jwtTokenService.createRfr(id);
+                //비밀번호 일치하는 경우, 액세스, 리프레시 토큰 생성
+                String acsToken = jwtTokenService.createAcs(id);
+                String rfrToken = jwtTokenService.createRfr(id);
 
-                    //redis에 저장
-                    redisService.saveAcsToken(id, acsToken);
-                    redisService.saveRfrToken(id, rfrToken);
+                //redis에 저장
+                redisService.saveAcsToken(id, acsToken);
+                redisService.saveRfrToken(id, rfrToken);
 
-                    //쿠키에 저장
-                    Cookie rfrTokenCookie = new Cookie("rfrToken", rfrToken);
-                    rfrTokenCookie.setHttpOnly(true); // 클라이언트 측 스크립트에서 접근 불가
-                    rfrTokenCookie.setPath("/"); // 모든 경로에서 접근 가능
-                    rfrTokenCookie.setMaxAge(7 * 24 * 3600);
-                    response.addCookie(rfrTokenCookie);
-                    log.info("통과2에서 확인"+rfrTokenCookie.getValue());
-                    return true;
-                } else if (redisService.getAcsToken(id) != null && redisService.getAcsToken(id) == null){
-                    System.out.println("통과4");
-                    String acsToken = jwtTokenService.createAcs(id);
-                    redisService.saveAcsToken(id, acsToken);
-                    return true;
-                }
-                System.out.println("통과 못함");
+                //쿠키에 저장
+                Cookie rfrTokenCookie = new Cookie("rfrToken", rfrToken);
+                rfrTokenCookie.setHttpOnly(true); // 클라이언트 측 스크립트에서 접근 불가
+                rfrTokenCookie.setPath("/"); // 모든 경로에서 접근 가능
+                rfrTokenCookie.setMaxAge(7 * 24 * 3600);
+                response.addCookie(rfrTokenCookie);
+                return true;
             }
         }
         return false;
