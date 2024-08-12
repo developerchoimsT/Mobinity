@@ -36,4 +36,8 @@ public class JobController {
         Map map = jobService.getJobDetail(jobPostingCd);
         return ResponseEntity.ok(map);
     }
+    @PostMapping("/apply")
+    public ResponseEntity<String> applyPostJob(@RequestBody String jobPostingCd, String usersId) {
+        return jobService.applyPostJob(jobPostingCd, usersId);
+    }
 }

@@ -1,10 +1,12 @@
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import axios from "axios";
+import {UserContext} from "./App";
 
 const JobPostingDetail = () => {
 
     const {jobPostingCd} = useParams();
+    const {usersId} = useContext(UserContext);
     const [jobPostingDto, setJobPostingDto] = useState('');
     const [companyDto, setCompanyDto] = useState('');
 
@@ -18,11 +20,23 @@ const JobPostingDetail = () => {
                 setCompanyDto(response.data.companyDto);
             } catch (error){
                 console.log(error);
-            };
-        }
+            }
+        };
 
         fetchDetail();
     }, [jobPostingCd])
+
+    const submitApply = () => {
+        axios.post("http://hoopi.p-e.kr/api/hoopi/apply", {
+                jobPostingCd: jobPostingCd,
+                usersId: usersId
+            }).then( response => {
+                alert(response.data);
+            }).catch(error => {
+                console.log(error);
+        })
+    };
+
     return(
         <div>
             <table>
@@ -65,6 +79,13 @@ const JobPostingDetail = () => {
                         <td>{jobPostingDto.jobPostingBody}</td>
                     </tr>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <th colSpan={2}>
+                            <button onClick={submitApply}></button>
+                        </th>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     );

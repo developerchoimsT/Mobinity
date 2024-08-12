@@ -1,12 +1,10 @@
 package com.ms.hoopi.service.serviceImpl;
 
+import com.ms.hoopi.model.dto.ApplyDto;
 import com.ms.hoopi.model.dto.CompanyDto;
 import com.ms.hoopi.model.dto.JobPostingDto;
 import com.ms.hoopi.model.entity.Users;
-import com.ms.hoopi.repository.CompanyRepository;
-import com.ms.hoopi.repository.DtoEntMapper;
-import com.ms.hoopi.repository.JobPostingRepository;
-import com.ms.hoopi.repository.UserRepository;
+import com.ms.hoopi.repository.*;
 import com.ms.hoopi.service.JobService;
 import com.ms.hoopi.service.LoginService;
 import org.springframework.http.ResponseEntity;
@@ -24,17 +22,20 @@ public class JobServiceImpl implements JobService {
     private final UserRepository userRepository;
     private final LoginService loginService;
     private final CompanyRepository companyRepository;
+    private final ApplyRepository applyRepository;
 
     public JobServiceImpl(JobPostingRepository jobPostingRepository
                         , DtoEntMapper dtoEntMapper
                         , UserRepository userRepository
                         , LoginService loginService
-                        , CompanyRepository companyRepository) {
+                        , CompanyRepository companyRepository
+                        , ApplyRepository applyRepository) {
         this.jobPostingRepository = jobPostingRepository;
         this.dtoEntMapper = dtoEntMapper;
         this.userRepository = userRepository;
         this.loginService = loginService;
         this.companyRepository = companyRepository;
+        this.applyRepository = applyRepository;
     }
     @Override
     public ResponseEntity<String> insertJob(JobPostingDto jobPosting) {
@@ -90,5 +91,19 @@ public class JobServiceImpl implements JobService {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public ResponseEntity<String> applyPostJob(String jobPostingCd, String usersId) {
+        ApplyDto applyDto = new ApplyDto();
+        applyDto.setJobPostingCd(Integer.valueOf(jobPostingCd));
+        applyDto.setUsersId(jobPostingCd);
+        try{
+            applyRepository.save(dtoEntMapper.toEntity(applyDto));
+            return ResponseEntity.ok("지원이 완료되었습니다.");
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body("지원 실패, 다시 시도해주세요");
+        }
+
     }
 }

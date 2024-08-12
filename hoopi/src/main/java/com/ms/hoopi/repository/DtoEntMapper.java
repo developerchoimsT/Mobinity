@@ -1,7 +1,9 @@
 package com.ms.hoopi.repository;
 
+import com.ms.hoopi.model.dto.ApplyDto;
 import com.ms.hoopi.model.dto.CompanyDto;
 import com.ms.hoopi.model.dto.JobPostingDto;
+import com.ms.hoopi.model.entity.Apply;
 import com.ms.hoopi.model.entity.Company;
 import com.ms.hoopi.model.entity.JobPosting;
 import com.ms.hoopi.model.entity.Users;
@@ -30,4 +32,7 @@ public interface DtoEntMapper {
 
     CompanyDto toDto(Company entity);
     List<CompanyDto> toCompanyDtoList(List<Company> entity);
+
+    Apply toEntity(ApplyDto dto);
+    ApplyDto toDto(Apply entity);
 }

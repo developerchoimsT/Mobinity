@@ -66,9 +66,6 @@ const JobPosting = () => {
                                             <td>{job.companyName}</td>
                                             <td>{job.companyNation}</td>
                                             <td>{job.companyLocation}</td>
-                                            <td>
-                                                <button>지원</button>
-                                            </td>
                                         </tr>
                                 );
                             })

@@ -14,4 +14,6 @@ public interface JobService {
     List getJob(String search);
 
     Map getJobDetail(String jobPostingCd);
+
+    ResponseEntity<String> applyPostJob(String jobPostingCd, String usersId);
 }
