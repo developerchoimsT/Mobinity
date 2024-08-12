@@ -14,7 +14,7 @@ const JobPosting = () => {
                 const response = await axios.get("http://hoopi.p-e.kr/api/hoopi/job", {
                                                                     params: { search: search }
                                                                 });
-                setJobPostings(response.data.jobPostings);
+                setJobPostings(response.data);
                 console.log(response.data);
             } catch (error) {
                 console.log("채용 공고를 불러오지 못했습니다.", error);
