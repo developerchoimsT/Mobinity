@@ -3,6 +3,7 @@ package com.ms.hoopi.service.serviceImpl;
 import com.ms.hoopi.model.dto.ApplyDto;
 import com.ms.hoopi.model.dto.CompanyDto;
 import com.ms.hoopi.model.dto.JobPostingDto;
+import com.ms.hoopi.model.entity.JobPosting;
 import com.ms.hoopi.model.entity.Users;
 import com.ms.hoopi.repository.*;
 import com.ms.hoopi.service.JobService;
@@ -40,12 +41,14 @@ public class JobServiceImpl implements JobService {
     @Override
     public ResponseEntity<String> insertJob(JobPostingDto jobPosting) {
         try{
-            String usersId = jobPosting.getCompanyCd();
+            String usersId = jobPosting.getCompany().getCompanyCd();
             Users user = userRepository.findByUsersId(usersId);
             if(user == null) {
                 return ResponseEntity.ofNullable("등록자를 인식할 수 없습니다.");
             }
-            jobPosting.setCompanyCd(user.getUsersCd());
+            CompanyDto company = jobPosting.getCompany();
+            company.setCompanyCd(user.getUsersCd());
+            jobPosting.setCompany(company);
             jobPostingRepository.save(dtoEntMapper.toEntity(jobPosting));
             return ResponseEntity.ok("귀사가 바라는 인재가 지원하기를 기원합니다.");
         }catch (Exception e){
@@ -81,7 +84,7 @@ public class JobServiceImpl implements JobService {
         try{
             int cd = Integer.valueOf(jobPostingCd);
             jobPostingDto = dtoEntMapper.toDto(jobPostingRepository.findJobPostingByJobPostingCd(cd));
-            String companyCd = jobPostingDto.getCompanyCd();
+            String companyCd = jobPostingDto.getCompany().getCompanyCd();
             companyDto = dtoEntMapper.toDto(companyRepository.findByCompanyCd(companyCd));
 
             map.put("jobPostingDto", jobPostingDto);
