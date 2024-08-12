@@ -6,6 +6,9 @@ import {UserContext} from "./App";
 const PostJobs = () => {
 
     const {usersId, setUsersId} = useContext(UserContext);
+    const navigate = useNavigate();
+
+    const location = useLocation();
 
     const [jobPosting, setJobPosting] = useState({
         companyCd: usersId,
@@ -28,10 +31,6 @@ const PostJobs = () => {
             });
         }
     }, [location, usersId]);
-
-    const navigate = useNavigate();
-
-    const location = useLocation();
 
     const postJob = (e) => {
 

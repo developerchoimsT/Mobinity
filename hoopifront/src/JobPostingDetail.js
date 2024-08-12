@@ -85,16 +85,21 @@ const JobPostingDetail = () => {
                     </tr>
                 </tbody>
                 <tfoot>
-                    <tr>
-                        <th colSpan={2}>
-                            <button onClick={submitApply}>지원</button>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th colSpan={2}>
-                            <button onClick={handleEdit}>수정</button>
-                        </th>
-                    </tr>
+                <tr>
+                    <th colSpan={2}>
+                        <button onClick={submitApply}>지원</button>
+                    </th>
+                </tr>
+                <tr>
+                    <th colSpan={2}>
+                        <button onClick={handleEdit}>수정</button>
+                    </th>
+                </tr>
+                <tr>
+                    <th colSpan={2}>
+                        <button onClick={handleEdit}>삭제</button>
+                    </th>
+                </tr>
                 </tfoot>
             </table>
         </div>
