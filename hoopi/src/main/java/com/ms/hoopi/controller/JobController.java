@@ -28,7 +28,7 @@ public class JobController {
     }
     @GetMapping("/job")
     public ResponseEntity<List> getJob(@RequestParam String search) {
-        List list= Collections.singletonList(jobService.getJob(search));
+        List list= jobService.getJob(search);
         return ResponseEntity.ok(list);
     }
     @GetMapping("/jobDetail")
