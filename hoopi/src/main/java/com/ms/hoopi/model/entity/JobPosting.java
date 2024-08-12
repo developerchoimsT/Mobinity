@@ -12,7 +12,7 @@ public class JobPosting {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "job_posting_cd", nullable = false)
-    private Integer id;
+    private Integer jobPostingCd;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "company_cd", nullable = false, referencedColumnName = "company_cd")
