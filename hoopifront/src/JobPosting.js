@@ -63,9 +63,9 @@ const JobPosting = () => {
                                             <td>{job.jobPostingPosition}</td>
                                             <td>{job.jobPostingMoney}</td>
                                             <td>{job.jobPostingSkill}</td>
-                                            <td>{job.companyName}</td>
-                                            <td>{job.companyNation}</td>
-                                            <td>{job.companyLocation}</td>
+                                            <td>{job.company.companyName}</td>
+                                            <td>{job.company.companyNation}</td>
+                                            <td>{job.company.companyLocation}</td>
                                         </tr>
                                 );
                             })
