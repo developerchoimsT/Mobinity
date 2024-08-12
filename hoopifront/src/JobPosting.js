@@ -29,12 +29,18 @@ const JobPosting = () => {
     const goDetail = (jobPostingCd) => {
         navigate(`/jobPostingDetail/${jobPostingCd}`);
     }
+    const changeSearch = (e)=>{
+        setSearch(e.target.value);
+    }
 
     return(
         <div className="job-posting">
             <div>
                 <h1>채용 공고</h1>
                 <button><Link to='/postJobs'>채용 공고 올리기</Link></button>
+            </div>
+            <div>
+                <input id='search' value={search} onChange={changeSearch} type='text'/>
             </div>
             <div className="posting-info">
                 <table>
