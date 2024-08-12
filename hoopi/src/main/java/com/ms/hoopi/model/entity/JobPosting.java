@@ -1,29 +1,33 @@
 package com.ms.hoopi.model.entity;
 
-import com.ms.hoopi.model.dto.CompanyDto;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-@Builder
+@Setter
 @Entity
-@Table(name="job_posting")
+@Table(name = "job_posting")
 public class JobPosting {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int jobPostingCd;
-    @Column(nullable = false)
-    private String jobPostingPosition;
-    @Column(nullable = false)
-    private String jobPostingMoney;
-    @Column(nullable = false)
-    private String jobPostingBody;
-    @Column(nullable = false)
-    private String jobPostingSkill;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_cd", referencedColumnName = "company_cd")
+    @Column(name = "job_posting_cd", nullable = false)
+    private Integer id;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "company_cd", nullable = false, referencedColumnName = "company_cd")
     private Company company;
+
+    @Column(name = "job_posting_body", nullable = false)
+    private String jobPostingBody;
+
+    @Column(name = "job_posting_money", nullable = false)
+    private String jobPostingMoney;
+
+    @Column(name = "job_posting_position", nullable = false)
+    private String jobPostingPosition;
+
+    @Column(name = "job_posting_skill", nullable = false)
+    private String jobPostingSkill;
 
 }
