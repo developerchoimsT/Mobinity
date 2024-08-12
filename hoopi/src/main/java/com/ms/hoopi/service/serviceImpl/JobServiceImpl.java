@@ -65,6 +65,7 @@ public class JobServiceImpl implements JobService {
         try{
             if(search == null || search.isEmpty()){
                 jobPostings = dtoEntMapper.toDtoList(jobPostingRepository.findJobPosting());
+                System.out.println(jobPostings);
             } else {
                 jobPostings = dtoEntMapper.toDtoList(jobPostingRepository.searchJobPostings(search));
             }

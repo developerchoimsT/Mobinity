@@ -24,16 +24,10 @@ public interface DtoEntMapper {
     JobPosting toEntity(JobPostingDto dto);
     List<JobPosting> toEntityList(List<JobPostingDto> dtoList);
 
-    @Mapping(source = "company.companyCd", target = "company")
+    @Mapping(source = "company", target = "company")
     JobPostingDto toDto(JobPosting entity);
-    @Mapping(source = "company.companyCd", target = "company")
+    @Mapping(source = "company", target = "company")
     List<JobPostingDto> toDtoList(List<JobPosting> entityList);
-
-    default CompanyDto map(String companyCd) {
-        CompanyDto companyDto = new CompanyDto();
-        companyDto.setCompanyCd(companyCd);
-        return companyDto;
-    }
 
     Company toEntity(CompanyDto dto);
     List<Company> toCompanyEntityList(List<CompanyDto> dtoList);
