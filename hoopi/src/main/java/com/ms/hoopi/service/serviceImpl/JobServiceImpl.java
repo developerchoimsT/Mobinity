@@ -41,14 +41,14 @@ public class JobServiceImpl implements JobService {
     @Override
     public ResponseEntity<String> insertJob(JobPostingDto jobPosting) {
         try{
-            String usersId = jobPosting.getCompany().getCompanyCd();
+            String usersId = jobPosting.getCompanyDto().getCompanyCd();
             Users user = userRepository.findByUsersId(usersId);
             if(user == null) {
                 return ResponseEntity.ofNullable("등록자를 인식할 수 없습니다.");
             }
-            CompanyDto company = jobPosting.getCompany();
+            CompanyDto company = jobPosting.getCompanyDto();
             company.setCompanyCd(user.getUsersCd());
-            jobPosting.setCompany(company);
+            jobPosting.setCompanyDto(company);
             jobPostingRepository.save(dtoEntMapper.toEntity(jobPosting));
             return ResponseEntity.ok("귀사가 바라는 인재가 지원하기를 기원합니다.");
         }catch (Exception e){
@@ -85,7 +85,7 @@ public class JobServiceImpl implements JobService {
         try{
             int cd = Integer.valueOf(jobPostingCd);
             jobPostingDto = dtoEntMapper.toDto(jobPostingRepository.findJobPostingByJobPostingCd(cd));
-            String companyCd = jobPostingDto.getCompany().getCompanyCd();
+            String companyCd = jobPostingDto.getCompanyDto().getCompanyCd();
             companyDto = dtoEntMapper.toDto(companyRepository.findByCompanyCd(companyCd));
 
             map.put("jobPostingDto", jobPostingDto);

@@ -9,5 +9,5 @@ public class JobPostingDto {
     private String jobPostingMoney;
     private String jobPostingBody;
     private String jobPostingSkill;
-    private CompanyDto company;
+    private CompanyDto companyDto;
 }

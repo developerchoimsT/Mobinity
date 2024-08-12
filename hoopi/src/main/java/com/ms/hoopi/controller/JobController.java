@@ -29,6 +29,7 @@ public class JobController {
     @GetMapping("/job")
     public ResponseEntity<List> getJob(@RequestParam String search) {
         List list= jobService.getJob(search);
+        System.out.println("컨트롤러단"+list);
         return ResponseEntity.ok(list);
     }
     @GetMapping("/jobDetail")

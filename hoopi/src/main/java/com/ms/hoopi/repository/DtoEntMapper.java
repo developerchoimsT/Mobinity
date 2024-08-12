@@ -24,9 +24,9 @@ public interface DtoEntMapper {
     JobPosting toEntity(JobPostingDto dto);
     List<JobPosting> toEntityList(List<JobPostingDto> dtoList);
 
-    @Mapping(source = "company", target = "company")
+    @Mapping(source = "company", target = "companyDto")
     JobPostingDto toDto(JobPosting entity);
-    @Mapping(source = "company", target = "company")
+    @Mapping(source = "company", target = "companyDto")
     List<JobPostingDto> toDtoList(List<JobPosting> entityList);
 
     Company toEntity(CompanyDto dto);
