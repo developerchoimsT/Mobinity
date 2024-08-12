@@ -1,5 +1,12 @@
+import {useEffect} from "react";
+
 const JobPostingDetail = () => {
 
+    useEffect(()=>{
+        const fetchDetail = async () => {
+
+        }
+    })
     return(
         <div>
             <table>

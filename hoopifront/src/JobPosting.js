@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import './JobPosting.css';
 
 const JobPosting = () => {
@@ -24,6 +24,11 @@ const JobPosting = () => {
         };
         fetchJobPosting();
     }, [search])
+
+    const navigate = useNavigate();
+    const goDetail = (e) => {
+        navigate(`/jobPostingDetail/${e.key}`);
+    }
 
     return(
         <div className="job-posting">
@@ -50,8 +55,7 @@ const JobPosting = () => {
                             jobPostings.map((job, index) => {
                                 const company = companies.find(com => com.companyCd === job.companyCd);
                                 return company ? (
-                                    <Link to={`/jobPostingDetail/${job.jobPostingCd}`} key={job.jobPostingCd}>
-                                        <tr key={index}>
+                                        <tr key={job.jobPostingCd} onClick={goDetail}>
                                             <td>{index + 1}</td>
                                             <td>{job.jobPostingPosition}</td>
                                             <td>{job.jobPostingMoney}</td>
@@ -63,7 +67,6 @@ const JobPosting = () => {
                                                 <button>지원</button>
                                             </td>
                                         </tr>
-                                    </Link>
                                 ) : null;
                             })
                         }
