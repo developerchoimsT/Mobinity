@@ -22,7 +22,8 @@ public class JobPosting {
     private String jobPostingBody;
     @Column(nullable = false)
     private String jobPostingSkill;
-    @Column(nullable = false)
-    private String companyCd;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_cd", referencedColumnName = "company_cd")
+    private Company company;
 
 }
