@@ -14,6 +14,7 @@ import lombok.*;
 @Table(name="company")
 public class Company {
     @Id
+    @Column(name = "company_cd")
     private String companyCd;
     @Column(nullable=false)
     private String companyName;
