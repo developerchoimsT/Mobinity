@@ -6,7 +6,6 @@ import './JobPosting.css';
 const JobPosting = () => {
 
     const [jobPostings, setJobPostings] = useState([]);
-    const [companies, setCompanies] = useState([]);
     const [search, setSearch] = useState("");
 
     useEffect(()=>{
@@ -16,7 +15,6 @@ const JobPosting = () => {
                                                                     params: { search: search }
                                                                 });
                 setJobPostings(response.data.jobPostings);
-                setCompanies(response.data.companies);
                 console.log(response.data);
             } catch (error) {
                 console.log("채용 공고를 불러오지 못했습니다.", error);
@@ -59,21 +57,20 @@ const JobPosting = () => {
                     <tbody>
                         {
                             jobPostings.map((job, index) => {
-                                const company = companies.find(com => com.companyCd === job.companyCd);
-                                return company ? (
+                                return (
                                         <tr key={job.jobPostingCd} onClick={()=>goDetail(job.jobPostingCd)}>
                                             <td>{index + 1}</td>
                                             <td>{job.jobPostingPosition}</td>
                                             <td>{job.jobPostingMoney}</td>
                                             <td>{job.jobPostingSkill}</td>
-                                            <td>{company.companyName}</td>
-                                            <td>{company.companyNation}</td>
-                                            <td>{company.companyLocation}</td>
+                                            <td>{job.companyName}</td>
+                                            <td>{job.companyNation}</td>
+                                            <td>{job.companyLocation}</td>
                                             <td>
                                                 <button>지원</button>
                                             </td>
                                         </tr>
-                                ) : null;
+                                );
                             })
                         }
                     </tbody>

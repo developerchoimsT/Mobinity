@@ -17,10 +17,18 @@ public interface JobPostingRepository extends JpaRepository<JobPosting, Integer>
 
     JobPosting findJobPostingByJobPostingCd(@Param("jobPostingCd") int jobPostingCd);
 
-    @Query("SELECT j FROM JobPosting j WHERE " +
-            "j.jobPostingBody LIKE %:search% OR " +
-            "j.jobPostingMoney LIKE %:search% OR " +
-            "j.jobPostingSkill LIKE %:search% OR " +
-            "j.jobPostingPosition LIKE %:search%")
+    @Query("SELECT j FROM JobPosting j, Company c WHERE " +
+            "j.companyCd = c.companyCd")
+    List<JobPosting> findJobPosting();
+
+    @Query("SELECT j FROM JobPosting j, Company c WHERE " +
+            "j.companyCd = c.companyCd AND (" +
+            "j.jobPostingBody LIKE CONCAT('%', :search, '%') OR " +
+            "j.jobPostingMoney LIKE CONCAT('%', :search, '%') OR " +
+            "j.jobPostingSkill LIKE CONCAT('%', :search, '%') OR " +
+            "j.jobPostingPosition LIKE CONCAT('%', :search, '%') OR " +
+            "c.companyLocation LIKE CONCAT('%', :search, '%') OR " +
+            "c.companyName LIKE CONCAT('%', :search, '%') OR " +
+            "c.companyNation LIKE CONCAT('%', :search, '%'))")
     List<JobPosting> searchJobPostings(@Param("search") String search);
 }

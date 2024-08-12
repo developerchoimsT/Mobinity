@@ -5,12 +5,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public interface JobService {
     public ResponseEntity<String> insertJob(JobPostingDto jobPosting);
 
-    Map<String, Object> getJob(String search);
+    List getJob(String search);
 
     Map getJobDetail(String jobPostingCd);
 }

@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -24,9 +27,9 @@ public class JobController {
         return jobService.insertJob(jobPosting);
     }
     @GetMapping("/job")
-    public ResponseEntity<Map<String, Object>> getJob(@RequestParam String search) {
-        Map map = jobService.getJob(search);
-        return ResponseEntity.ok(map);
+    public ResponseEntity<List> getJob(@RequestParam String search) {
+        List list= Collections.singletonList(jobService.getJob(search));
+        return ResponseEntity.ok(list);
     }
     @GetMapping("/jobDetail")
     public ResponseEntity<Map<String, Object>> getJobDetail(@RequestParam String jobPostingCd) {
