@@ -6,6 +6,7 @@ import Join from './Join';
 import JobPosting from './JobPosting';
 import PostJobs from './PostJobs';
 import './App.css';
+import JobPostingDetail from "./JobPostingDetail";
 
 // Context 생성
 const UserContext = createContext(null);
@@ -58,6 +59,7 @@ function App() {
                         <Route path='/jobPosting' element={<JobPosting />}/>
                         <Route path='/' element={<JobPosting />}/>
                         <Route path='/postJobs' element={<PostJobs />}/>
+                        <Route path='/jobPostingDetail/:jobPostingCd' element={<JobPostingDetail />}/>
                     </Routes>
                 </div>
             </Router>

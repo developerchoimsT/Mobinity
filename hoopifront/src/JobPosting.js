@@ -37,6 +37,8 @@ const JobPosting = () => {
                         <tr>
                             <th>채용 번호</th>
                             <th>채용 공고</th>
+                            <th>채용 보상금</th>
+                            <th>사용 기술</th>
                             <th>회사 명</th>
                             <th>국가</th>
                             <th>위치</th>
@@ -48,16 +50,20 @@ const JobPosting = () => {
                             jobPostings.map((job, index) => {
                                 const company = companies.find(com => com.companyCd === job.companyCd);
                                 return company ? (
-                                    <tr key={index}>
-                                        <td>{index + 1}</td>
-                                        <td>{job.jobPostingPosition}</td>
-                                        <td>{company.companyName}</td>
-                                        <td>{company.companyNation}</td>
-                                        <td>{company.companyLocation}</td>
-                                        <td>
-                                            <button>지원</button>
-                                        </td>
-                                    </tr>
+                                    <Link to={`/jobPostingDetail/${job.jobPostingCd}`} key={job.jobPostingCd}>
+                                        <tr key={index}>
+                                            <td>{index + 1}</td>
+                                            <td>{job.jobPostingPosition}</td>
+                                            <td>{job.jobPostingMoney}</td>
+                                            <td>{job.jobPostingSkill}</td>
+                                            <td>{company.companyName}</td>
+                                            <td>{company.companyNation}</td>
+                                            <td>{company.companyLocation}</td>
+                                            <td>
+                                                <button>지원</button>
+                                            </td>
+                                        </tr>
+                                    </Link>
                                 ) : null;
                             })
                         }
