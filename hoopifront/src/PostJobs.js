@@ -1,17 +1,40 @@
 import {useContext, useState} from "react";
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {UserContext} from "./App";
 
 const PostJobs = () => {
 
     const {usersId, setUsersId} = useContext(UserContext);
 
-    const [jobPosting, setJobPosting] = useState({"companyCd" : usersId});
+    const [jobPosting, setJobPosting] = useState({
+        companyCd: usersId,
+        jobPostingPosition: "",
+        jobPostingMoney: "",
+        jobPostingBody: "",
+        jobPostingSkill: ""
+    });
+
+    useEffect(() => {
+        if (location.state) {
+            const { jobPostingDto } = location.state;
+            setJobPosting({
+                companyCd: jobPostingDto.companyDto.companyCd,
+                jobPostingCd: jobPostingDto.jobPostingCd,
+                jobPostingPosition: jobPostingDto.jobPostingPosition,
+                jobPostingMoney: jobPostingDto.jobPostingMoney,
+                jobPostingBody: jobPostingDto.jobPostingBody,
+                jobPostingSkill: jobPostingDto.jobPostingSkill
+            });
+        }
+    }, [location, usersId]);
 
     const navigate = useNavigate();
 
+    const location = useLocation();
+
     const postJob = (e) => {
+
         switch (e.target.id) {
             case "position": setJobPosting(prevState => ({
                 ...prevState,

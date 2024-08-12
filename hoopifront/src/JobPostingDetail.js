@@ -1,5 +1,5 @@
 import {useContext, useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import {UserContext} from "./App";
 
@@ -7,6 +7,7 @@ const JobPostingDetail = () => {
 
     const {jobPostingCd} = useParams();
     const {usersId} = useContext(UserContext);
+    const navigate = useNavigate();
     const [jobPostingDto, setJobPostingDto] = useState('');
     const [companyDto, setCompanyDto] = useState('');
 
@@ -25,6 +26,10 @@ const JobPostingDetail = () => {
 
         fetchDetail();
     }, [jobPostingCd])
+
+    const handleEdit = () => {
+        navigate(`/postJobs`, { state: { jobPostingDto } });
+    };
 
     const submitApply = () => {
         axios.post("http://hoopi.p-e.kr/api/hoopi/apply", {
@@ -83,6 +88,11 @@ const JobPostingDetail = () => {
                     <tr>
                         <th colSpan={2}>
                             <button onClick={submitApply}>지원</button>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colSpan={2}>
+                            <button onClick={handleEdit}>수정</button>
                         </th>
                     </tr>
                 </tfoot>
