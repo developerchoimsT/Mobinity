@@ -26,8 +26,8 @@ const JobPosting = () => {
     }, [search])
 
     const navigate = useNavigate();
-    const goDetail = (e) => {
-        navigate(`/jobPostingDetail/${e.key}`);
+    const goDetail = (jobPostingCd) => {
+        navigate(`/jobPostingDetail/${jobPostingCd}`);
     }
 
     return(
@@ -55,7 +55,7 @@ const JobPosting = () => {
                             jobPostings.map((job, index) => {
                                 const company = companies.find(com => com.companyCd === job.companyCd);
                                 return company ? (
-                                        <tr key={job.jobPostingCd} onClick={goDetail}>
+                                        <tr key={job.jobPostingCd} onClick={()=>goDetail(job.jobPostingCd)}>
                                             <td>{index + 1}</td>
                                             <td>{job.jobPostingPosition}</td>
                                             <td>{job.jobPostingMoney}</td>

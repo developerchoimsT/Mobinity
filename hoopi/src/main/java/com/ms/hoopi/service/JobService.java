@@ -11,4 +11,6 @@ public interface JobService {
     public ResponseEntity<String> insertJob(JobPostingDto jobPosting);
 
     Map<String, Object> getJob(String search);
+
+    Map getJobDetail(String jobPostingCd);
 }

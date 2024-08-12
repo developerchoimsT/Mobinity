@@ -1,12 +1,27 @@
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
+import {useParams} from "react-router-dom";
 
 const JobPostingDetail = () => {
 
+    const {jobPostingCd} = useParams();
+    const [jobPostingDto, setJobPostingDto] = useState('');
+    const [companyDto, setCompanyDto] = useState('');
+
     useEffect(()=>{
         const fetchDetail = async () => {
-
+            try{
+                const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/jobDetail', {
+                                                params : {jobPostingCd : jobPostingCd}
+                                            });
+                setJobPostingDto(response.data.jobPostingDto);
+                setCompanyDto(response.data.companyDto);
+            } catch (error){
+                console.log(error);
+            };
         }
-    })
+
+        fetchDetail();
+    }, [jobPostingCd])
     return(
         <div>
             <table>
@@ -18,39 +33,35 @@ const JobPostingDetail = () => {
                 <tbody>
                     <tr>
                         <th>채용공고 id</th>
-                        <td></td>
+                        <td>{jobPostingDto.jobPostingCd}</td>
                     </tr>
                     <tr>
                         <th>회사명</th>
-                        <td></td>
+                        <td>{companyDto.companyName}</td>
                     </tr>
                     <tr>
                         <th>국가</th>
-                        <td></td>
+                        <td>{companyDto.companyNation}</td>
                     </tr>
                     <tr>
                         <th>지역</th>
-                        <td></td>
+                        <td>{companyDto.companyLocation}</td>
                     </tr>
                     <tr>
                         <th>채용포지션</th>
-                        <td></td>
+                        <td>{jobPostingDto.jobPostingPosition}</td>
                     </tr>
                     <tr>
                         <th>채용보상금</th>
-                        <td></td>
+                        <td>{jobPostingDto.jobPostingMoney}</td>
                     </tr>
                     <tr>
                         <th>사용기술</th>
-                        <td></td>
+                        <td>{jobPostingDto.jobPostingSkill}</td>
                     </tr>
                     <tr>
                         <th>채용내용</th>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th>회사가 올린 다른 채용 공고</th>
-                        <td></td>
+                        <td>{jobPostingDto.jobPostingBody}</td>
                     </tr>
                 </tbody>
             </table>

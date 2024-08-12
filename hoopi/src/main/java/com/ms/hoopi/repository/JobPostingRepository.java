@@ -15,6 +15,8 @@ public interface JobPostingRepository extends JpaRepository<JobPosting, Integer>
     @Override
     List<JobPosting> findAll();
 
+    JobPosting findJobPostingByJobPostingCd(@Param("jobPostingCd") int jobPostingCd);
+
     @Query("SELECT j FROM JobPosting j WHERE " +
             "j.jobPostingBody LIKE %:search% OR " +
             "j.jobPostingMoney LIKE %:search% OR " +

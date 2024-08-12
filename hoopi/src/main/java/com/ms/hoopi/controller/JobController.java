@@ -28,4 +28,9 @@ public class JobController {
         Map map = jobService.getJob(search);
         return ResponseEntity.ok(map);
     }
+    @GetMapping("/jobDetail")
+    public ResponseEntity<Map<String, Object>> getJobDetail(@RequestParam String jobPostingCd) {
+        Map map = jobService.getJobDetail(jobPostingCd);
+        return ResponseEntity.ok(map);
+    }
 }

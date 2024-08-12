@@ -84,4 +84,25 @@ public class JobServiceImpl implements JobService {
             return null;
         }
     }
+
+    @Override
+    public Map getJobDetail(String jobPostingCd) {
+        Map map = new HashMap();
+        JobPostingDto jobPostingDto = new JobPostingDto();
+        CompanyDto companyDto = new CompanyDto();
+
+        try{
+            int cd = Integer.valueOf(jobPostingCd);
+            jobPostingDto = dtoEntMapper.toDto(jobPostingRepository.findJobPostingByJobPostingCd(cd));
+            String companyCd = jobPostingDto.getCompanyCd();
+            companyDto = dtoEntMapper.toDto(companyRepository.findByCompanyCd(companyCd));
+
+            map.put("jobPostingDto", jobPostingDto);
+            map.put("companyDto", companyDto);
+            return map;
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
