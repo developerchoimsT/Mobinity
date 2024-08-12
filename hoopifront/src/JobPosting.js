@@ -5,7 +5,7 @@ import './JobPosting.css';
 
 const JobPosting = () => {
 
-    const [jobPostings, setJobPostings] = useState();
+    const [jobPostings, setJobPostings] = useState([]);
     const [search, setSearch] = useState("");
 
     useEffect(()=>{
