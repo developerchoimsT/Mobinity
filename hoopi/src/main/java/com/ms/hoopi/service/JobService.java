@@ -1,5 +1,6 @@
 package com.ms.hoopi.service;
 
+import com.ms.hoopi.model.dto.ApplyDto;
 import com.ms.hoopi.model.dto.JobPostingDto;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
@@ -15,5 +16,5 @@ public interface JobService {
 
     Map getJobDetail(String jobPostingCd);
 
-    ResponseEntity<String> applyPostJob(String jobPostingCd, String usersId);
+    ResponseEntity<String> applyPostJob(ApplyDto applyDto);
 }

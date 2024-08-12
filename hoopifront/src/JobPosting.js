@@ -51,7 +51,6 @@ const JobPosting = () => {
                             <th>회사 명</th>
                             <th>국가</th>
                             <th>위치</th>
-                            <th>지원</th>
                         </tr>
                     </thead>
                     <tbody>

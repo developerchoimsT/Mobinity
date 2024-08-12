@@ -98,10 +98,7 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public ResponseEntity<String> applyPostJob(String jobPostingCd, String usersId) {
-        ApplyDto applyDto = new ApplyDto();
-        applyDto.setJobPostingCd(Integer.valueOf(jobPostingCd));
-        applyDto.setUsersId(jobPostingCd);
+    public ResponseEntity<String> applyPostJob(ApplyDto applyDto) {
         try{
             applyRepository.save(dtoEntMapper.toEntity(applyDto));
             return ResponseEntity.ok("지원이 완료되었습니다.");

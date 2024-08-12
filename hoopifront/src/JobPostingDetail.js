@@ -82,7 +82,7 @@ const JobPostingDetail = () => {
                 <tfoot>
                     <tr>
                         <th colSpan={2}>
-                            <button onClick={submitApply}></button>
+                            <button onClick={submitApply}>지원</button>
                         </th>
                     </tr>
                 </tfoot>

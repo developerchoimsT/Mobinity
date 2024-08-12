@@ -1,5 +1,6 @@
 package com.ms.hoopi.controller;
 
+import com.ms.hoopi.model.dto.ApplyDto;
 import com.ms.hoopi.model.dto.JobPostingDto;
 import com.ms.hoopi.service.JobService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,7 +39,7 @@ public class JobController {
         return ResponseEntity.ok(map);
     }
     @PostMapping("/apply")
-    public ResponseEntity<String> applyPostJob(@RequestBody String jobPostingCd, String usersId) {
-        return jobService.applyPostJob(jobPostingCd, usersId);
+    public ResponseEntity<String> applyPostJob(@RequestBody ApplyDto applyDto) {
+        return jobService.applyPostJob(applyDto);
     }
 }
