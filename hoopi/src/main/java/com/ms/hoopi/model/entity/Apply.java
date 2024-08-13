@@ -1,9 +1,6 @@
 package com.ms.hoopi.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
@@ -14,6 +11,7 @@ import lombok.*;
 @Table(name = "apply")
 public class Apply {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // 자동 증가 설정
     @Column(name = "apply_id", nullable = false)
     private int id;
 
