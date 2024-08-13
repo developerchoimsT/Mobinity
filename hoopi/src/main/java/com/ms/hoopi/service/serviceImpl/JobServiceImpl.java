@@ -115,13 +115,11 @@ public class JobServiceImpl implements JobService {
             }
             JobPostingDto existingJobPostingDto = dtoEntMapper.toDto(existingJobPosting.get());
 
-            // 무조건 수정
             existingJobPostingDto.setJobPostingPosition(jobPosting.getJobPostingPosition());
             existingJobPostingDto.setJobPostingMoney(jobPosting.getJobPostingMoney());
             existingJobPostingDto.setJobPostingBody(jobPosting.getJobPostingBody());
             existingJobPostingDto.setJobPostingSkill(jobPosting.getJobPostingSkill());
 
-            // 수정된 데이터 저장
             jobPostingRepository.save(dtoEntMapper.toEntity(existingJobPostingDto));
 
             return ResponseEntity.ok("수정되었습니다.");

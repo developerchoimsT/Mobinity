@@ -61,7 +61,7 @@ const PostJobs = () => {
 
     const submitJobPost = () => {
         if(location.state){
-            axios.put("https://hoopi.p-e.kr/api/hoopi/job", jobPosting)
+            axios.put("http://hoopi.p-e.kr/api/hoopi/job", jobPosting)
             .then(res => {
                 alert(res.data);
                 navigate('/');
