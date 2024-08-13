@@ -44,7 +44,7 @@ const JobPostingDetail = () => {
     };
 
     const handleDelete = () => {
-        axios.delete("http://hoopi.p-e.kr/api/hoopi/jobDetail", jobPosting
+        axios.delete("http://hoopi.p-e.kr/api/hoopi/jobDetail", jobPostingDto
         ).then(response => {
             alert(response.data);
         }).catch(error => {
