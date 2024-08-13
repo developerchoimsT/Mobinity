@@ -131,13 +131,13 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public ResponseEntity<String> deleteJob(JobPostingDto jobPosting) {
+    public ResponseEntity<String> deleteJob(JobPostingDto jobPostingDto) {
         try{
-            Optional<JobPosting> existingJobPosting = jobPostingRepository.findById(jobPosting.getJobPostingCd());
+            Optional<JobPosting> existingJobPosting = jobPostingRepository.findById(jobPostingDto.getJobPostingCd());
             if (!existingJobPosting.isPresent()) {
                 return ResponseEntity.badRequest().body("이미 존재하지 않는 공고입니다.");
             } else {
-                jobPostingRepository.deleteById(jobPosting.getJobPostingCd());
+                jobPostingRepository.deleteById(jobPostingDto.getJobPostingCd());
                 return ResponseEntity.ok("정상적으로 삭제되었습니다.");
             }
         } catch (Exception e){
