@@ -44,13 +44,13 @@ const JobPostingDetail = () => {
     };
 
     const handleDelete = () => {
-        axios.delete("http://hoopi.p-e.kr/api/hoopi/jobDetail", jobPostingDto
-        ).then(response => {
-            alert(response.data);
-        }).catch(error => {
-            console.log(error);
-        })
-
+        axios.delete("http://hoopi.p-e.kr/api/hoopi/jobDetail", {
+            data: jobPostingDto
+            }).then(response => {
+                alert(response.data);
+            }).catch(error => {
+                console.log(error);
+            })
     }
 
     return(
