@@ -17,4 +17,6 @@ public interface JobService {
     Map getJobDetail(String jobPostingCd);
 
     ResponseEntity<String> applyPostJob(ApplyDto applyDto);
+
+    ResponseEntity<String> putJob(JobPostingDto jobPosting);
 }

@@ -60,11 +60,20 @@ const PostJobs = () => {
     }
 
     const submitJobPost = () => {
-        axios.post("http://hoopi.p-e.kr/api/hoopi/job", jobPosting)
+        if(location.state){
+            axios.put("https://hoopi.p-e.kr/api/hoopi/job", jobPosting)
             .then(res => {
                 alert(res.data);
                 navigate('/');
             })
+        } else {
+            axios.post("http://hoopi.p-e.kr/api/hoopi/job", jobPosting)
+                .then(res => {
+                    alert(res.data);
+                    navigate('/');
+                })
+        }
+
     }
 
     return(

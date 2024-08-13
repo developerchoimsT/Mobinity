@@ -33,6 +33,10 @@ public class JobController {
         System.out.println("컨트롤러단"+list);
         return ResponseEntity.ok(list);
     }
+    @PutMapping("/job")
+    public ResponseEntity<String> putJob(@RequestBody JobPostingDto jobPosting) {
+        return jobService.putJob(jobPosting);
+    }
     @GetMapping("/jobDetail")
     public ResponseEntity<Map<String, Object>> getJobDetail(@RequestParam String jobPostingCd) {
         Map map = jobService.getJobDetail(jobPostingCd);

@@ -8,13 +8,11 @@ import com.ms.hoopi.model.entity.Users;
 import com.ms.hoopi.repository.*;
 import com.ms.hoopi.service.JobService;
 import com.ms.hoopi.service.LoginService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class JobServiceImpl implements JobService {
@@ -106,5 +104,31 @@ public class JobServiceImpl implements JobService {
             return ResponseEntity.badRequest().body("지원 실패, 다시 시도해주세요");
         }
 
+    }
+
+    @Override
+    public ResponseEntity<String> putJob(JobPostingDto jobPosting) {
+        try {
+            Optional<JobPosting> existingJobPosting = jobPostingRepository.findById(jobPosting.getJobPostingCd());
+            if (!existingJobPosting.isPresent()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 채용공고를 찾을 수 없습니다.");
+            }
+            JobPostingDto existingJobPostingDto = dtoEntMapper.toDto(existingJobPosting.get());
+
+            // 무조건 수정
+            existingJobPostingDto.setJobPostingPosition(jobPosting.getJobPostingPosition());
+            existingJobPostingDto.setJobPostingMoney(jobPosting.getJobPostingMoney());
+            existingJobPostingDto.setJobPostingBody(jobPosting.getJobPostingBody());
+            existingJobPostingDto.setJobPostingSkill(jobPosting.getJobPostingSkill());
+
+            // 수정된 데이터 저장
+            jobPostingRepository.save(dtoEntMapper.toEntity(existingJobPostingDto));
+
+            return ResponseEntity.ok("수정되었습니다.");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("잠시 뒤에 다시 시도해주세요.");
+        }
     }
 }
