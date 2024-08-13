@@ -40,6 +40,7 @@ public class JobServiceImpl implements JobService {
     @Override
     public ResponseEntity<String> insertJob(JobPostingDto jobPosting) {
         try{
+            System.out.println("공고 작성 jobPosting확인:"+jobPosting);
             Company company = companyRepository.findByCompanyCd(jobPosting.getCompanyDto().getCompanyCd());
             if(company == null){
                 System.out.println("회사정보 확인::::"+company);
