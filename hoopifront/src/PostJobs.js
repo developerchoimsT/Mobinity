@@ -12,7 +12,7 @@ const PostJobs = () => {
 
     const [jobPosting, setJobPosting] = useState({
         companyDto: {
-            companyCd: usersId
+            companyName: usersId
         },
         jobPostingPosition: "",
         jobPostingMoney: "",
