@@ -48,6 +48,7 @@ const JobPostingDetail = () => {
             data: jobPostingDto
             }).then(response => {
                 alert(response.data);
+                navigate('/');
             }).catch(error => {
                 console.log(error);
             })

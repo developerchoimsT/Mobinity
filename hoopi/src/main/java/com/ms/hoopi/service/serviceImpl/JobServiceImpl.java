@@ -3,6 +3,7 @@ package com.ms.hoopi.service.serviceImpl;
 import com.ms.hoopi.model.dto.ApplyDto;
 import com.ms.hoopi.model.dto.CompanyDto;
 import com.ms.hoopi.model.dto.JobPostingDto;
+import com.ms.hoopi.model.entity.Company;
 import com.ms.hoopi.model.entity.JobPosting;
 import com.ms.hoopi.model.entity.Users;
 import com.ms.hoopi.repository.*;
@@ -39,14 +40,13 @@ public class JobServiceImpl implements JobService {
     @Override
     public ResponseEntity<String> insertJob(JobPostingDto jobPosting) {
         try{
-            String usersId = jobPosting.getCompanyDto().getCompanyCd();
-            Users user = userRepository.findByUsersId(usersId);
-            if(user == null) {
-                return ResponseEntity.ofNullable("등록자를 인식할 수 없습니다.");
+            Company company = companyRepository.findByCompanyCd(jobPosting.getCompanyDto().getCompanyCd());
+            if(company == null){
+                System.out.println("회사정보 확인::::"+company);
+                return new ResponseEntity<String>("회사 정보가 존재하지 않습니다.", HttpStatus.NOT_FOUND);
             }
-            CompanyDto company = jobPosting.getCompanyDto();
-            company.setCompanyCd(user.getUsersCd());
-            jobPosting.setCompanyDto(company);
+            CompanyDto companyDto = dtoEntMapper.toDto(company);
+            jobPosting.setCompanyDto(companyDto);
             jobPostingRepository.save(dtoEntMapper.toEntity(jobPosting));
             return ResponseEntity.ok("귀사가 바라는 인재가 지원하기를 기원합니다.");
         }catch (Exception e){
