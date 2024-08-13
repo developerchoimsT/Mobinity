@@ -114,7 +114,7 @@ public class JobServiceImpl implements JobService {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 채용공고를 찾을 수 없습니다.");
             }
             JobPostingDto existingJobPostingDto = dtoEntMapper.toDto(existingJobPosting.get());
-
+            System.out.println("잡서비스임플확인::::"+existingJobPostingDto);
             existingJobPostingDto.setJobPostingPosition(jobPosting.getJobPostingPosition());
             existingJobPostingDto.setJobPostingMoney(jobPosting.getJobPostingMoney());
             existingJobPostingDto.setJobPostingBody(jobPosting.getJobPostingBody());
