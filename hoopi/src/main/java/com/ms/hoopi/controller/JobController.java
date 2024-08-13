@@ -44,7 +44,7 @@ public class JobController {
         return ResponseEntity.ok(map);
     }
     @DeleteMapping("/jobDetail")
-    public ResponseEntity<String> deleteJobDetail(@RequestParam JobPostingDto jobPosting) {
+    public ResponseEntity<String> deleteJobDetail(@RequestBody JobPostingDto jobPosting) {
         return jobService.deleteJob(jobPosting);
     }
     @PostMapping("/apply")
