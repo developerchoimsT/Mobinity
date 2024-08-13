@@ -38,7 +38,6 @@ const Login = () => {
                 if(response.status >= 200 && response.status < 300){
                     alert("로그인에 성공하셨습니다.");
                     setUsersId(users.usersId);
-                    console.log("바뀌었는지 확인:"+users.usersId);
                     navigate("/")
                 } else {
                     alert('다시 시도해주세요.');

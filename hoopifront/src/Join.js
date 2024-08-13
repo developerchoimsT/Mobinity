@@ -61,7 +61,6 @@ function Join() {
                 break;
             case 'chkPhoneCd':
                 setChkPhoneCd(e.target.value);
-                console.log(users);
                 break;
         }
     }
@@ -136,7 +135,6 @@ function Join() {
     const handleJoin = () => {
         axios.post("http://hoopi.p-e.kr/api/hoopi/join", users)
         .then(response => {
-            console.log(users);
             if(response.status != 200){
                 alert("다시 시도해주세요.");
             } else {

@@ -20,7 +20,6 @@ public class JoinController {
     @PostMapping("/join")
     public ResponseEntity<String> userJoin(@RequestBody UsersDto users) {
         try {
-            System.out.println("users::::" + users);
             joinService.joinUser(users);
             return ResponseEntity.ok("User successfully registered");
         } catch (RuntimeException e) {

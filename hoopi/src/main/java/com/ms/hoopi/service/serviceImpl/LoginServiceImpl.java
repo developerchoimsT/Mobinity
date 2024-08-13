@@ -46,7 +46,6 @@ public class LoginServiceImpl implements LoginService {
         String id = user.getUsersId();
         Users users = userRepository.findByUsersId(id);
         if(users != null){
-            System.out.println("통과1");
             if(encoder.matches(user.getUsersPw(), users.getUsersPw())){
                 //아이디, 비밀번호가 일치하는 경우, 쿠키 중 다른 아이디의 rfrToken발견해 삭제시킴
                 deleteToken(request, response, id);
@@ -80,7 +79,6 @@ public class LoginServiceImpl implements LoginService {
                 if ("rfrToken".equals(cookie.getName())) {
                     DecodedJWT jwt = JWT.decode(cookie.getValue());
                     usersId = jwt.getSubject();
-                    System.out.println(usersId);
                     break;
                 }
             }
@@ -92,13 +90,9 @@ public class LoginServiceImpl implements LoginService {
         Cookie[] cookies = request.getCookies();
         if(cookies != null){
             for(Cookie cookie : cookies){
-                System.out.println("쿠키이름:"+cookie.getName());
                 if(cookie.getName().equals("rfrToken")){
-                    System.out.println("rfrToken쿠키 확인");
-                    System.out.println("rfrToken쿠키 값:"+cookie.getValue());
                     //쿠키들 중 rfrToken이 존재하는지 확인
                     DecodedJWT jwt = JWT.decode((cookie.getValue()));
-                    System.out.println(jwt.getSubject());
                     if(!jwt.getSubject().equals(id)){
                         //쿠키들 중 현재 로그인한 아이디와 다른 아이디의 jwtToken이 존재한다면 삭제
                         cookie.setValue("");

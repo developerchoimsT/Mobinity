@@ -58,12 +58,10 @@ const PostJobs = () => {
             }));
                 break;
         }
-        console.log(jobPosting);
     }
 
     const submitJobPost = () => {
         if(location.state){
-            console.log(location.state);
             axios.put("http://hoopi.p-e.kr/api/hoopi/job", jobPosting)
             .then(res => {
                 alert(res.data);

@@ -40,10 +40,8 @@ public class JobServiceImpl implements JobService {
     @Override
     public ResponseEntity<String> insertJob(JobPostingDto jobPosting) {
         try{
-            System.out.println("공고 작성 jobPosting확인:"+jobPosting);
             Company company = companyRepository.findByCompanyName(jobPosting.getCompanyDto().getCompanyName());
             if(company == null){
-                System.out.println("회사정보 확인::::"+company);
                 return new ResponseEntity<String>("회사 정보가 존재하지 않습니다.", HttpStatus.NOT_FOUND);
             }
             CompanyDto companyDto = dtoEntMapper.toDto(company);
@@ -64,7 +62,6 @@ public class JobServiceImpl implements JobService {
         try{
             if(search == null || search.isEmpty()){
                 jobPostings = dtoEntMapper.toDtoList(jobPostingRepository.findJobPosting());
-                System.out.println(jobPostings);
             } else {
                 jobPostings = dtoEntMapper.toDtoList(jobPostingRepository.searchJobPostings(search));
             }
@@ -115,7 +112,6 @@ public class JobServiceImpl implements JobService {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 채용공고를 찾을 수 없습니다.");
             }
             JobPostingDto existingJobPostingDto = dtoEntMapper.toDto(existingJobPosting.get());
-            System.out.println("잡서비스임플확인::::"+existingJobPostingDto);
             existingJobPostingDto.setJobPostingPosition(jobPosting.getJobPostingPosition());
             existingJobPostingDto.setJobPostingMoney(jobPosting.getJobPostingMoney());
             existingJobPostingDto.setJobPostingBody(jobPosting.getJobPostingBody());

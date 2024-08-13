@@ -30,8 +30,6 @@ public class PhoneController {
         }
         String cerNum = buffer.toString();
         phoneService.certifyPhone(phone, cerNum);
-        System.out.println("수신자 번호 : " + phone);
-        System.out.println("인증번호 : " + cerNum);
         return cerNum;
     }
 }
