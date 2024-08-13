@@ -19,4 +19,6 @@ public interface JobService {
     ResponseEntity<String> applyPostJob(ApplyDto applyDto);
 
     ResponseEntity<String> putJob(JobPostingDto jobPosting);
+
+    ResponseEntity<String> deleteJob(JobPostingDto jobPosting);
 }

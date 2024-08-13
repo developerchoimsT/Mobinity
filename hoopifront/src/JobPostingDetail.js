@@ -2,6 +2,7 @@ import {useContext, useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import {UserContext} from "./App";
+import jobPosting from "./JobPosting";
 
 const JobPostingDetail = () => {
 
@@ -41,6 +42,16 @@ const JobPostingDetail = () => {
                 console.log(error);
         })
     };
+
+    const handleDelete = () => {
+        axios.delete("http://hoopi.p-e.kr/api/hoopi/jobDetail", jobPosting
+        ).then(response => {
+            alert(response.data);
+        }).catch(error => {
+            console.log(error);
+        })
+
+    }
 
     return(
         <div>
@@ -97,7 +108,7 @@ const JobPostingDetail = () => {
                 </tr>
                 <tr>
                     <th colSpan={2}>
-                        <button onClick={handleEdit}>삭제</button>
+                        <button onClick={handleDelete}>삭제</button>
                     </th>
                 </tr>
                 </tfoot>

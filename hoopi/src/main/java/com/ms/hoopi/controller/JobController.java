@@ -2,6 +2,7 @@ package com.ms.hoopi.controller;
 
 import com.ms.hoopi.model.dto.ApplyDto;
 import com.ms.hoopi.model.dto.JobPostingDto;
+import com.ms.hoopi.model.entity.JobPosting;
 import com.ms.hoopi.service.JobService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,10 @@ public class JobController {
     public ResponseEntity<Map<String, Object>> getJobDetail(@RequestParam String jobPostingCd) {
         Map map = jobService.getJobDetail(jobPostingCd);
         return ResponseEntity.ok(map);
+    }
+    @DeleteMapping("/jobDetail")
+    public ResponseEntity<String> deleteJobDetail(@RequestParam JobPostingDto jobPosting) {
+        return jobService.deleteJob(jobPosting);
     }
     @PostMapping("/apply")
     public ResponseEntity<String> applyPostJob(@RequestBody ApplyDto applyDto) {

@@ -129,4 +129,20 @@ public class JobServiceImpl implements JobService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("잠시 뒤에 다시 시도해주세요.");
         }
     }
+
+    @Override
+    public ResponseEntity<String> deleteJob(JobPostingDto jobPosting) {
+        try{
+            Optional<JobPosting> existingJobPosting = jobPostingRepository.findById(jobPosting.getJobPostingCd());
+            if (!existingJobPosting.isPresent()) {
+                return ResponseEntity.badRequest().body("이미 존재하지 않는 공고입니다.");
+            } else {
+                jobPostingRepository.deleteById(jobPosting.getJobPostingCd());
+                return ResponseEntity.ok("정상적으로 삭제되었습니다.");
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("다시 시도해주세요.");
+        }
+    }
 }
