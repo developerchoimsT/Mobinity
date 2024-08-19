@@ -36,12 +36,8 @@ const Login = () => {
 
         try {
             const response = await axios.post("http://hoopi.p-e.kr/api/hoopi/login", users);
-            if (response.status >= 200 && response.status < 300 && response.data.usersId && response.data.usersRole) {
-                handleUserInfo(response.data);
-                console.log(userInfo);
-            } else {
-                alert('로그인 실패. 다시 시도해주세요.');
-            }
+            handleUserInfo(response.data);
+            console.log(userInfo);
         } catch (error) {
             console.error('로그인 요청 오류:', error);
             alert('서버 오류 발생. 나중에 다시 시도해 주세요.');
