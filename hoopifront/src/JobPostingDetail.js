@@ -32,6 +32,7 @@ const JobPostingDetail = () => {
     }, [jobPostingCd]);
 
     useEffect(() => {
+        console.log("회사 정보",companyDto);
         const fetchButton = async () => {
             try {
                 if (userInfo.usersRole === 'COMPANY') {
