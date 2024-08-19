@@ -29,6 +29,7 @@ const JobPostingDetail = () => {
         };
 
         const fetchButton = async () => {
+            console.log(companyDto.companyName);
             try{
                 if(userInfo.usersRole === 'COMPANY'){
                     setApplyDisable(true);
