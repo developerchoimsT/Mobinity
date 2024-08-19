@@ -20,6 +20,7 @@ function UserProvider({ children }) {
 
     useEffect(() => {
         async function fetchUserInfo() {
+            console.log(userInfo);
             try {
                 const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/userInfo');
                 if (response.data !== "" && response.data != null) {
@@ -35,7 +36,7 @@ function UserProvider({ children }) {
         }
 
         fetchUserInfo();
-    }, []);
+    }, [userInfo]);
 
     return (
         <UserContext.Provider value={{ userInfo, setUserInfo }}>

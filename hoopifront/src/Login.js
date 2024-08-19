@@ -11,6 +11,7 @@ const Login = () => {
 
     useEffect(() => {
         if (isLoginSuccess) {
+            console.log(userInfo);
             alert("로그인에 성공하셨습니다.");
             navigate("/");
         }
