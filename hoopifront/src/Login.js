@@ -37,7 +37,7 @@ const Login = () => {
             .then(response => {
                 if(response.status >= 200 && response.status < 300){
                     alert("로그인에 성공하셨습니다.");
-                    setUsersInfo({
+                    setUserInfo({
                         'usersId': response.data.usersId,
                         'usersRole': response.data.usersRole,
                     })
