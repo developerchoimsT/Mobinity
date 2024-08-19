@@ -5,8 +5,17 @@ import {UserContext} from "./App";
 
 const Login = () => {
     const [users, setUsers] = useState({ 'usersId': '', 'usersPw': '' });
-    const navigate = useNavigate(); // useNavigate 훅을 사용하여 네비게이션 처리
+    const [isLoginSuccess, setIsLoginSuccess] = useState(false); // 로그인 성공 상태 추가
+    const navigate = useNavigate();
     const { userInfo, setUserInfo } = useContext(UserContext);
+
+    useEffect(() => {
+        if (isLoginSuccess) {
+            alert("로그인에 성공하셨습니다.");
+            navigate("/");
+        }
+    }, [isLoginSuccess, navigate]);
+
 
     const handleUsers = (e) => {
         switch(e.target.id) {
@@ -27,13 +36,6 @@ const Login = () => {
         }
     }
 
-    useEffect(() => {
-        if (userInfo.usersId !== '') {
-            alert("로그인에 성공하셨습니다.");
-            navigate("/");
-        }
-    }, [userInfo]);
-
 
     const handleLogin = async () => {
         if (users.usersId === '' || users.usersPw === '') {
@@ -48,7 +50,7 @@ const Login = () => {
                     'usersId': response.data.usersId,
                     'usersRole': response.data.usersRole,
                 });
-                // navigate("/")를 여기서 호출하지 않고 useEffect 내에서 호출합니다.
+                setIsLoginSuccess(true);
             } else {
                 alert('다시 시도해주세요.');
             }
