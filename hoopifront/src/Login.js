@@ -37,6 +37,8 @@ const Login = () => {
         try {
             const response = await axios.post("http://hoopi.p-e.kr/api/hoopi/login", users);
             handleUserInfo(response.data);
+            alert("로그인에 성공하였습니다.");
+            navigate('/');
             console.log(userInfo);
         } catch (error) {
             console.error('로그인 요청 오류:', error);
