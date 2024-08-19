@@ -29,27 +29,28 @@ const JobPostingDetail = () => {
         };
 
         fetchDetail();
-    }, [jobPostingCd]);
+    }, [jobPostingCd, companyDto]);
 
     useEffect(() => {
-        console.log("회사 정보",companyDto.companyName);
-        console.log("회원 정보", userInfo.usersId);
         const fetchButton = async () => {
             try {
                 if (userInfo.usersRole === 'COMPANY') {
                     setApplyDisable(true);
                 }
-                if (userInfo.usersId !== companyDto.companyName) {
-                    setEditDisable(true);
-                    setDeleteDisable(true);
-                }
+
+                const isDifferentCompany = userInfo.usersId !== companyDto.companyName;
+                console.log(isDifferentCompany);
+                console.log(userInfo.usersId);
+                console.log(companyDto.companyName);
+                setEditDisable(isDifferentCompany);
+                setDeleteDisable(isDifferentCompany);
             } catch (error) {
-                console.log(error);
+                console.error('버튼 상태 결정 중 오류 발생:', error);
             }
         };
 
         fetchButton();
-    }, [userInfo, companyDto]);
+    }, [userInfo.usersRole, userInfo.usersId, companyDto.companyName]);
 
     const handleEdit = () => {
         navigate(`/postJobs`, { state: { jobPostingDto } });
