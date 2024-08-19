@@ -65,10 +65,10 @@ function Join() {
                 break;
             case 'role' :
                 if(e.target.checked) {
-                    setRole('company');
+                    setRole('COMPANY');
                     setUsers(prevUsers => ({
                         ...prevUsers,
-                        usersRole: 'company'
+                        usersRole: 'COMPANY'
                     }))
                 }
         }

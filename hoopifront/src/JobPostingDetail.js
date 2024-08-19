@@ -30,10 +30,10 @@ const JobPostingDetail = () => {
 
         const fetchButton = async () => {
             try{
-                if(userInfo.usersRole !== 'company'){
+                if(userInfo.usersRole === 'COMPANY'){
                     setApplyDisable(true);
                 }
-                if(userInfo.usersId !== companyDto.companyCd){
+                if(userInfo.usersId !== companyDto.companyName){
                     setEditDisable(true);
                     setDeleteDisable(true);
                 }

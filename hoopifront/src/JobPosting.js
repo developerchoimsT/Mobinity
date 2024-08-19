@@ -25,7 +25,7 @@ const JobPosting = () => {
 
         const fetchButton = async () => {
             try{
-                if(userInfo.usersRole !== 'company'){
+                if(userInfo.usersRole !== 'COMPANY'){
                     setWriteDisable(true);
                 }
             }catch (error) {
