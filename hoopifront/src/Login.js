@@ -41,7 +41,7 @@ const Login = () => {
                 'usersRole': response.data.usersRole
             });
             alert("로그인에 성공하였습니다");
-            history.push("/");
+            window.location.href = '/';
         } catch (error) {
             console.error('로그인 요청 오류:', error);
             alert('서버 오류 발생. 나중에 다시 시도해 주세요.');
