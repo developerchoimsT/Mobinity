@@ -64,6 +64,7 @@ function Join() {
                 setChkPhoneCd(e.target.value);
                 break;
             case 'role' :
+                console.log(e.target.checked);
                 if(e.target.checked) {
                     setRole('COMPANY');
                     setUsers(prevUsers => ({
