@@ -8,13 +8,25 @@ const Login = () => {
     const navigate = useNavigate();
     const { userInfo, setUserInfo } = useContext(UserContext);
 
-    useEffect(() => {
-        if (userInfo.usersId && userInfo.usersRole) {
-            console.log("로그인에서", userInfo);
-            alert("로그인에 성공하셨습니다.");
-            navigate("/");
+    const handleUsers = (e) => {
+        switch(e.target.id) {
+            case 'id':
+                setUsers(prevUsers => ({
+                    ...prevUsers,
+                    'usersId': e.target.value
+                }));
+                break;
+            case 'pwd':
+                setUsers(prevUsers => ({
+                    ...prevUsers,
+                    'usersPw': e.target.value
+                }));
+                break;
+            default:
+                break;
         }
-    }, [userInfo, navigate]);
+    }
+
 
     const handleLogin = async () => {
         if (users.usersId === '' || users.usersPw === '') {
@@ -25,10 +37,8 @@ const Login = () => {
         try {
             const response = await axios.post("http://hoopi.p-e.kr/api/hoopi/login", users);
             if (response.status >= 200 && response.status < 300 && response.data.usersId && response.data.usersRole) {
-                setUserInfo({
-                    'usersId': response.data.usersId,
-                    'usersRole': response.data.usersRole,
-                });
+                handleUserInfo(response.data);
+                console.log(userInfo);
             } else {
                 alert('로그인 실패. 다시 시도해주세요.');
             }
@@ -36,6 +46,13 @@ const Login = () => {
             console.error('로그인 요청 오류:', error);
             alert('서버 오류 발생. 나중에 다시 시도해 주세요.');
         }
+    }
+
+    const handleUserInfo = (e) => {
+        setUserInfo({
+            'usersId' : e.usersId,
+            'usersRole' : e.usersRole
+        })
     }
 
     return (
