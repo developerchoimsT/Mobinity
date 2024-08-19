@@ -38,12 +38,10 @@ const JobPostingDetail = () => {
                     setApplyDisable(true);
                 }
 
-                const isDifferentCompany = userInfo.usersId !== companyDto.companyName;
-                console.log(isDifferentCompany);
-                console.log(userInfo.usersId);
-                console.log(companyDto.companyName);
-                setEditDisable(isDifferentCompany);
-                setDeleteDisable(isDifferentCompany);
+                if (userInfo.usersId !== companyDto.companyName) {
+                    setEditDisable(true);
+                    setDeleteDisable(true);
+                }
             } catch (error) {
                 console.error('버튼 상태 결정 중 오류 발생:', error);
             }
