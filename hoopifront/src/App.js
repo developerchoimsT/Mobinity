@@ -23,9 +23,10 @@ function UserProvider({ children }) {
             try {
                 const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/userInfo');
                 if (response.data !== "" && response.data != null) {
+                    console(response.data);
                     setUserInfo({
-                        'usersId': response.data.map.usersId,
-                        'usersRole': response.data.map.usersRole
+                        'usersId': response.data.usersId,
+                        'usersRole': response.data.usersRole
                     })
                 }
             } catch (error) {
