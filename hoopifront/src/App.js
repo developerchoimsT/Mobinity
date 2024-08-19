@@ -20,15 +20,15 @@ function UserProvider({ children }) {
 
     useEffect(() => {
         async function fetchUserInfo() {
-            console.log(userInfo);
             try {
                 const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/userInfo');
                 if (response.data !== "" && response.data != null) {
-                    console.log(response.data);
-                    setUserInfo({
-                        'usersId': response.data.usersId,
-                        'usersRole': response.data.usersRole
-                    })
+                    if (response.data.usersId !== userInfo.usersId || response.data.usersRole !== userInfo.usersRole) {
+                        setUserInfo({
+                            'usersId': response.data.usersId,
+                            'usersRole': response.data.usersRole
+                        });
+                    }
                 }
             } catch (error) {
                 console.error("유저 정보를 불러오지 못했습니다.", error);
@@ -36,7 +36,7 @@ function UserProvider({ children }) {
         }
 
         fetchUserInfo();
-    }, [userInfo]);
+    }, []);
 
     return (
         <UserContext.Provider value={{ userInfo, setUserInfo }}>
