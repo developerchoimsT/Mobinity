@@ -7,10 +7,13 @@ import jobPosting from "./JobPosting";
 const JobPostingDetail = () => {
 
     const {jobPostingCd} = useParams();
-    const {usersId} = useContext(UserContext);
+    const {userInfo} = useContext(UserContext);
     const navigate = useNavigate();
     const [jobPostingDto, setJobPostingDto] = useState('');
     const [companyDto, setCompanyDto] = useState('');
+    const [applyDisable, setApplyDisable] = useState(false);
+    const [editDisable, setEditDisable] = useState(false);
+    const [deleteDisable, setDeleteDisable] = useState(false);
 
     useEffect(()=>{
         const fetchDetail = async () => {
@@ -25,8 +28,24 @@ const JobPostingDetail = () => {
             }
         };
 
+        const fetchButton = async () => {
+            try{
+                if(userInfo.usersRole !== 'company'){
+                    setApplyDisable(true);
+                }
+                if(userInfo.usersId !== companyDto.companyCd){
+                    setEditDisable(true);
+                    setDeleteDisable(true);
+                }
+            } catch(error){
+                console.log(error);
+            }
+        }
+
         fetchDetail();
-    }, [jobPostingCd])
+        fetchButton();
+
+    }, [jobPostingCd, userInfo])
 
     const handleEdit = () => {
         navigate(`/postJobs`, { state: { jobPostingDto } });
@@ -35,7 +54,7 @@ const JobPostingDetail = () => {
     const submitApply = () => {
         axios.post("http://hoopi.p-e.kr/api/hoopi/apply", {
                 jobPostingCd: jobPostingCd,
-                usersId: usersId
+                usersId: userInfo.usersId
             }).then( response => {
                 alert(response.data);
             }).catch(error => {
@@ -99,17 +118,17 @@ const JobPostingDetail = () => {
                 <tfoot>
                 <tr>
                     <th colSpan={2}>
-                        <button onClick={submitApply}>지원</button>
+                        <button id='apply' onClick={submitApply} disabled={applyDisable}>지원</button>
                     </th>
                 </tr>
                 <tr>
                     <th colSpan={2}>
-                        <button onClick={handleEdit}>수정</button>
+                        <button id='edit' onClick={handleEdit} disabled={editDisable}>수정</button>
                     </th>
                 </tr>
                 <tr>
                     <th colSpan={2}>
-                        <button onClick={handleDelete}>삭제</button>
+                        <button id='delete' onClick={handleDelete} disabled={deleteDisable}>삭제</button>
                     </th>
                 </tr>
                 </tfoot>

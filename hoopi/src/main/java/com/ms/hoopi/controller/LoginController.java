@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("hoopi")
@@ -36,9 +38,9 @@ public class LoginController {
     }
 
     @GetMapping("/userInfo")
-    public ResponseEntity<String> getUserInfo(HttpServletRequest request){
-        String usersId = "";
-        usersId = loginService.getUserInfo(request);
-        return ResponseEntity.ok().body(usersId);
+    public ResponseEntity<Map<String, String>> getUserInfo(HttpServletRequest request){
+        Map<String, String> map = new HashMap<>();
+         map = loginService.getUserInfo(request);
+        return ResponseEntity.ok().body(map);
     }
 }

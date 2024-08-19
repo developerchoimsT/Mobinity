@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
 import './JobPosting.css';
@@ -7,6 +7,8 @@ const JobPosting = () => {
 
     const [jobPostings, setJobPostings] = useState([]);
     const [search, setSearch] = useState("");
+    const {userInfo} = useContext(UserContext);
+    const [writeDisable, setWriteDisable] = useState(false);
 
     useEffect(()=>{
         const fetchJobPosting = async () => {
@@ -19,8 +21,20 @@ const JobPosting = () => {
                 console.log("채용 공고를 불러오지 못했습니다.", error);
             }
         };
+
+        const fetchButton = async () => {
+            try{
+                if(userInfo.usersRole !== 'company'){
+                    setWriteDisable(true);
+                }
+            }catch (error) {
+                console.log(error);
+            }
+        }
         fetchJobPosting();
-    }, [search])
+        fetchButton();
+
+    }, [search, userInfo])
 
     const navigate = useNavigate();
     const goDetail = (jobPostingCd) => {
@@ -34,7 +48,7 @@ const JobPosting = () => {
         <div className="job-posting">
             <div>
                 <h1>채용 공고</h1>
-                <button><Link to='/postJobs'>채용 공고 올리기</Link></button>
+                <button disabled={writeDisable}><Link to='/postJobs'>채용 공고 올리기</Link></button>
             </div>
             <div>
                 <input id='search' value={search} onChange={changeSearch} type='text'/>

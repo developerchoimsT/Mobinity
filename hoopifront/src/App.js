@@ -13,14 +13,20 @@ const UserContext = createContext(null);
 
 // 컨텍스트 프로바이더 컴포넌트
 function UserProvider({ children }) {
-    const [usersId, setUsersId] = useState('');
+    const [userInfo, setUserInfo] = useState({
+        'usersId' : '',
+        'usersRole' : ''
+    });
 
     useEffect(() => {
         async function fetchUserInfo() {
             try {
                 const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/userInfo');
                 if (response.data !== "" && response.data != null) {
-                    setUsersId(response.data);
+                    setUserInfo({
+                        'usersId': response.data.map.usersId,
+                        'usersRole': response.data.map.usersRole
+                    })
                 }
             } catch (error) {
                 console.error("유저 정보를 불러오지 못했습니다.", error);
@@ -31,7 +37,7 @@ function UserProvider({ children }) {
     }, []);
 
     return (
-        <UserContext.Provider value={{ usersId, setUsersId }}>
+        <UserContext.Provider value={{ userInfo, setUserInfo }}>
             {children}
         </UserContext.Provider>
     );

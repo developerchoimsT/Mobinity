@@ -5,14 +5,14 @@ import {UserContext} from "./App";
 
 const PostJobs = () => {
 
-    const {usersId, setUsersId} = useContext(UserContext);
+    const {userInfo, setUserInfo} = useContext(UserContext);
     const navigate = useNavigate();
 
     const location = useLocation();
 
     const [jobPosting, setJobPosting] = useState({
         companyDto: {
-            companyName: usersId
+            companyName: userInfo.usersId
         },
         jobPostingPosition: "",
         jobPostingMoney: "",
@@ -32,7 +32,7 @@ const PostJobs = () => {
                 jobPostingSkill: jobPostingDto.jobPostingSkill
             });
         }
-    }, [location, usersId]);
+    }, [location, userInfo]);
 
     const postJob = (e) => {
 

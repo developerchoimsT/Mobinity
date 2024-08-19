@@ -4,6 +4,7 @@ import { useState } from "react";
 function Join() {
     
     //값 저장
+    const[role, setRole] = useState("");
     const[id, setId] = useState('');
     const[pw, setPw] = useState('');
     const[chkPw, setChkPw] = useState('');
@@ -62,6 +63,14 @@ function Join() {
             case 'chkPhoneCd':
                 setChkPhoneCd(e.target.value);
                 break;
+            case 'role' :
+                if(e.target.checked) {
+                    setRole('company');
+                    setUsers(prevUsers => ({
+                        ...prevUsers,
+                        usersRole: 'company'
+                    }))
+                }
         }
     }
     
@@ -153,6 +162,8 @@ function Join() {
                     </tr>
                 </thead>
                 <tbody>
+                    <tr>기업 회원인가요?</tr>
+                        <td colSpan={5}><input id="role" type="radio" onChange={handleChange}/></td>
                     <tr>
                         <td>ID</td>
                         <td colSpan={5}><input id="id" value={id} onChange={handleChange}></input></td>

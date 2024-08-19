@@ -16,6 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Slf4j
 @Service
 public class LoginServiceImpl implements LoginService {
@@ -71,19 +74,24 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public String getUserInfo(HttpServletRequest request) {
+    public Map<String, String> getUserInfo(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
+        Map<String, String> map = new HashMap<>();
         String usersId = "";
+        String usersRole = "";
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if ("rfrToken".equals(cookie.getName())) {
                     DecodedJWT jwt = JWT.decode(cookie.getValue());
                     usersId = jwt.getSubject();
+                    usersRole = jwt.getClaim("role").asString();
+                    map.put("usersId", usersId);
+                    map.put("usersRole", usersRole);
                     break;
                 }
             }
         }
-        return usersId;
+        return map;
     }
 
     public void deleteToken(HttpServletRequest request, HttpServletResponse response, String id) {
