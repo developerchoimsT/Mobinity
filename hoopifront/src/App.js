@@ -23,7 +23,7 @@ function UserProvider({ children }) {
             try {
                 const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/userInfo');
                 if (response.data !== "" && response.data != null) {
-                    console(response.data);
+                    console.log(response.data);
                     setUserInfo({
                         'usersId': response.data.usersId,
                         'usersRole': response.data.usersRole
