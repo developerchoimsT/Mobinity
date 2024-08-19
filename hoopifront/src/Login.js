@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {UserContext} from "./App";
@@ -27,30 +27,35 @@ const Login = () => {
         }
     }
 
-    const handleLogin = () => {
-        if(users.usersId === '' || users.usersPw === ''){
+    useEffect(() => {
+        if (userInfo.usersId !== '') {
+            alert("로그인에 성공하셨습니다.");
+            navigate("/");
+        }
+    }, [userInfo]);
+
+
+    const handleLogin = async () => {
+        if (users.usersId === '' || users.usersPw === '') {
             alert('아이디와 비밀번호를 모두 입력해주세요.');
-            return false;
+            return;
         }
 
-        axios.post("http://hoopi.p-e.kr/api/hoopi/login", users)
-            .then(response => {
-                if(response.status >= 200 && response.status < 300){
-                    setUserInfo({
-                        'usersId': response.data.usersId,
-                        'usersRole': response.data.usersRole,
-                    })
-                    console.log(userInfo);
-                    alert("로그인에 성공하셨습니다.");
-                    navigate("/")
-                } else {
-                    alert('다시 시도해주세요.');
-                }
-            })
-            .catch(error => {
-                console.error('로그인 요청 오류:', error);
-                alert('서버 오류 발생. 나중에 다시 시도해 주세요.');
-            });
+        try {
+            const response = await axios.post("http://hoopi.p-e.kr/api/hoopi/login", users);
+            if (response.status >= 200 && response.status < 300) {
+                setUserInfo({
+                    'usersId': response.data.usersId,
+                    'usersRole': response.data.usersRole,
+                });
+                // navigate("/")를 여기서 호출하지 않고 useEffect 내에서 호출합니다.
+            } else {
+                alert('다시 시도해주세요.');
+            }
+        } catch (error) {
+            console.error('로그인 요청 오류:', error);
+            alert('서버 오류 발생. 나중에 다시 시도해 주세요.');
+        }
     }
 
     return (
