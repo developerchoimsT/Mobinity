@@ -23,12 +23,11 @@ function UserProvider({ children }) {
             try {
                 const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/userInfo');
                 if (response.data !== "" && response.data != null) {
-                    if (response.data.usersId !== userInfo.usersId || response.data.usersRole !== userInfo.usersRole) {
-                        setUserInfo({
-                            'usersId': response.data.usersId,
-                            'usersRole': response.data.usersRole
-                        });
-                    }
+                    console.log("app에서", userInfo);
+                    setUserInfo({
+                        'usersId': response.data.usersId,
+                        'usersRole': response.data.usersRole
+                    });
                 }
             } catch (error) {
                 console.error("유저 정보를 불러오지 못했습니다.", error);
