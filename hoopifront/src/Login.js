@@ -7,6 +7,7 @@ const Login = () => {
     const [users, setUsers] = useState({ 'usersId': '', 'usersPw': '' });
     const navigate = useNavigate();
     const { userInfo, setUserInfo } = useContext(UserContext);
+    const [loginSuccessful, setLoginSuccessful] = useState(false);
 
     const handleUsers = (e) => {
         switch(e.target.id) {
@@ -36,22 +37,26 @@ const Login = () => {
 
         try {
             const response = await axios.post("http://hoopi.p-e.kr/api/hoopi/login", users);
-            handleUserInfo(response.data);
-            alert("로그인에 성공하였습니다.");
-            navigate('/');
-            console.log(userInfo);
+            setUserInfo({
+                'usersId': response.data.usersId,
+                'usersRole': response.data.usersRole
+            });
+            setLoginSuccessful(true);
         } catch (error) {
             console.error('로그인 요청 오류:', error);
             alert('서버 오류 발생. 나중에 다시 시도해 주세요.');
         }
     }
+    useEffect(() => {
+        if (loginSuccessful) {  // 로그인 성공 플래그 확인
+            if (userInfo.usersId && userInfo.usersRole) {
+                alert("로그인에 성공하였습니다.");
+                navigate('/');
+            }
+            setLoginSuccessful(false);  // 플래그 재설정
+        }
+    }, [userInfo, navigate, loginSuccessful]);
 
-    const handleUserInfo = (e) => {
-        setUserInfo({
-            'usersId' : e.usersId,
-            'usersRole' : e.usersRole
-        })
-    }
 
     return (
         <div>
