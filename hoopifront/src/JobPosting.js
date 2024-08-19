@@ -9,7 +9,7 @@ const JobPosting = () => {
     const [jobPostings, setJobPostings] = useState([]);
     const [search, setSearch] = useState("");
     const {userInfo} = useContext(UserContext);
-    const [writeDisable, setWriteDisable] = useState(false);
+    const [writeDisable, setWriteDisable] = useState('block');
 
     useEffect(()=>{
         const fetchJobPosting = async () => {
@@ -25,8 +25,8 @@ const JobPosting = () => {
 
         const fetchButton = async () => {
             try{
-                if(userInfo.usersRole !== 'COMPANY'){
-                    setWriteDisable(true);
+                if(userInfo.usersRole === 'USER'){
+                    setWriteDisable('none');
                 }
             }catch (error) {
                 console.log(error);
@@ -49,7 +49,7 @@ const JobPosting = () => {
         <div className="job-posting">
             <div>
                 <h1>채용 공고</h1>
-                <button disabled={writeDisable}><Link to='/postJobs'>채용 공고 올리기</Link></button>
+                <Link to='/postJobs' style={{display: writeDisable}}>채용 공고 올리기</Link>
             </div>
             <div>
                 <input id='search' value={search} onChange={changeSearch} type='text'/>
