@@ -15,37 +15,39 @@ const JobPostingDetail = () => {
     const [editDisable, setEditDisable] = useState(false);
     const [deleteDisable, setDeleteDisable] = useState(false);
 
-    useEffect(()=>{
+    useEffect(() => {
         const fetchDetail = async () => {
-            try{
+            try {
                 const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/jobDetail', {
-                                                params : {jobPostingCd : jobPostingCd}
-                                            });
+                    params: { jobPostingCd: jobPostingCd }
+                });
                 setJobPostingDto(response.data.jobPostingDto);
                 setCompanyDto(response.data.companyDto);
-            } catch (error){
+            } catch (error) {
                 console.log(error);
             }
         };
 
+        fetchDetail();
+    }, [jobPostingCd]);
+
+    useEffect(() => {
         const fetchButton = async () => {
-            try{
-                if(userInfo.usersRole === 'COMPANY'){
+            try {
+                if (userInfo.usersRole === 'COMPANY') {
                     setApplyDisable(true);
                 }
-                if(userInfo.usersId !== companyDto.companyName){
+                if (userInfo.usersId !== companyDto.companyName) {
                     setEditDisable(true);
                     setDeleteDisable(true);
                 }
-            } catch(error){
+            } catch (error) {
                 console.log(error);
             }
-        }
+        };
 
-        fetchDetail();
         fetchButton();
-
-    }, [jobPostingCd, companyDto, userInfo])
+    }, [userInfo, companyDto]);
 
     const handleEdit = () => {
         navigate(`/postJobs`, { state: { jobPostingDto } });
