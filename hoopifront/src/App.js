@@ -22,8 +22,8 @@ function UserProvider({ children }) {
         async function fetchUserInfo() {
             try {
                 const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/userInfo');
-                if (response.data !== "" && response.data != null) {
-                    console.log("app에서", userInfo);
+                if (response.data && response.data.usersId && response.data.usersRole) {
+                    console.log("app에서", response.data);
                     setUserInfo({
                         'usersId': response.data.usersId,
                         'usersRole': response.data.usersRole
