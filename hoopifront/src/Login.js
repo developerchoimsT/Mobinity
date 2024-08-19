@@ -36,11 +36,12 @@ const Login = () => {
         axios.post("http://hoopi.p-e.kr/api/hoopi/login", users)
             .then(response => {
                 if(response.status >= 200 && response.status < 300){
-                    alert("로그인에 성공하셨습니다.");
                     setUserInfo({
                         'usersId': response.data.usersId,
                         'usersRole': response.data.usersRole,
                     })
+                    console.log(userInfo);
+                    alert("로그인에 성공하셨습니다.");
                     navigate("/")
                 } else {
                     alert('다시 시도해주세요.');
