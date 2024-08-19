@@ -15,7 +15,9 @@ function Join() {
     const[phone, setPhone] = useState('');
     const[phoneCd, setPhoneCd] = useState('');
     const[chkPhoneCd, setChkPhoneCd] = useState('');
-    const[users, setUsers] = useState([]);
+    const[users, setUsers] = useState({
+        'usersRole': 'USER', 'usersYn': 'Y'
+    });
 
     const handleChange = (e) => {
         switch (e.target.id) {
@@ -66,6 +68,7 @@ function Join() {
             case 'role' :
                 console.log(e.target.checked);
                 if(e.target.checked) {
+                    console.log('확인하기');
                     setRole('COMPANY');
                     setUsers(prevUsers => ({
                         ...prevUsers,

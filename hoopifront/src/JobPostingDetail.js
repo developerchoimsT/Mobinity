@@ -29,7 +29,6 @@ const JobPostingDetail = () => {
         };
 
         const fetchButton = async () => {
-            console.log(companyDto.companyName);
             try{
                 if(userInfo.usersRole === 'COMPANY'){
                     setApplyDisable(true);
@@ -46,7 +45,7 @@ const JobPostingDetail = () => {
         fetchDetail();
         fetchButton();
 
-    }, [jobPostingCd, userInfo])
+    }, [jobPostingCd, companyDto, userInfo])
 
     const handleEdit = () => {
         navigate(`/postJobs`, { state: { jobPostingDto } });

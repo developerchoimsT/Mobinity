@@ -15,8 +15,6 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface DtoEntMapper {
-    @Mapping(target = "usersYn", constant = "Y")
-    @Mapping(target = "usersRole", constant = "USER")
     Users toEntity(UsersDto dto);
 
     UsersDto toDto(Users entity);
