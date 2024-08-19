@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {UserContext} from "./App";
@@ -7,7 +7,6 @@ const Login = () => {
     const [users, setUsers] = useState({ 'usersId': '', 'usersPw': '' });
     const navigate = useNavigate();
     const { userInfo, setUserInfo } = useContext(UserContext);
-    const [loginSuccessful, setLoginSuccessful] = useState(false);
 
     const handleUsers = (e) => {
         switch(e.target.id) {
@@ -41,21 +40,13 @@ const Login = () => {
                 'usersId': response.data.usersId,
                 'usersRole': response.data.usersRole
             });
-            setLoginSuccessful(true);
+            alert("로그인에 성공하였습니다");
+            history.push("/");
         } catch (error) {
             console.error('로그인 요청 오류:', error);
             alert('서버 오류 발생. 나중에 다시 시도해 주세요.');
         }
     }
-    useEffect(() => {
-        if (loginSuccessful) {  // 로그인 성공 플래그 확인
-            if (userInfo.usersId && userInfo.usersRole) {
-                alert("로그인에 성공하였습니다.");
-                navigate('/');
-            }
-            setLoginSuccessful(false);  // 플래그 재설정
-        }
-    }, [userInfo, loginSuccessful]);
 
 
     return (
