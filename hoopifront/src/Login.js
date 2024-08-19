@@ -55,7 +55,7 @@ const Login = () => {
             }
             setLoginSuccessful(false);  // 플래그 재설정
         }
-    }, [userInfo, navigate, loginSuccessful]);
+    }, [loginSuccessful]);
 
 
     return (
