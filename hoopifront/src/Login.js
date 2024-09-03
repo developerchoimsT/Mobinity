@@ -7,7 +7,6 @@ import './Login.css';
 const Login = () => {
     const [users, setUsers] = useState({ 'usersId': '', 'usersPw': '' });
     const navigate = useNavigate();
-    const { userInfo, setUserInfo } = useContext(UserContext);
 
     const handleUsers = (e) => {
         switch(e.target.id) {

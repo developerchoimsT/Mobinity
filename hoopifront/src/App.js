@@ -10,39 +10,6 @@ import Search from "./search/Search";
 // Context 생성
 const UserContext = createContext(null);
 
-// 컨텍스트 프로바이더 컴포넌트
-function UserProvider({ children }) {
-    const [user, setUser] = useState({
-        'id' : '',
-        'role' : ''
-    });
-
-    useEffect(() => {
-        async function fetchUserInfo() {
-            try {
-                const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/userInfo');
-                if (response.data) {
-                    console.log("app에서", response.data);
-                    setUser({
-                        'id': response.user.id,
-                        'role': response.user.role
-                    });
-                }
-            } catch (error) {
-                console.error("유저 정보를 불러오지 못했습니다.", error);
-            }
-        }
-
-        fetchUserInfo();
-    }, []);
-
-    return (
-        <UserContext.Provider value={{ user, setUser }}>
-            {children}
-        </UserContext.Provider>
-    );
-}
-
 // App 컴포넌트
 function App() {
     return (
