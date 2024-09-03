@@ -21,9 +21,6 @@ public class JoinController {
 
     @PostMapping("/join")
     public ResponseEntity<String> userJoin(@RequestBody UserJoinDto userJoinDto) throws Exception{
-            if(joinService.joinUser(userJoinDto)){
-                return ResponseEntity.ok(Constants.JOIN_SUCCESS);
-            }
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Constants.JOIN_FAIL);
+            return joinService.joinUser(userJoinDto);
     }
 }

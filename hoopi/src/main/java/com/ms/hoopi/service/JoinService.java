@@ -11,6 +11,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ public class JoinService {
     private final CommonUtil commonUtil;
 
 
-    public boolean joinUser(UserJoinDto userJoinDto) {
+    public ResponseEntity<String> joinUser(UserJoinDto userJoinDto) {
         //id가 이미 존재할 경우 exception 발생
         Optional<User> storedUser = userRepository.findById(userJoinDto.getId());
         if (storedUser.isPresent()) {
@@ -47,11 +48,10 @@ public class JoinService {
         try{
             userRepository.save(user);
             saveAddress(user, userJoinDto.getAddress());
+            return ResponseEntity.ok(Constants.JOIN_SUCCESS);
         } catch (Exception e) {
             throw new RuntimeException(Constants.JOIN_FAIL);
         }
-
-        return true;
     }
 
     public void saveAddress(User user, String userAddress){
