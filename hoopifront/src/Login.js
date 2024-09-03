@@ -57,7 +57,7 @@ const Login = () => {
                     <tr>
                         <td>아이디</td>
                         <td colSpan={3}>
-                            <input id="id" onChange={handleUsers} value={users.usersId} />
+                            <input id="id" onChange={handleUsers} value={user.userId} />
                         </td>
                         <td rowSpan={2}>
                             <button onClick={handleLogin}>로그인</button>
@@ -66,7 +66,7 @@ const Login = () => {
                     <tr>
                         <td>비밀번호</td>
                         <td colSpan={3}>
-                            <input type="password" id="pwd" onChange={handleUsers} value={users.usersPw} />
+                            <input type="password" id="pwd" onChange={handleUsers} value={user.userPw} />
                         </td>
                     </tr>
                 </tbody>
