@@ -93,8 +93,12 @@ function Join() {
     const chkEmail = () => {
         if(emailCd === chkEmailCd){
             setEmailState(true);
+            console.log(emailCd);
+            console.log(chkEmailCd);
             alert("이메일 인증에 성공하셨습니다.");
         } else {
+            console.log(emailCd);
+            console.log(chkEmailCd);
             alert("다시 인증해주세요.");
             setEmailCd('');
             setChkEmailCd('');
@@ -123,8 +127,12 @@ function Join() {
     const chkPhone = () => {
         if(phoneCd === chkPhoneCd){
             setPhoneState(true);
+            console.log(phoneCd);
+            console.log(chkPhoneCd);
             alert("핸드폰 인증에 성공하셨습니다.");
         } else {
+            console.log(phoneCd);
+            console.log(chkPhoneCd);
             alert("다시 인증해주세요.");
             setPhoneCd('');
             setChkPhoneCd('');
