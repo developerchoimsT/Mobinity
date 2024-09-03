@@ -57,7 +57,7 @@
     border: 1px solid #91bee3;
 }
 ::-webkit-scrollbar-thumb:hover {
-    cursor: url('/hoopifront/public/cursor3.png') 14 14, auto;
+    cursor: url('//cursor3.png') 14 14, auto;
 }
 
 
