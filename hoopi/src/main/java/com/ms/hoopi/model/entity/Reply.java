@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
+
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -36,9 +37,8 @@ public class Reply {
     @Column(name = "depth", nullable = false, length = 1)
     private String depth;
 
-    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "reply_date")
-    private Instant replyDate;
+    private LocalDateTime replyDate;
 
     @Column(name = "delete_yn", nullable = false, length = 1)
     private String deleteYn;

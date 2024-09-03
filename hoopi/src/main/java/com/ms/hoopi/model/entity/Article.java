@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -28,9 +28,8 @@ public class Article {
     @Column(name = "board_content", nullable = false, length = 2000)
     private String boardContent;
 
-    @ColumnDefault("CURRENT_TIMESTAMP")
-    @Column(name = "article_date")
-    private Instant articleDate;
+        @Column(name = "article_date")
+    private LocalDateTime articleDate;
 
     @ColumnDefault("'N'")
     @Column(name = "delete_yn", nullable = false, length = 1)

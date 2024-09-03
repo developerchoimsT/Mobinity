@@ -8,9 +8,10 @@ import org.hibernate.Hibernate;
 
 import java.util.Objects;
 
-@Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Embeddable
 public class CartDetailId implements java.io.Serializable {
     private static final long serialVersionUID = -247367939816099055L;

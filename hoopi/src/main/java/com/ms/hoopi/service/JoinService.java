@@ -32,7 +32,7 @@ public class JoinService {
                 .pwd(newPw);
 
         //id가 이미 존재할 경우 exception 발생
-        Optional.ofNullable(userRepository.findByUserId(user.getId()))
+        Optional.ofNullable(userRepository.findById(user.getId()))
                 .ifPresent(existingUser -> {
                     throw new RuntimeException(Constants.ALREADY_EXIST);
                 });

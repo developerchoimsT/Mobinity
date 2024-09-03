@@ -36,11 +36,11 @@ public class LoginServiceImpl implements LoginService {
     public boolean validateUser(HttpServletResponse response, HttpServletRequest request, User user) {
 
         //데이터에 해당 유저가 존재하지 않을 경우, Exception 발생
-        User storedUser = Optional.ofNullable(userRepository.findByUserId(user.getId()))
+        Optional<User> storedUser = Optional.of(userRepository.findById(user.getId()))
                                     .orElseThrow(() -> new RuntimeException(Constants.NONE_USER));
 
         //비밀번호가 일치하지 않을 경우, Exception 발생
-        if(!encoder.matches(storedUser.getPwd(), user.getPwd())) {
+        if(!encoder.matches(storedUser.get().getPwd(), user.getPwd())) {
             throw new RuntimeException(Constants.INVALID_PWD);
         }
 

@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -21,9 +21,8 @@ public class Order {
     @JoinColumn(name = "code", nullable = false)
     private User code;
 
-    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "order_date")
-    private Instant orderDate;
+    private LocalDateTime orderDate;
 
     @OneToMany(mappedBy = "orderCode")
     private Set<Delivery> deliveries = new LinkedHashSet<>();

@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
+
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -29,9 +30,8 @@ public class Payment {
     @Column(name = "method", length = 100)
     private String method;
 
-    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "payment_date")
-    private Instant paymentDate;
+    private LocalDateTime paymentDate;
 
     @Column(name = "bank", length = 150)
     private String bank;

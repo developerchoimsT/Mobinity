@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -45,19 +45,18 @@ public class User {
     @Column(name = "quit_yn", nullable = false, length = 1)
     private String quitYn;
 
-    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "join_date")
-    private Instant joinDate;
+    private LocalDateTime joinDate;
 
     @Column(name = "quit_date")
-    private Instant quitDate;
+    private LocalDateTime quitDate;
 
     @ColumnDefault("'user'")
     @Column(name = "role", nullable = false, length = 10)
     private String role;
 
     @Column(name = "birth", nullable = false)
-    private Instant birth;
+    private LocalDateTime birth;
 
     @OneToMany(mappedBy = "code")
     private Set<Address> addresses = new LinkedHashSet<>();
@@ -84,7 +83,7 @@ public class User {
     private Set<Reply> replies = new LinkedHashSet<>();
 
     @Builder
-    public User (String code, String id, String pwd, String name, String phone, Instant birth) {
+    public User (String code, String id, String pwd, String name, String phone, LocalDateTime birth) {
         this.code = code;
         this.id = id;
         this.pwd = pwd;
