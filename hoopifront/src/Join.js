@@ -27,6 +27,11 @@ function Join() {
         }));
     }
 
+    const handleChkPw = (e) => {
+        setChkP(e.target.value);
+        }
+    }
+
     const handleAddress = (e) => {
         switch (e.target.id) {
             case "add1":
@@ -179,7 +184,7 @@ function Join() {
                 </tr>
                 <tr>
                     <td>비밀번호 확인</td>
-                    <td colSpan={5}><input id="chkPw" value={chkPw} onChange={handleChange}></input></td>
+                    <td colSpan={5}><input id="chkPw" value={chkPw} onChange={handleChkPw}></input></td>
                 </tr>
                 <tr>
                     <td>이름</td>
