@@ -64,15 +64,15 @@
 }
 
 body {
-    cursor: url('../public/cursor.png') 14 14, auto;
+    cursor: url('/hoopifront/public/cursor.png') 14 14, auto;
 }
 
 body button:hover, a:hover, select:hover, option:hover{
-    cursor: url('../public/cursor3.png') 14 14, auto;
+    cursor: url('/hoopifront/public/cursor3.png') 14 14, auto;
 }
 
 body input:hover, input:focus{
-    cursor: url("../public/cursor2.png") 14 14, auto;
+    cursor: url("/hoopifront/public/cursor2.png") 14 14, auto;
 }
 
 .join-table>thead>tr>td {
