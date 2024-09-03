@@ -84,11 +84,12 @@ public class User {
     private Set<Reply> replies = new LinkedHashSet<>();
 
     @Builder
-    public User (String code, String id, String pwd, String name, String phone, LocalDate birth) {
+    public User (String code, String id, String pwd, String name, String email, String phone, LocalDate birth) {
         this.code = code;
         this.id = id;
         this.pwd = pwd;
         this.name = name;
+        this.email = email;
         this.phone = phone;
         this.birth = birth;
     }
