@@ -1,6 +1,7 @@
 package com.ms.hoopi.controller;
 
 import com.ms.hoopi.constants.Constants;
+import com.ms.hoopi.model.dto.UserJoinDto;
 import com.ms.hoopi.model.entity.User;
 import com.ms.hoopi.service.JoinService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,8 @@ public class JoinController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<String> userJoin(@RequestBody User user) throws Exception{
-            if(joinService.joinUser(user)){
+    public ResponseEntity<String> userJoin(@RequestBody UserJoinDto userJoinDto) throws Exception{
+            if(joinService.joinUser(userJoinDto)){
                 return ResponseEntity.ok(Constants.JOIN_SUCCESS);
             }
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Constants.JOIN_FAIL);

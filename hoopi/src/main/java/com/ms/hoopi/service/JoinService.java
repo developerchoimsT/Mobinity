@@ -28,10 +28,6 @@ public class JoinService {
 
 
     public boolean joinUser(UserJoinDto userJoinDto) {
-        //회원 코드(난수), 복호화한 pwd
-        String cd = commonUtil.createNum();
-        String newPw = passwordEncoder.encode(userJoinDto.getPwd());
-
         //id가 이미 존재할 경우 exception 발생
         Optional<User> storedUser = userRepository.findById(userJoinDto.getId());
         if (storedUser.isPresent()) {
@@ -39,9 +35,9 @@ public class JoinService {
         }
         // 새로운 user 엔티티 생성
         User user = User.builder()
-                .code(uuidCode())
+                .code(commonUtil.createCode())
                 .id(userJoinDto.getId())
-                .pwd(hashPwd(userJoinDto.getPwd()))
+                .pwd(commonUtil.hashPwd(userJoinDto.getPwd()))
                 .name(userJoinDto.getName())
                 .birth(userJoinDto.getBirth())
                 .phone(userJoinDto.getPhone())
@@ -61,19 +57,13 @@ public class JoinService {
     public void saveAddress(User user, String userAddress){
         //새로운 address 엔티티 생성
         Address address = Address.builder()
-                .addressCode(uuidCode())
+                .addressCode(commonUtil.createCode())
                 .code(user)
                 .address(userAddress)
                 .build();
         addressRepository.save(address);
     }
 
-    public String uuidCode(){
-        return UUID.randomUUID().toString();
-    }
 
-    public String hashPwd(String pwd) {
-        return passwordEncoder.encode(pwd);
-    }
 
 }
