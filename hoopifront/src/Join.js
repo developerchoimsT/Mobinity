@@ -153,6 +153,7 @@ function Join() {
         }
         if(chkPw !== user.pwd){
             alert("비밀번호를 다시 입력해주세요.");
+            return false;
         }
         if(!emailState || !phoneState){
             alert("이메일과 핸드폰 인증을 마무리해주세요.");

@@ -23,11 +23,18 @@ public class Address {
     @Column(name = "address", nullable = false, length = 500)
     private String address;
 
-    @ColumnDefault("'N'")
+    @ColumnDefault("'Y'")
     @Column(name = "main", nullable = false, length = 1)
     private String main;
 
     @OneToMany(mappedBy = "addressCode")
     private Set<Delivery> deliveries = new LinkedHashSet<>();
+
+    @Builder
+    public Address(String addressCode, User code, String address) {
+        this.addressCode = addressCode;
+        this.code = code;
+        this.address = address;
+    }
 
 }
