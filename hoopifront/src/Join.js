@@ -142,6 +142,9 @@ function Join() {
             alert("기본 입력 사항을 모두 입력해주세요.");
             return false;
         }
+        if(chkPw !== user.pwd){
+            alert("비밀번호를 다시 입력해주세요.");
+        }
         if(!emailState || !phoneState){
             alert("이메일과 핸드폰 인증을 마무리해주세요.");
             return false;
@@ -183,7 +186,7 @@ function Join() {
                 </tr>
                 <tr>
                     <td>비밀번호 확인</td>
-                    <td colSpan={5}><input id="chkPw" value={chkPw} onChange={handleChange}></input></td>
+                    <td colSpan={5}><input id="chkPw" value={chkPw} onChange={handleChkPw}></input></td>
                 </tr>
                 <tr>
                     <td>이름</td>
