@@ -28,8 +28,7 @@ function Join() {
     }
 
     const handleChkPw = (e) => {
-        setChkP(e.target.value);
-        }
+        setChkPw(e.target.value);
     }
 
     const handleAddress = (e) => {
@@ -184,7 +183,7 @@ function Join() {
                 </tr>
                 <tr>
                     <td>비밀번호 확인</td>
-                    <td colSpan={5}><input id="chkPw" value={chkPw} onChange={handleChkPw}></input></td>
+                    <td colSpan={5}><input id="chkPw" value={chkPw} onChange={handleChange}></input></td>
                 </tr>
                 <tr>
                     <td>이름</td>
