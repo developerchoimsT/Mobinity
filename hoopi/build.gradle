@@ -34,6 +34,7 @@ dependencies {
 
     //데이터 관련
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.hibernate.orm:hibernate-core:6.2.0.Final'
     implementation 'mysql:mysql-connector-java:8.0.29'

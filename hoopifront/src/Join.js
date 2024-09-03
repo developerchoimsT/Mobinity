@@ -1,95 +1,79 @@
 import axios from "axios";
 import { useState } from "react";
+import "./Join.css";
+import DaumPostCode from "./DaumPostCode";
 
 function Join() {
-    
-    //값 저장
-    const[role, setRole] = useState("");
-    const[id, setId] = useState('');
-    const[pw, setPw] = useState('');
-    const[chkPw, setChkPw] = useState('');
-    const[name, setName] = useState('');
-    const[email, setEmail] = useState('');
-    const[emailCd, setEmailCd] = useState('');
-    const[chkEmailCd, setChkEmailCd] = useState('');
-    const[phone, setPhone] = useState('');
-    const[phoneCd, setPhoneCd] = useState('');
-    const[chkPhoneCd, setChkPhoneCd] = useState('');
-    const[users, setUsers] = useState({
-        'usersRole': 'USER', 'usersYn': 'Y'
-    });
+
+    // 값 저장
+    const [chkPw, setChkPw] = useState("");
+    const [add1, setAdd1] = useState("");
+    const [add2, setAdd2] = useState("");
+    const [add3, setAdd3] = useState("");
+    const [showPostCode, setShowPostCode] = useState(false);
+    const [emailCd, setEmailCd] = useState("");
+    const [chkEmailCd, setChkEmailCd] = useState('');
+    const [phoneCd, setPhoneCd] = useState('');
+    const [chkPhoneCd, setChkPhoneCd] = useState('');
+    const [emailState, setEmailState] = useState(false);
+    const [phoneState, setPhoneState] = useState(false);
+    const [user, setUser] = useState({});
 
     const handleChange = (e) => {
-        switch (e.target.id) {
-            case 'id':
-                setId(e.target.value);
-                setUsers(prevUsers => ({
-                    ...prevUsers,
-                    usersId: e.target.value
-                }));
-                break;
-            case 'pw':
-                setPw(e.target.value);
-                setUsers(prevUsers => ({
-                    ...prevUsers,
-                    usersPw: e.target.value
-                }));
-                break;
-            case 'chkPw':
-                setChkPw(e.target.value);
-                break;
-            case 'name':
-                setName(e.target.value);
-                setUsers(prevUsers => ({
-                    ...prevUsers,
-                    usersNm: e.target.value
-                }));
-                break;
-            case 'email':
-                setEmail(e.target.value);
-                setUsers(prevUsers => ({
-                    ...prevUsers,
-                    usersEmail: e.target.value
-                }));
-                break;
-            case 'chkEmailCd':
-                setChkEmailCd(e.target.value);
-                break;
-            case 'phone':
-                setPhone(e.target.value);
-                setUsers(prevUsers => ({
-                    ...prevUsers,
-                    usersPhone: e.target.value
-                }));
-                break;
-            case 'chkPhoneCd':
-                setChkPhoneCd(e.target.value);
-                break;
-            case 'role' :
-                console.log(e.target.checked);
-                if(e.target.checked) {
-                    console.log('확인하기');
-                    setRole('COMPANY');
-                    setUsers(prevUsers => ({
-                        ...prevUsers,
-                        usersRole: 'COMPANY'
-                    }))
-                }
-        }
+        const { id, value } = e.target;
+        setUser(prevState => ({
+            ...prevState,
+            [id]: value
+        }));
     }
-    
-    //인증 버튼 눌러 본인인증 요청하기
+
+    const handleAddress = (e) => {
+        switch (e.target.id) {
+            case "add1":
+                setAdd1(e.target.value);
+                break;
+            case "add2":
+                setAdd2(e.target.value);
+                break;
+            case "add3":
+                setAdd3(e.target.value);
+                break;
+            default:
+                break;
+        }
+        setUser(prevState => ({
+            ...prevState,
+            address: add1 + ' ' + add2 + ' ' + add3
+        }));
+    }
+
+    const handleCompleteAddress = (data) => {
+        setAdd1(data.address);
+        setAdd2(data.extraAddress);
+        setUser(prevState => ({
+            ...prevState,
+            address: data.address + ' ' + data.extraAddress,
+            zoneCode: data.zoneCode
+        }));
+        setShowPostCode(false);  // 팝업 닫기
+    };
+
+    const handleChkEmailCd = (e) => {
+        setChkEmailCd(e.target.value);
+    }
+
+    // 인증 버튼 눌러 본인인증 요청하기
     const handleEmail = () => {
-        if(email == "" || email == null) {
+        if(user.email === "" || user.email == null) {
             alert("이메일을 입력해주세요");
             return false;
         }
-        
+
         axios.post("http://hoopi.p-e.kr/api/hoopi/email", null, {
-                params: {
-                   email: email
-                }
-            })
+            params: {
+                email: user.email
+            }
+        })
             .then(response => {
                 setEmailCd(response.data);
                 alert("이메일을 확인하여 본인인증을 완료해주세요.");
@@ -97,27 +81,27 @@ function Join() {
             .catch(error => {
                 alert(error);
                 setEmailCd('');
-                setEmail('');
             })
 
     }
 
-    //인증 완료하기
+    // 인증 완료하기
     const chkEmail = () => {
-        if(emailCd == chkEmailCd){
+        if(emailCd === chkEmailCd){
+            setEmailState(true);
             alert("이메일 인증에 성공하셨습니다.");
         } else {
             alert("다시 인증해주세요.");
             setEmailCd('');
-            setEmail('');
+            setChkEmailCd('');
         }
     }
 
-    //핸드폰 인증하기
+    // 핸드폰 인증하기
     const handlePhone = () => {
         axios.post("http://hoopi.p-e.kr/api/hoopi/phone", null ,{
             params: {
-                phone: phone
+                phone: user.phone
             }
         })
             .then(response => {
@@ -127,83 +111,146 @@ function Join() {
             .catch(error => {
                 alert(error);
                 setPhoneCd('');
-                setPhoneCd('');
                 setChkPhoneCd('');
             })
     }
 
-    //핸드폰 인증 완료하기
+    // 핸드폰 인증 완료하기
     const chkPhone = () => {
-        if(phoneCd == chkPhoneCd){
+        if(phoneCd === chkPhoneCd){
+            setPhoneState(true);
             alert("핸드폰 인증에 성공하셨습니다.");
         } else {
             alert("다시 인증해주세요.");
-            setPhoneCd('');
             setPhoneCd('');
             setChkPhoneCd('');
         }
     }
 
-    //회원가입 신청
-    const handleJoin = () => {
-        axios.post("http://hoopi.p-e.kr/api/hoopi/join", users)
-        .then(response => {
-            if(response.status != 200){
-                alert("다시 시도해주세요.");
-            } else {
-                alert("회원가입이 성공적으로 이루어졌습니다.");
-            }
-        })
+    const handleChkPhoneCd = (e) => {
+        setChkPhoneCd(e.target.value);
     }
 
+    // 회원가입 신청
+    const handleJoin = () => {
+        if(user.id === "" || user.pwd === "" || user.name === "" ||
+            user.address === "" || user.email === "" || user.phone === "") {
+            alert("기본 입력 사항을 모두 입력해주세요.");
+            return false;
+        }
+        if(!emailState || !phoneState){
+            alert("이메일과 핸드폰 인증을 마무리해주세요.");
+            return false;
+        }
+        axios.post("http://hoopi.p-e.kr/api/hoopi/join", user)
+            .then(response => {
+                alert("회원가입이 성공적으로 이루어졌습니다.");
+            })
+            .catch(error => {
+                if (error.response) {
+                    console.error('오류 상태 코드:', error.response.status);
+                    console.error('오류 헤더:', error.response.headers);
+                    alert('에러 발생: ' + error.response.data);
+                } else if (error.request) {
+                    // 요청이 만들어졌지만 서버에서 응답이 없을 때
+                    console.error('요청 데이터:', error.request);
+                    alert('서버로부터 응답이 없습니다.');
+                }
+            })
+
+    }
 
     return (
-        <div>
-            <table>
+        <div className="join-container">
+            <table className="join-table">
                 <thead>
-                    <tr>
-                        <td colSpan = {6}>회원 가입</td>
-                    </tr>
+                <tr>
+                    <td colSpan={6}>회원 가입</td>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr>기업 회원인가요?</tr>
-                        <td colSpan={5}><input id="role" type="radio" onChange={handleChange}/></td>
-                    <tr>
-                        <td>ID</td>
-                        <td colSpan={5}><input id="id" value={id} onChange={handleChange}></input></td>
-                    </tr>
-                    <tr>
-                        <td>password</td>
-                        <td colSpan={5}><input id="pw" value={pw} onChange={handleChange}></input></td>
-                    </tr>
-                    <tr>
-                        <td>비밀번호 확인</td>
-                        <td colSpan={5}><input id="chkPw" value={chkPw} onChange={handleChange}></input></td>
-                    </tr>
-                    <tr>
-                        <td>이름</td>
-                        <td colSpan={5}><input id="name" value={name} onChange={handleChange}></input></td>
-                    </tr>
-                    <tr>
-                        <td>이메일</td>
-                        <td colSpan={2}><input id="email" value={email} onChange={handleChange}></input></td>
-                        <td><button id="emailChkBtn" onClick={handleEmail}>인증</button></td>
-                        <td colSpan={2}><input id="chkEmailCd" value={chkEmailCd} onChange={handleChange}></input></td>
-                        <td><button onClick={chkEmail}>이메일인증</button></td>
-                    </tr>
-                    <tr>
-                        <td>핸드폰</td>
-                        <td colSpan={2}><input id="phone" value={phone} onChange={handleChange}></input></td>
-                        <td><button id="phoneChkBtn" onClick={handlePhone}>인증</button></td>
-                        <td colSpan={2}><input id="chkPhoneCd" value={chkPhoneCd} onChange={handleChange}></input></td>
-                        <td><button onClick={chkPhone}>핸드폰
-                            인증</button></td>
-                    </tr>
-                    <tr>
-                        <td colSpan={6}><button onClick={handleJoin}>회원가입</button></td>
-                    </tr>
+                <tr>
+                    <td>ID</td>
+                    <td colSpan={5}><input id="id" value={user.id} onChange={handleChange}></input></td>
+                </tr>
+                <tr>
+                    <td>password</td>
+                    <td colSpan={5}><input id="pwd" value={user.pwd} onChange={handleChange}></input></td>
+                </tr>
+                <tr>
+                    <td>비밀번호 확인</td>
+                    <td colSpan={5}><input id="chkPw" value={chkPw} onChange={handleChange}></input></td>
+                </tr>
+                <tr>
+                    <td>이름</td>
+                    <td colSpan={5}><input id="name" value={user.name} onChange={handleChange}></input></td>
+                </tr>
+                <tr>
+                    <td>생일</td>
+                    <td colSpan={5}><input id="birth" type="date" value={user.birth} onChange={handleChange}/></td>
+                </tr>
+                <tr>
+                    <td>주소</td>
+                    <td colSpan={5}><input id="add1" value={add1} onChange={handleAddress}/></td>
+                </tr>
+                <tr>
+                    <td><button onClick={() => setShowPostCode(true)}>주소 찾기</button></td>
+                    <td colSpan={1}><input id="add2" value={add2} onChange={handleAddress}/></td>
+                    <td colSpan={4}><input id="add3" value={add3} onChange={handleAddress}/></td>
+                </tr>
+                <tr>
+                    <td>이메일</td>
+                    <td colSpan={3}><input disabled={emailState} id="email" value={user.email} onChange={handleChange}></input></td>
+                    <td colSpan={2}>
+                        <button disabled={emailState} id="emailChkBtn" onClick={handleEmail}>인증</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>이메일 확인</td>
+                    <td colSpan={3}><input disabled={emailState} id="chkEmailCd" value={chkEmailCd} onChange={handleChkEmailCd}></input></td>
+                    <td colSpan={2}>
+                        <button disabled={emailState} onClick={chkEmail}>이메일 인증</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>핸드폰</td>
+                    <td colSpan={3}><input disabled={phoneState} id="phone" value={user.phone} onChange={handleChange}></input></td>
+                    <td colSpan={2}>
+                        <button disabled={phoneState} id="phoneChkBtn" onClick={handlePhone}>인증</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>핸드폰 확인</td>
+                    <td colSpan={3}><input disabled={phoneState} id="chkPhoneCd" value={chkPhoneCd} onChange={handleChkPhoneCd}></input></td>
+                    <td colSpan={2}>
+                        <button disabled={phoneState} onClick={chkPhone}>핸드폰 인증</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colSpan={6}>
+                        <button onClick={handleJoin}>회원가입</button>
+                    </td>
+                </tr>
                 </tbody>
             </table>
+            <div>
+                {showPostCode && (
+                    <div style={{
+                        position: 'fixed',
+                        top: '50%',
+                        left: '50%',
+                        width: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        zIndex: 100,
+                        padding: '10px',
+                        backgroundColor: '#fff',
+                        boxShadow: '0px 0px 10px rgba(0,0,0,0.3)'
+                    }}>
+                        <DaumPostCode onComplete={handleCompleteAddress} />
+                        <button onClick={() => setShowPostCode(false)}>닫기</button>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

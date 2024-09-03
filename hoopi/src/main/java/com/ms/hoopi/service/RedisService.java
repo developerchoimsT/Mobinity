@@ -1,15 +1,31 @@
 package com.ms.hoopi.service;
 
-public interface RedisService{
+import com.ms.hoopi.model.entity.RefreshToken;
+import com.ms.hoopi.repository.RefreshTokenRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
-    public void saveRfrToken(String id, String token);
+@RequiredArgsConstructor
+@Service
+public class RedisService {
 
-    public void saveAcsToken(String id, String token);
+    private final RefreshTokenRepository refreshTokenRepository;
 
-    public String getRfrToken(String id);
+    // rfr token Redis 저장
+    public void saveRefreshToken(String id, String refreshToken) {
+        RefreshToken token = new RefreshToken(id, refreshToken, 7*24*60*60L);//7일
+        refreshTokenRepository.save(token);
+    }
 
-    public String getAcsToken(String id);
+    //rfr token Redis에서 get
+    public String getRefreshToken(String id) {
+        return refreshTokenRepository.findById(id)
+                .map(RefreshToken::getRefreshToken)
+                .orElse(null);
+    }
 
-    public void deleteJwtToken(String id);
-
+    //rfr token Redis에서 삭제
+    public void deleteRefreshToken(String id) {
+        refreshTokenRepository.deleteById(id);
+    }
 }

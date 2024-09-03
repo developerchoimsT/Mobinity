@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {UserContext} from "./App";
+import './Login.css';
 
 const Login = () => {
     const [users, setUsers] = useState({ 'usersId': '', 'usersPw': '' });
@@ -50,8 +51,8 @@ const Login = () => {
 
 
     return (
-        <div>
-            <table>
+        <div className='login-container'>
+            <table className='login-table'>
                 <thead>
                     <tr>
                         <th colSpan={6}>로그인</th>

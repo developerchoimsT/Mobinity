@@ -1,15 +1,12 @@
 package com.ms.hoopi.repository;
 
-import com.ms.hoopi.model.entity.Users;
+import com.ms.hoopi.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface UserRepository extends JpaRepository<Users, String> {
+@Repository
+public interface UserRepository extends JpaRepository<User, String> {
+    User findByUserId(String Id);
 
-    Users findByUsersId(String id);
-
-    default String findRoleByUserId(String id) {
-        Users users = findByUsersId(id);
-        return users.getUsersRole();
-    }
-
+    String findCodeByUserId(String Id);
 }

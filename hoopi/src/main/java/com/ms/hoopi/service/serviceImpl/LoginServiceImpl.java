@@ -2,75 +2,60 @@ package com.ms.hoopi.service.serviceImpl;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.ms.hoopi.model.entity.Users;
+import com.ms.hoopi.constants.Constants;
+import com.ms.hoopi.model.entity.User;
 import com.ms.hoopi.repository.UserRepository;
-import com.ms.hoopi.model.dto.UsersDto;
-import com.ms.hoopi.service.JwtTokenService;
 import com.ms.hoopi.service.LoginService;
 import com.ms.hoopi.service.RedisService;
+import com.ms.hoopi.util.CookieUtil;
+import com.ms.hoopi.util.JwtUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class LoginServiceImpl implements LoginService {
 
-    @Autowired
     private final UserRepository userRepository;
-
-    @Autowired
     private final BCryptPasswordEncoder encoder;
-
-    @Autowired
-    private final JwtTokenService jwtTokenService;
-
-    @Autowired
     private final RedisService redisService;
+    private final JwtUtil jwtUtil;
+    private final CookieUtil cookieUtil;
 
-    public LoginServiceImpl(UserRepository userRepository
-                            , BCryptPasswordEncoder encoder
-                            , JwtTokenService jwtTokenService
-                            , RedisService redisService) {
-        this.userRepository = userRepository;
-        this.encoder = encoder;
-        this.jwtTokenService = jwtTokenService;
-        this.redisService = redisService;
-    }
     @Override
-    public boolean validateUser(HttpServletResponse response, HttpServletRequest request, UsersDto user) {
-        String id = user.getUsersId();
-        Users users = userRepository.findByUsersId(id);
-        if(users != null){
-            if(encoder.matches(user.getUsersPw(), users.getUsersPw())){
-                //아이디, 비밀번호가 일치하는 경우, 쿠키 중 다른 아이디의 rfrToken발견해 삭제시킴
-                deleteToken(request, response, id);
+    public boolean validateUser(HttpServletResponse response, HttpServletRequest request, User user) {
 
-                //비밀번호 일치하는 경우, 액세스, 리프레시 토큰 생성
-                String acsToken = jwtTokenService.createAcs(id);
-                String rfrToken = jwtTokenService.createRfr(id);
+        //데이터에 해당 유저가 존재하지 않을 경우, Exception 발생
+        User storedUser = Optional.ofNullable(userRepository.findByUserId(user.getId()))
+                                    .orElseThrow(() -> new RuntimeException(Constants.NONE_USER));
 
-                //redis에 저장
-                redisService.saveAcsToken(id, acsToken);
-                redisService.saveRfrToken(id, rfrToken);
-
-                //쿠키에 저장
-                Cookie rfrTokenCookie = new Cookie("rfrToken", rfrToken);
-                rfrTokenCookie.setHttpOnly(true); // 클라이언트 측 스크립트에서 접근 불가
-                rfrTokenCookie.setPath("/"); // 모든 경로에서 접근 가능
-                rfrTokenCookie.setMaxAge(7 * 24 * 3600);
-                response.addCookie(rfrTokenCookie);
-                return true;
-            }
+        //비밀번호가 일치하지 않을 경우, Exception 발생
+        if(!encoder.matches(storedUser.getPwd(), user.getPwd())) {
+            throw new RuntimeException(Constants.INVALID_PWD);
         }
-        return false;
+
+        //acsToken, rfrToken 생성 및 쿠키 저장
+        String acsToken = jwtUtil.generateAccessToken(user.getId());
+        String rfrToken = jwtUtil.generateRefreshToken(user.getId());
+
+        cookieUtil.createAccessTokenCookie(response, acsToken, true);
+        cookieUtil.createRefreshTokenCookie(response, rfrToken, true);
+
+        //rfrToken redis에 저장
+        redisService.saveRefreshToken(user.getId(), rfrToken);
+
+        return true;
+
     }
 
     @Override
@@ -94,23 +79,4 @@ public class LoginServiceImpl implements LoginService {
         return map;
     }
 
-    public void deleteToken(HttpServletRequest request, HttpServletResponse response, String id) {
-        Cookie[] cookies = request.getCookies();
-        if(cookies != null){
-            for(Cookie cookie : cookies){
-                if(cookie.getName().equals("rfrToken")){
-                    //쿠키들 중 rfrToken이 존재하는지 확인
-                    DecodedJWT jwt = JWT.decode((cookie.getValue()));
-                    if(!jwt.getSubject().equals(id)){
-                        //쿠키들 중 현재 로그인한 아이디와 다른 아이디의 jwtToken이 존재한다면 삭제
-                        cookie.setValue("");
-                        cookie.setPath("/");
-                        cookie.setMaxAge(0);
-                        response.addCookie(cookie);
-                        redisService.deleteJwtToken(jwt.getSubject());
-                    }
-                }
-            }
-        }
-    }
 }

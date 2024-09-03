@@ -1,10 +1,8 @@
 package com.ms.hoopi.controller;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.interfaces.DecodedJWT;
-import com.ms.hoopi.model.dto.UsersDto;
+import com.ms.hoopi.constants.Constants;
+import com.ms.hoopi.model.entity.User;
 import com.ms.hoopi.service.LoginService;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +26,15 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(HttpServletResponse response, HttpServletRequest request, @RequestBody UsersDto users) throws IOException {
-        if(users != null){
-            if(loginService.validateUser(response, request, users)){
-                return ResponseEntity.status(HttpStatus.CREATED).body("Login successful");
+    public ResponseEntity<String> login(HttpServletResponse response, HttpServletRequest request, @RequestBody User user) throws IOException {
+        // user정보가 null이 아니면 로직 진행 및 user id 반환
+        if(user != null){
+            if(loginService.validateUser(response, request, user)){
+                return ResponseEntity.ok(user.getId());
             }
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+        //user정보가 null이면 로그인 실패 안내
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Constants.LOGIN_FAIL);
     }
 
     @GetMapping("/userInfo")

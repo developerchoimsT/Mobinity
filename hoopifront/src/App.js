@@ -3,30 +3,29 @@ import axios from 'axios';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Login from './Login';
 import Join from './Join';
-import JobPosting from './JobPosting';
-import PostJobs from './PostJobs';
 import './App.css';
-import JobPostingDetail from "./JobPostingDetail";
+import Main from "./main/Main";
+import Search from "./search/Search";
 
 // Context 생성
 const UserContext = createContext(null);
 
 // 컨텍스트 프로바이더 컴포넌트
 function UserProvider({ children }) {
-    const [userInfo, setUserInfo] = useState({
-        'usersId' : '',
-        'usersRole' : ''
+    const [user, setUser] = useState({
+        'id' : '',
+        'role' : ''
     });
 
     useEffect(() => {
         async function fetchUserInfo() {
             try {
                 const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/userInfo');
-                if (response.data && response.data.usersId && response.data.usersRole) {
+                if (response.data) {
                     console.log("app에서", response.data);
-                    setUserInfo({
-                        'usersId': response.data.usersId,
-                        'usersRole': response.data.usersRole
+                    setUser({
+                        'id': response.user.id,
+                        'role': response.user.role
                     });
                 }
             } catch (error) {
@@ -38,7 +37,7 @@ function UserProvider({ children }) {
     }, []);
 
     return (
-        <UserContext.Provider value={{ userInfo, setUserInfo }}>
+        <UserContext.Provider value={{ user, setUser }}>
             {children}
         </UserContext.Provider>
     );
@@ -49,23 +48,25 @@ function App() {
     return (
         <UserProvider>
             <Router>
-                <nav className='mainNav'>
-                    <ul>
-                        <li><Link to='/jobPosting'>채용 공고</Link></li>
-                    </ul>
-                    <ul>
-                        <li><Link to="/join">회원가입</Link></li>
-                        <li><Link to="/login">로그인</Link></li>
-                    </ul>
-                </nav>
-                <div className='main-box'>
+                <div className='mainNav-container'>
+                    <div className='mainNav-sns-box'>
+
+                    </div>
+                    <div className='mainNav-img-box'>
+                        <Link to='/'><img src='/nata_logo.png' /></Link>
+                    </div>
+                    <div className='mainNav-link-box'>
+                        <Link to="/join">회원가입</Link>
+                        <Link to="/login">로그인</Link>
+
+                    </div>
+                </div>
+                <Search/>
+                <div>
                     <Routes>
+                        <Route path='/' element={<Main/>}/>
                         <Route path='/join' element={<Join />}/>
                         <Route path='/login' element={<Login />}/>
-                        <Route path='/jobPosting' element={<JobPosting />}/>
-                        <Route path='/' element={<JobPosting />}/>
-                        <Route path='/postJobs' element={<PostJobs />}/>
-                        <Route path='/jobPostingDetail/:jobPostingCd' element={<JobPostingDetail />}/>
                     </Routes>
                 </div>
             </Router>

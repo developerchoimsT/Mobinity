@@ -1,7 +1,8 @@
 package com.ms.hoopi.controller;
 
+import com.ms.hoopi.constants.Constants;
+import com.ms.hoopi.model.entity.User;
 import com.ms.hoopi.service.JoinService;
-import com.ms.hoopi.model.dto.UsersDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,14 +19,10 @@ public class JoinController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<String> userJoin(@RequestBody UsersDto users) {
-        try {
-            joinService.joinUser(users);
-            return ResponseEntity.ok("User successfully registered");
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("An error occurred during registration");
-        }
+    public ResponseEntity<String> userJoin(@RequestBody User user) throws Exception{
+            if(joinService.joinUser(user)){
+                return ResponseEntity.ok(Constants.JOIN_SUCCESS);
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Constants.JOIN_FAIL);
     }
 }
