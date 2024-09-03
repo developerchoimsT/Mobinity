@@ -93,7 +93,8 @@ function Join() {
     const chkEmail = () => {
         if(emailCd === chkEmailCd){
             setEmailState(true);
-            console.log(emailCd);
+            console.log("돼라...");
+            console.log("이메일 Cd",emailCd);
             console.log(chkEmailCd);
             alert("이메일 인증에 성공하셨습니다.");
         } else {
