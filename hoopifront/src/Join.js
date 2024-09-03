@@ -91,7 +91,7 @@ function Join() {
 
     // 인증 완료하기
     const chkEmail = () => {
-        if(emailCd === chkEmailCd){
+        if(emailCd == chkEmailCd){
             setEmailState(true);
             console.log("돼라...");
             console.log("이메일 Cd",emailCd);
@@ -126,7 +126,7 @@ function Join() {
 
     // 핸드폰 인증 완료하기
     const chkPhone = () => {
-        if(phoneCd === chkPhoneCd){
+        if(phoneCd == chkPhoneCd){
             setPhoneState(true);
             console.log(phoneCd);
             console.log(chkPhoneCd);
