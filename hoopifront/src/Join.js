@@ -167,7 +167,7 @@ function Join() {
                 if (error.response) {
                     console.error('오류 상태 코드:', error.response.status);
                     console.error('오류 헤더:', error.response.headers);
-                    alert(error.response.data);
+                    alert(error.response.data.message);
                 } else if (error.request) {
                     // 요청이 만들어졌지만 서버에서 응답이 없을 때
                     console.error('요청 데이터:', error.request);
