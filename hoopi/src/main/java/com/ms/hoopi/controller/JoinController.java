@@ -20,7 +20,7 @@ public class JoinController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<String> userJoin(@RequestBody UserJoinDto userJoinDto) throws Exception{
-            return joinService.joinUser(userJoinDto);
+    public ResponseEntity<String> userJoin(@RequestBody UserJoinDto user) throws Exception{
+            return joinService.joinUser(user);
     }
 }
