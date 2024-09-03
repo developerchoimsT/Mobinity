@@ -62,16 +62,16 @@ public class LoginServiceImpl implements LoginService {
     public Map<String, String> getUserInfo(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         Map<String, String> map = new HashMap<>();
-        String usersId = "";
-        String usersRole = "";
+        String userId = "";
+        String userRole = "";
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if ("rfrToken".equals(cookie.getName())) {
                     DecodedJWT jwt = JWT.decode(cookie.getValue());
-                    usersId = jwt.getSubject();
-                    usersRole = jwt.getClaim("role").asString();
-                    map.put("usersId", usersId);
-                    map.put("usersRole", usersRole);
+                    userId = jwt.getSubject();
+                    userRole = jwt.getClaim("role").asString();
+                    map.put("userId", userId);
+                    map.put("userRole", userRole);
                     break;
                 }
             }

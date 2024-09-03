@@ -13,7 +13,6 @@ const UserContext = createContext(null);
 // App 컴포넌트
 function App() {
     return (
-        <UserProvider>
             <Router>
                 <div className='mainNav-container'>
                     <div className='mainNav-sns-box'>
@@ -37,7 +36,6 @@ function App() {
                     </Routes>
                 </div>
             </Router>
-        </UserProvider>
     );
 }
 

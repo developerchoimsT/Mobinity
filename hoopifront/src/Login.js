@@ -5,21 +5,21 @@ import {UserContext} from "./App";
 import './Login.css';
 
 const Login = () => {
-    const [users, setUsers] = useState({ 'usersId': '', 'usersPw': '' });
+    const [user, setUser] = useState({ 'userId': '', 'userPw': '' });
     const navigate = useNavigate();
 
     const handleUsers = (e) => {
         switch(e.target.id) {
             case 'id':
-                setUsers(prevUsers => ({
+                setUser(prevUsers => ({
                     ...prevUsers,
-                    'usersId': e.target.value
+                    'userId': e.target.value
                 }));
                 break;
             case 'pwd':
-                setUsers(prevUsers => ({
+                setUser(prevUsers => ({
                     ...prevUsers,
-                    'usersPw': e.target.value
+                    'userPw': e.target.value
                 }));
                 break;
             default:
@@ -29,17 +29,13 @@ const Login = () => {
 
 
     const handleLogin = async () => {
-        if (users.usersId === '' || users.usersPw === '') {
+        if (user.userId === '' || user.userPw === '') {
             alert('아이디와 비밀번호를 모두 입력해주세요.');
             return;
         }
 
         try {
-            const response = await axios.post("http://hoopi.p-e.kr/api/hoopi/login", users);
-            setUserInfo({
-                'usersId': response.data.usersId,
-                'usersRole': response.data.usersRole
-            });
+            const response = await axios.post("http://hoopi.p-e.kr/api/hoopi/login", user);
             alert("로그인에 성공하였습니다");
             window.location.href = '/';
         } catch (error) {
