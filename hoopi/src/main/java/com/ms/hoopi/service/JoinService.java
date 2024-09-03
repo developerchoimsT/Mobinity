@@ -9,6 +9,9 @@ import com.ms.hoopi.repository.UserRepository;
 import com.ms.hoopi.util.CommonUtil;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +25,7 @@ import java.util.UUID;
 @Service
 public class JoinService {
 
+    private static final Logger log = LoggerFactory.getLogger(JoinService.class);
     private final UserRepository userRepository;
     private final AddressRepository addressRepository;
     private final BCryptPasswordEncoder passwordEncoder;
@@ -46,8 +50,11 @@ public class JoinService {
 
         //db에 저장 - user 저장, user의 주소 저장
         try{
+            log.info("Creating user {}", user);
             userRepository.save(user);
+            log.info("User {} created", user);
             saveAddress(user, userJoinDto.getAddress());
+            log.info("Address {} created", userJoinDto.getAddress());
             return ResponseEntity.ok(Constants.JOIN_SUCCESS);
         } catch (Exception e) {
             throw new RuntimeException(Constants.JOIN_FAIL);
