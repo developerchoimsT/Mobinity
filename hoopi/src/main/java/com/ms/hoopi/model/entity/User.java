@@ -43,18 +43,18 @@ public class User {
 
     @ColumnDefault("'N'")
     @Column(name = "quit_yn", length = 1)
-    private String quitYn;
+    private String quitYn = "N";
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "join_date")
-    private LocalDateTime joinDate;
+    private LocalDateTime joinDate = LocalDateTime.now();
 
     @Column(name = "quit_date")
     private LocalDateTime quitDate;
 
     @ColumnDefault("'user'")
     @Column(name = "role", length = 20)
-    private String role;
+    private String role = "user";
 
     @Column(name = "birth", nullable = false)
     private LocalDate birth;
@@ -100,15 +100,6 @@ public class User {
         validateName();
         validatePhone();
         validateEmail();
-        if (this.quitYn == null) {
-            this.quitYn = "N";
-        }
-        if (this.role == null) {
-            this.role = "user";
-        }
-        if (this.joinDate == null) {
-            this.joinDate = LocalDateTime.now();
-        }
     }
 
     private void validatePhone() {

@@ -25,7 +25,7 @@ public class Address {
 
     @ColumnDefault("'Y'")
     @Column(name = "main", length = 1)
-    private String main;
+    private String main = "Y";
 
     @OneToMany(mappedBy = "addressCode")
     private Set<Delivery> deliveries = new LinkedHashSet<>();
@@ -37,11 +37,5 @@ public class Address {
         this.address = address;
     }
 
-    @PrePersist
-    public void prePersist() {
-        if(main == null){
-            main = "Y";
-        }
-    }
 
 }
