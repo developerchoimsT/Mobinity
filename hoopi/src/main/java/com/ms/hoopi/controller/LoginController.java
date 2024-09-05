@@ -1,6 +1,7 @@
 package com.ms.hoopi.controller;
 
 import com.ms.hoopi.constants.Constants;
+import com.ms.hoopi.model.dto.UserLoginDto;
 import com.ms.hoopi.model.entity.User;
 import com.ms.hoopi.service.LoginService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,7 +27,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(HttpServletResponse response, HttpServletRequest request, @RequestBody User user) throws IOException {
+    public ResponseEntity<String> login(HttpServletResponse response, HttpServletRequest request, @RequestBody UserLoginDto user) throws IOException {
         // user정보가 null이 아니면 로직 진행 및 user id 반환
         if(user != null){
             if(loginService.validateUser(response, request, user)){
