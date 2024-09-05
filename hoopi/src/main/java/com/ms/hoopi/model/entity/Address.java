@@ -24,7 +24,7 @@ public class Address {
     private String address;
 
     @ColumnDefault("'Y'")
-    @Column(name = "main", nullable = false, length = 1)
+    @Column(name = "main", length = 1)
     private String main;
 
     @OneToMany(mappedBy = "addressCode")
