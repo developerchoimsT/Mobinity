@@ -9,7 +9,7 @@ axios.interceptors.response.use(
       const originalRequest = error.config;
 
       // 서버에서 401 Unauthorized 또는 JwtException 발생 시
-      if (error.response.status === 401 && !originalRequest._retry) {
+      if ((error.response.status === 401 || error.response.status === 403) && !originalRequest._retry) {
         originalRequest._retry = true;
 
         // localStorage에서 user ID 가져오기
