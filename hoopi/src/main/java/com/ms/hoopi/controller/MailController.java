@@ -15,7 +15,7 @@ import jakarta.mail.MessagingException;
 @Slf4j
 @RestController
 @Configuration
-@RequestMapping("/hoopi")
+@RequestMapping("hoopi")
 public class MailController {
 
 
