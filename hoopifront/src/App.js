@@ -37,10 +37,7 @@ function App() {
                     </div>
                     <div className='mainNav-link-box'>
                         <Link to="/join">회원가입</Link>
-                        {localStorage.getItem("id")===null
-                            ? <a onClick={handleLogout}>로그아웃</a>
-                            : <Link to="/login">로그인</Link>
-                        }
+                        <Link to="/login">로그인</Link>
                     </div>
                 </div>
                 <Search/>
