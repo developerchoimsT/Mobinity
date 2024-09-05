@@ -12,6 +12,20 @@ const UserContext = createContext(null);
 
 // App 컴포넌트
 function App() {
+
+    const handleLogout = () => {
+        const id = localStorage.getItem('id');
+        axios.delete('http://hoopi.p-e.kr/api/hoopi/logout?id=' + id)
+            .then(response => {
+                localStorage.removeItem('id');
+                localStorage.removeItem('role');
+                alert(response.data);
+                window.location.reload('/');
+            })
+            .catch(error => {
+                alert(error.response.data)
+            });
+    }
     return (
             <Router>
                 <div className='mainNav-container'>
@@ -23,8 +37,10 @@ function App() {
                     </div>
                     <div className='mainNav-link-box'>
                         <Link to="/join">회원가입</Link>
-                        <Link to="/login">로그인</Link>
-
+                        {localStorage.getItem("id")===null
+                            ? <a onClick={handleLogout}>로그아웃</a>
+                            : <Link to="/login">로그인</Link>
+                        }
                     </div>
                 </div>
                 <Search/>

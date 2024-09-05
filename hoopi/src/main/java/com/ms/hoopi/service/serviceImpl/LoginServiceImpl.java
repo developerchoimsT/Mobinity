@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +36,12 @@ public class LoginServiceImpl implements LoginService {
     private final CookieUtil cookieUtil;
 
     @Override
-    public boolean validateUser(HttpServletResponse response, HttpServletRequest request, UserLoginDto user) {
+    public ResponseEntity<Map> validateUser(HttpServletResponse response, HttpServletRequest request, UserLoginDto user) {
+
+        //user가 null일 경우 Exception 발생
+        if(user == null){
+            throw new NullPointerException(Constants.LOGIN_FAIL);
+        }
 
         //데이터에 해당 유저가 존재하지 않을 경우, Exception 발생
         Optional<User> storedUser = userRepository.findById(user.getId());
@@ -55,39 +61,46 @@ public class LoginServiceImpl implements LoginService {
             String acsToken = jwtUtil.generateAccessToken(user.getId());
             String rfrToken = jwtUtil.generateRefreshToken(user.getId());
 
+            //acsToken cookie에 저장
             cookieUtil.createAccessTokenCookie(response, acsToken, true);
-            cookieUtil.createRefreshTokenCookie(response, rfrToken, true);
-
             //rfrToken redis에 저장
             redisService.saveRefreshToken(user.getId(), rfrToken);
 
-            return true;
+            //데이터 전달을 위한 map 객체 생성
+            Map<String, String> map = new HashMap<>();
+            map.put("id", storedUser.get().getId());
+            map.put("role", storedUser.get().getRole());
+            map.put("msg", Constants.LOGIN_SUCCESS);
+            return ResponseEntity.ok(map);
 
         }catch (Exception e){
-            log.error(e.getMessage());
             throw new RuntimeException(Constants.LOGIN_FAIL);
         }
     }
 
     @Override
-    public Map<String, String> getUserInfo(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        Map<String, String> map = new HashMap<>();
-        String userId = "";
-        String userRole = "";
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("rfrToken".equals(cookie.getName())) {
-                    DecodedJWT jwt = JWT.decode(cookie.getValue());
-                    userId = jwt.getSubject();
-                    userRole = jwt.getClaim("role").asString();
-                    map.put("userId", userId);
-                    map.put("userRole", userRole);
-                    break;
-                }
-            }
+    public ResponseEntity<String> logout(HttpServletResponse response, HttpServletRequest request, String id) {
+
+        //넘어온 user정보가 없을 경우 Exception 발생
+        if(id.isBlank() || id.isEmpty()){
+            throw new NullPointerException(Constants.LOGOUT_FAIL);
         }
-        return map;
+
+        try{
+            //쿠키에서 token, id 추출
+            String token = cookieUtil.getAccessTokenFromCookie(request);
+            String cookieId = jwtUtil.getIdFromToken(token);
+
+            //cookie와 redis에서 acs, rfr token 삭제
+            cookieUtil.deleteAccessTokenCookie(response, true);
+            redisService.deleteRefreshToken(cookieId);
+
+            return ResponseEntity.ok(Constants.LOGOUT_SUCCESS);
+        } catch (Exception e){
+            throw new RuntimeException(Constants.LOGOUT_FAIL);
+        }
+
     }
+
 
 }

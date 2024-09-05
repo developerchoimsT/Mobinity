@@ -27,21 +27,13 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(HttpServletResponse response, HttpServletRequest request, @RequestBody UserLoginDto user) throws IOException {
-        // user정보가 null이 아니면 로직 진행 및 user id 반환
-        if(user != null){
-            if(loginService.validateUser(response, request, user)){
-                return ResponseEntity.ok(user.getId());
-            }
-        }
-        //user정보가 null이면 로그인 실패 안내
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Constants.LOGIN_FAIL);
+    public ResponseEntity<Map> login(HttpServletResponse response, HttpServletRequest request, @RequestBody UserLoginDto user){
+        return loginService.validateUser(response, request, user);
     }
 
-    @GetMapping("/userInfo")
-    public ResponseEntity<Map<String, String>> getUserInfo(HttpServletRequest request){
-        Map<String, String> map = new HashMap<>();
-         map = loginService.getUserInfo(request);
-        return ResponseEntity.ok().body(map);
+    @DeleteMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletResponse response, HttpServletRequest request, @RequestParam String id){
+        return loginService.logout(response, request, id);
     }
+
 }

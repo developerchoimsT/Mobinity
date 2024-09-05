@@ -26,22 +26,13 @@ public class CookieUtil {
 
     // acs token 쿠키 생성
     public void createAccessTokenCookie(HttpServletResponse response, String accessToken, boolean secure) {
+        deleteAccessTokenCookie(response, true);
         create(response, ACCESS_TOKEN_COOKIE_NAME, accessToken, 15 * 60, true, secure);
-    }
-
-    // rfr token 쿠키 생성
-    public void createRefreshTokenCookie(HttpServletResponse response, String refreshToken, boolean secure) {
-        create(response, REFRESH_TOKEN_COOKIE_NAME, refreshToken, 7 * 24 * 60 * 60, true, secure);
     }
 
     // 쿠키에서 acs token 추출
     public String getAccessTokenFromCookie(HttpServletRequest request) {
         return getCookieValue(request, ACCESS_TOKEN_COOKIE_NAME);
-    }
-
-    // 쿠키에서 rfr token 추출
-    public String getRefreshTokenFromCookie(HttpServletRequest request) {
-        return getCookieValue(request, REFRESH_TOKEN_COOKIE_NAME);
     }
 
     // 쿠키 값 추출

@@ -53,14 +53,10 @@ public class JoinService {
 
         //db에 저장 - user 저장, user의 주소 저장
         try {
-            log.info("Saving user: {}", user);
             userRepository.save(user);
-            log.info("User saved successfully.");
             saveAddress(user, userJoinDto.getAddress());
-            log.info("Address saved successfully.");
             return ResponseEntity.ok(Constants.JOIN_SUCCESS);
         } catch (Exception e) {
-            log.error("회원가입 중 오류 발생", e);  // 스택 트레이스 출력
             throw new RuntimeException(Constants.JOIN_FAIL, e);
         }
     }

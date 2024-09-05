@@ -1,9 +1,11 @@
 package com.ms.hoopi.util;
 
+import com.ms.hoopi.service.RedisService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.SignatureException;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -21,9 +23,13 @@ public class JwtUtil {
     private final long REFRESH_TOKEN_EXPIRATION = 1000 * 60 * 60 * 24 * 7; // 7일
 
     private final Key key;
+    private final RedisService redisService;
+    private final CookieUtil cookieUtil;
 
-    public JwtUtil(@Value("${jwt.key}") String JWT_KEY) {
+    public JwtUtil(@Value("${jwt.key}") String JWT_KEY, RedisService redisService, CookieUtil cookieUtil) {
         this.key = new SecretKeySpec(JWT_KEY.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+        this.redisService = redisService;
+        this.cookieUtil = cookieUtil;
     }
 
     // acs token 생성
@@ -100,5 +106,10 @@ public class JwtUtil {
             // 다른 예외 처리
             throw new RuntimeException("토큰처리를 할 수 없습니다.", e);
         }
+    }
+
+    public void deleteToken(HttpServletResponse response, String id) {
+        redisService.deleteRefreshToken(id);
+        cookieUtil.deleteAccessTokenCookie(response, true);
     }
 }

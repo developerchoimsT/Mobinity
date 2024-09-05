@@ -18,18 +18,20 @@ const Login = () => {
 
 
     const handleLogin = async () => {
-        if (user.userId === '' || user.userPw === '') {
+        if (user.id === '' || user.pwd === '') {
             alert('아이디와 비밀번호를 모두 입력해주세요.');
             return;
         }
 
         try {
             const response = await axios.post("http://hoopi.p-e.kr/api/hoopi/login", user);
-            alert("로그인에 성공하였습니다");
+            localStorage.setItem("id", response.data.id);
+            localStorage.setItem("role", response.data.role);
+            alert(response.data.msg);
             window.location.href = '/';
         } catch (error) {
             console.error('로그인 요청 오류:', error);
-            alert('서버 오류 발생. 나중에 다시 시도해 주세요.');
+            alert(error.response.data);
         }
     }
 

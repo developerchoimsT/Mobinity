@@ -162,12 +162,11 @@ function Join() {
         axios.post("http://hoopi.p-e.kr/api/hoopi/join", user)
             .then(response => {
                 alert("회원가입이 성공적으로 이루어졌습니다.");
+                window.location.reload('/');
             })
             .catch(error => {
                 if (error.response) {
-                    console.error('오류 상태 코드:', error.response.status);
-                    console.error('오류 헤더:', error.response.headers);
-                    alert(error.response.data.message);
+                    alert(error.response.data);
                 } else if (error.request) {
                     // 요청이 만들어졌지만 서버에서 응답이 없을 때
                     console.error('요청 데이터:', error.request);
@@ -208,12 +207,12 @@ function Join() {
                 </tr>
                 <tr>
                     <td>주소</td>
-                    <td colSpan={5}><input id="add1" value={add1} onChange={handleAddress}/></td>
+                    <td colSpan={5}><input disabled={true} id="add1" value={add1} onChange={handleAddress}/></td>
                 </tr>
                 <tr>
                     <td><button onClick={() => setShowPostCode(true)}>주소 찾기</button></td>
-                    <td colSpan={1}><input id="add2" value={add2} onChange={handleAddress}/></td>
-                    <td colSpan={4}><input id="add3" value={add3} onChange={handleAddress}/></td>
+                    <td colSpan={1}><input disabled={true} id="add2" value={add2} onChange={handleAddress}/></td>
+                    <td colSpan={4}><input disabled={true} id="add3" value={add3} onChange={handleAddress}/></td>
                 </tr>
                 <tr>
                     <td>이메일</td>

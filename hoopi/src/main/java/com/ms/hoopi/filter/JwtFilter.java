@@ -32,47 +32,34 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        String path = request.getRequestURI();
-        if (path.startsWith("/hoopi/login") || path.startsWith("/hoopi/join")) {
-            filterChain.doFilter(request, response);  // JWT 검증 없이 다음 필터로 넘어감
-            return;
-        }
         // 쿠키에서 access token 추출
         String accessToken = cookieUtil.getAccessTokenFromCookie(request);
-        String refreshToken = cookieUtil.getRefreshTokenFromCookie(request);
+        // 레디스에서 rfr token get
+        String id = jwtUtil.getIdFromToken(accessToken);
+        String refreshToken = redisService.getRefreshToken(id);
 
         if (accessToken != null && jwtUtil.validateToken(accessToken)) {
             // access token이 유효하면 사용자 정보 추출
-            Claims claims = jwtUtil.getClaimsFromToken(accessToken);
-            String id = claims.getSubject();
-            List<String> roles = claims.get("roles", List.class); // JWT에서 권한 정보 추출
+            List<String> roles = jwtUtil.getRolesFromToken(accessToken); // JWT에서 권한 정보 추출
 
             // 인증 객체 생성
             setSecurityContext(id, roles);
 
         } else if (refreshToken != null && jwtUtil.validateToken(refreshToken)) {
             // refresh token이 유효한 경우 access token을 재발급
-            String id = jwtUtil.getIdFromToken(refreshToken);
+            String newAccessToken = jwtUtil.generateAccessToken(id);
 
-            // Redis에서 refresh token 확인
-            String storedRefreshToken = redisService.getRefreshToken(id);
-            if (storedRefreshToken != null && storedRefreshToken.equals(refreshToken)) {
-                // 새로운 access token 생성
-                String newAccessToken = jwtUtil.generateAccessToken(id);
+            // 새 access token을 쿠키에 저장
+            cookieUtil.createAccessTokenCookie(response, newAccessToken, true);
 
-                // 새 access token을 쿠키에 저장
-                cookieUtil.createAccessTokenCookie(response, newAccessToken, true);
-
-                // JWT에서 권한 정보를 다시 가져와서 인증 객체 생성
-                List<String> roles = jwtUtil.getRolesFromToken(newAccessToken); // JWT에서 권한 정보 추출
-                setSecurityContext(id, roles);
-            } else {
-                // refresh token이 Redis와 일치하지 않으면 로그아웃 처리 (쿠키 삭제)
-                invalidateCookies(response);
-            }
+            // JWT에서 권한 정보를 다시 가져와서 인증 객체 생성
+            List<String> roles = jwtUtil.getRolesFromToken(newAccessToken);
+            
+            //인증 객체 생성
+            setSecurityContext(id, roles);
         } else {
             // 둘 다 유효하지 않으면 세션 및 쿠키 삭제 (로그아웃 처리)
-            invalidateCookies(response);
+            invalidateCookies(response, id);
         }
 
         filterChain.doFilter(request, response);
@@ -92,12 +79,11 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
 
-    private void invalidateCookies(HttpServletResponse response) {
+    private void invalidateCookies(HttpServletResponse response, String id) {
         // Spring Security 컨텍스트 초기화
         SecurityContextHolder.clearContext();
         // 쿠키 삭제
-        cookieUtil.deleteAccessTokenCookie(response, true);
-        cookieUtil.deleteRefreshTokenCookie(response, true);
+        jwtUtil.deleteToken(response, id);
     }
 }
 

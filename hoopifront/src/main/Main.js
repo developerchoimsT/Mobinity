@@ -12,7 +12,7 @@ const Main = () => {
                         <tr>
                             <td colSpan={2}>
                                 <div>
-                                    <img src='/cursor2.png' alt='맛나요'/>
+                                    <img src='/nata_logo.png' alt='맛나요'/>
                                 </div>
                             </td>
                         </tr>
