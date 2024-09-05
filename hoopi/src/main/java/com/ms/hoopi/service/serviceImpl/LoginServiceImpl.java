@@ -39,6 +39,7 @@ public class LoginServiceImpl implements LoginService {
 
         //데이터에 해당 유저가 존재하지 않을 경우, Exception 발생
         Optional<User> storedUser = userRepository.findById(user.getId());
+        log.info("user user user user유저유저{}", storedUser);
         if(storedUser.isEmpty()) {
             throw new EntityNotFoundException(Constants.NONE_USER);
         }
@@ -48,18 +49,23 @@ public class LoginServiceImpl implements LoginService {
             throw new RuntimeException(Constants.INVALID_PWD);
         }
 
-        //acsToken, rfrToken 생성 및 쿠키 저장
-        String acsToken = jwtUtil.generateAccessToken(user.getId());
-        String rfrToken = jwtUtil.generateRefreshToken(user.getId());
+        try{
+            //acsToken, rfrToken 생성 및 쿠키 저장
+            String acsToken = jwtUtil.generateAccessToken(user.getId());
+            String rfrToken = jwtUtil.generateRefreshToken(user.getId());
 
-        cookieUtil.createAccessTokenCookie(response, acsToken, true);
-        cookieUtil.createRefreshTokenCookie(response, rfrToken, true);
+            cookieUtil.createAccessTokenCookie(response, acsToken, true);
+            cookieUtil.createRefreshTokenCookie(response, rfrToken, true);
 
-        //rfrToken redis에 저장
-        redisService.saveRefreshToken(user.getId(), rfrToken);
+            //rfrToken redis에 저장
+            redisService.saveRefreshToken(user.getId(), rfrToken);
 
-        return true;
+            return true;
 
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new RuntimeException(Constants.LOGIN_FAIL);
+        }
     }
 
     @Override
