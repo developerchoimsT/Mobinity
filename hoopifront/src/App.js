@@ -6,7 +6,7 @@ import Join from './Join';
 import './App.css';
 import Main from "./main/Main";
 import Search from "./search/Search";
-import 'axios/axiosInterceptor.js';
+import './main/axios/axiosInterceptor.js';
 
 // Context 생성
 const UserContext = createContext(null);
