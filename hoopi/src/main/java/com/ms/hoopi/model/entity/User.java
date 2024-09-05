@@ -25,9 +25,7 @@ public class User {
     @Column(name = "id", nullable = false, length = 25)
     private String id;
 
-    @Column(name = "pwd", nullable = false, length = 30)
-    @Pattern(regexp = "^[a-zA-Z0-9_!]{10,15}$",
-            message = "비밀번호에는 _! 특수문자가 들어갈 수 있으며 10~15자리로 입력해주세요.")
+    @Column(name = "pwd", nullable = false)
     private String pwd;
 
     @Column(name = "name", nullable = false, length = 20)
@@ -100,7 +98,6 @@ public class User {
     @PreUpdate
     private void validateUser() {
         validateName();
-        validatePwd();
         validatePhone();
         validateEmail();
     }
@@ -114,15 +111,6 @@ public class User {
     private void validateEmail() {
         if (email == null || !email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
             throw new IllegalArgumentException("유효한 이메일 주소를 입력하세요");
-        }
-    }
-
-    private void validatePwd() {
-        if(pwd == null || !pwd.matches("^[a-zA-Z0-9_!]{10,15}$")) {
-            throw new IllegalArgumentException("비밀번호는 10~15자리로 입력해주세요.");
-        }
-        if(!pwd.contains("!")||!pwd.contains("_")){
-            throw new IllegalArgumentException("비밀번호에는 _ 또는 ! 특수문자가 들어가야 합니다.");
         }
     }
 
