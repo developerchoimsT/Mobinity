@@ -44,7 +44,7 @@ public class User {
     private String email;
 
     @ColumnDefault("'N'")
-    @Column(name = "quit_yn", nullable = false, length = 1)
+    @Column(name = "quit_yn", length = 1)
     private String quitYn;
 
     @ColumnDefault("CURRENT_TIMESTAMP")
@@ -55,7 +55,7 @@ public class User {
     private LocalDateTime quitDate;
 
     @ColumnDefault("'user'")
-    @Column(name = "role", nullable = false, length = 10)
+    @Column(name = "role", length = 20)
     private String role;
 
     @Column(name = "birth", nullable = false)
