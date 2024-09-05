@@ -32,32 +32,36 @@ public class JwtFilter extends OncePerRequestFilter {
 
         // 쿠키에서 access token 추출
         String accessToken = cookieUtil.getAccessTokenFromCookie(request);
-        // acs token에서 id 추출
-        String id = jwtUtil.getIdFromToken(accessToken);
 
         if (accessToken != null && jwtUtil.validateToken(accessToken)) {
             // access token이 유효하면 사용자 정보 추출
+            String id = jwtUtil.getIdFromToken(accessToken);
             List<String> roles = jwtUtil.getRolesFromToken(accessToken); // JWT에서 권한 정보 추출
 
             // 인증 객체 생성
             setSecurityContext(id, roles);
 
         } else {
-            //redis에서 refreshtoken 가져오기
-            String rfrToken = redisService.getRefreshToken(id);
-            if (rfrToken != null && jwtUtil.validateToken(rfrToken)) {
-                //acsToken 새로 발급 및 쿠키 저장
-                String newAcsToken = jwtUtil.generateAccessToken(id);
-                cookieUtil.createAccessTokenCookie(response, newAcsToken, true);
+            // 만료된 acs token에서 id 추출
+            String id = jwtUtil.getIdFromToken(accessToken);
+            if (id != null) {
+                // Redis에서 refresh token 조회
+                String refreshToken = redisService.getRefreshToken(id);
 
-                //역할 추출
-                List<String> role = jwtUtil.getRolesFromToken(newAcsToken);
+                if (refreshToken != null && jwtUtil.validateToken(refreshToken)) {
+                    // refresh token이 유효한 경우 access token을 재발급
+                    String newAccessToken = jwtUtil.generateAccessToken(id);
+                    cookieUtil.createAccessTokenCookie(response, newAccessToken, true);
 
-                //인증 객체 생성
-                setSecurityContext(id, role);
-            } else {
-                //rfr token, acs token 모두 유효하지 않을 때
-                invalidateCookies(response, id);
+                    // 새 access token으로 역할 추출
+                    List<String> roles = jwtUtil.getRolesFromToken(newAccessToken);
+
+                    // 인증 객체 생성
+                    setSecurityContext(id, roles);
+                } else {
+                    // refresh token이 유효하지 않으면 로그아웃 처리
+                    invalidateCookies(response, id);
+                }
             }
         }
 
