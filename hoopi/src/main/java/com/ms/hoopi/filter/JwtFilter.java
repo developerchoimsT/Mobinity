@@ -4,6 +4,7 @@ import com.ms.hoopi.model.dto.UserCustom;
 import com.ms.hoopi.service.RedisService;
 import com.ms.hoopi.util.CookieUtil;
 import com.ms.hoopi.util.JwtUtil;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -42,27 +43,8 @@ public class JwtFilter extends OncePerRequestFilter {
             setSecurityContext(id, roles);
 
         } else {
-            // 만료된 acs token에서 id 추출
-            String id = jwtUtil.getIdFromToken(accessToken);
-            if (id != null) {
-                // Redis에서 refresh token 조회
-                String refreshToken = redisService.getRefreshToken(id);
-
-                if (refreshToken != null && jwtUtil.validateToken(refreshToken)) {
-                    // refresh token이 유효한 경우 access token을 재발급
-                    String newAccessToken = jwtUtil.generateAccessToken(id);
-                    cookieUtil.createAccessTokenCookie(response, newAccessToken, true);
-
-                    // 새 access token으로 역할 추출
-                    List<String> roles = jwtUtil.getRolesFromToken(newAccessToken);
-
-                    // 인증 객체 생성
-                    setSecurityContext(id, roles);
-                } else {
-                    // refresh token이 유효하지 않으면 로그아웃 처리
-                    invalidateCookies(response, id);
-                }
-            }
+            logger.error("토큰 못 찾었다!!!!!!");
+            throw new JwtException("Invalid JWT token");
         }
 
         filterChain.doFilter(request, response);

@@ -102,5 +102,19 @@ public class LoginServiceImpl implements LoginService {
 
     }
 
+    @Override
+    public void refreshToken(HttpServletResponse response, HttpServletRequest request, String id) {
+        if(id.isBlank() || id.isEmpty()){
+            throw new NullPointerException("아이디가 넘어오지 않음");
+        }
+
+        String rfrToken = Optional.of(redisService.getRefreshToken(id))
+                                    .orElseThrow(()-> new EntityNotFoundException("rfr토큰 없음"));
+
+        String acsToken = jwtUtil.generateAccessToken(id);
+        cookieUtil.createAccessTokenCookie(response, acsToken, true);
+
+    }
+
 
 }
