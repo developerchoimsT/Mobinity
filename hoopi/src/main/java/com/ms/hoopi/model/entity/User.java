@@ -118,7 +118,7 @@ public class User {
     }
 
     private void validatePwd() {
-        if(pwd == null || !pwd.matches("^[a-zA-Z0-9_!]{6,15}$")) {
+        if(pwd == null || !pwd.matches("^[a-zA-Z0-9_!]{10,15}$")) {
             throw new IllegalArgumentException("비밀번호는 10~15자리로 입력해주세요.");
         }
         if(!pwd.contains("!")||!pwd.contains("_")){
