@@ -32,10 +32,10 @@ public class JoinService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final CommonUtil commonUtil;
 
-    @Transactional
+
     public ResponseEntity<String> joinUser(UserJoinDto userJoinDto) {
         //id가 이미 존재할 경우 exception 발생
-        Optional<User> storedUser = userRepository.findById(userJoinDto.getId());
+        Optional<User> storedUser = userRepository.findByUserId(userJoinDto.getId());
         if (storedUser.isPresent()) {
             throw new DuplicateKeyException(Constants.ALREADY_EXIST);
         }
