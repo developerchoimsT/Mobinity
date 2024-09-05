@@ -1,7 +1,6 @@
 package com.ms.hoopi.filter;
 
 import com.ms.hoopi.model.dto.UserCustom;
-import com.ms.hoopi.service.RedisService;
 import com.ms.hoopi.util.CookieUtil;
 import com.ms.hoopi.util.JwtUtil;
 import io.jsonwebtoken.JwtException;
@@ -26,7 +25,6 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
     private final CookieUtil cookieUtil;
-    private final RedisService redisService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -37,14 +35,16 @@ public class JwtFilter extends OncePerRequestFilter {
         if (accessToken != null && jwtUtil.validateToken(accessToken)) {
             // access token이 유효하면 사용자 정보 추출
             String id = jwtUtil.getIdFromToken(accessToken);
-            List<String> roles = jwtUtil.getRolesFromToken(accessToken); // JWT에서 권한 정보 추출
+            List<String> roles = jwtUtil.getRolesFromToken(accessToken);
 
             // 인증 객체 생성
             setSecurityContext(id, roles);
 
         } else {
-            logger.error("토큰 못 찾었다!!!!!!");
-            throw new JwtException("Invalid JWT token");
+            // Access Token이 유효하지 않을 때 401 또는 403 반환
+            logger.error("Invalid or expired JWT token");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401 Unauthorized
+            return; // 필터 체인을 중단하고, 에러 응답을 반환
         }
 
         filterChain.doFilter(request, response);
@@ -53,7 +53,7 @@ public class JwtFilter extends OncePerRequestFilter {
     private void setSecurityContext(String id, List<String> roles) {
         // GrantedAuthority를 List로 변환
         List<SimpleGrantedAuthority> authorities = roles.stream()
-                .map(role -> new SimpleGrantedAuthority(role))
+                .map(SimpleGrantedAuthority::new)
                 .toList();
 
         // UserCustom 객체 생성
@@ -62,13 +62,4 @@ public class JwtFilter extends OncePerRequestFilter {
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
-
-
-    private void invalidateCookies(HttpServletResponse response, String id) {
-        // Spring Security 컨텍스트 초기화
-        SecurityContextHolder.clearContext();
-        // 쿠키 삭제
-        jwtUtil.deleteToken(response, id);
-    }
 }
-
