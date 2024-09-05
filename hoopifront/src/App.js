@@ -15,7 +15,7 @@ function App() {
 
     const handleLogout = () => {
         const id = localStorage.getItem('id');
-        axios.delete('http://hoopi.p-e.kr/api/hoopi/logout?id=' + id)
+        axios.delete('http://hoopi.p-e.kr/api/hoopi/logout', {params: {id}})
             .then(response => {
                 localStorage.removeItem('id');
                 localStorage.removeItem('role');
