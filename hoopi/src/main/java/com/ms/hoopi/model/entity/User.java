@@ -100,6 +100,15 @@ public class User {
         validateName();
         validatePhone();
         validateEmail();
+        if (this.quitYn == null) {
+            this.quitYn = "N";
+        }
+        if (this.role == null) {
+            this.role = "user";
+        }
+        if (this.joinDate == null) {
+            this.joinDate = LocalDateTime.now();
+        }
     }
 
     private void validatePhone() {

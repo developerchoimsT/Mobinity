@@ -37,4 +37,11 @@ public class Address {
         this.address = address;
     }
 
+    @PrePersist
+    public void prePersist() {
+        if(main == null){
+            main = "Y";
+        }
+    }
+
 }
