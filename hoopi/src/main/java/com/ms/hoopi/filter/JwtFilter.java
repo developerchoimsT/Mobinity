@@ -5,6 +5,7 @@ import com.ms.hoopi.service.RedisService;
 import com.ms.hoopi.util.CookieUtil;
 import com.ms.hoopi.util.JwtUtil;
 import io.jsonwebtoken.Claims;
+import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,6 +32,11 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
+        String path = request.getRequestURI();
+        if (path.startsWith("/hoopi/login") || path.startsWith("/hoopi/join")) {
+            filterChain.doFilter(request, response);  // JWT 검증 없이 다음 필터로 넘어감
+            return;
+        }
         // 쿠키에서 access token 추출
         String accessToken = cookieUtil.getAccessTokenFromCookie(request);
         String refreshToken = cookieUtil.getRefreshTokenFromCookie(request);
