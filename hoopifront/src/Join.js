@@ -212,7 +212,7 @@ function Join() {
                 <tr>
                     <td><button onClick={() => setShowPostCode(true)}>주소 찾기</button></td>
                     <td colSpan={1}><input disabled={true} id="add2" value={add2} onChange={handleAddress}/></td>
-                    <td colSpan={4}><input disabled={true} id="add3" value={add3} onChange={handleAddress}/></td>
+                    <td colSpan={4}><input id="add3" value={add3} onChange={handleAddress}/></td>
                 </tr>
                 <tr>
                     <td>이메일</td>

@@ -4,8 +4,6 @@ import com.ms.hoopi.model.dto.UserCustom;
 import com.ms.hoopi.service.RedisService;
 import com.ms.hoopi.util.CookieUtil;
 import com.ms.hoopi.util.JwtUtil;
-import io.jsonwebtoken.Claims;
-import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
