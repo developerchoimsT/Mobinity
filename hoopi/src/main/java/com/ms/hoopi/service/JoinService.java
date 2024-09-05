@@ -33,6 +33,7 @@ public class JoinService {
     private final CommonUtil commonUtil;
 
 
+    @Transactional
     public ResponseEntity<String> joinUser(UserJoinDto userJoinDto) {
         //id가 이미 존재할 경우 exception 발생
         Optional<User> storedUser = userRepository.findById(userJoinDto.getId());
