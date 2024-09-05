@@ -39,6 +39,7 @@ public class LoginServiceImpl implements LoginService {
 
         //데이터에 해당 유저가 존재하지 않을 경우, Exception 발생
         Optional<User> storedUser = userRepository.findById(user.getId());
+        log.info("user found: {}", user);
         log.info("user user user user유저유저{}", storedUser);
         if(storedUser.isEmpty()) {
             throw new EntityNotFoundException(Constants.NONE_USER);

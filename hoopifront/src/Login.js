@@ -5,26 +5,15 @@ import {UserContext} from "./App";
 import './Login.css';
 
 const Login = () => {
-    const [user, setUser] = useState({ 'userId': '', 'userPw': '' });
+    const [user, setUser] = useState({ 'id': '', 'pwd': '' });
     const navigate = useNavigate();
 
     const handleUsers = (e) => {
-        switch(e.target.id) {
-            case 'id':
-                setUser(prevUsers => ({
-                    ...prevUsers,
-                    'userId': e.target.value
-                }));
-                break;
-            case 'pwd':
-                setUser(prevUsers => ({
-                    ...prevUsers,
-                    'userPw': e.target.value
-                }));
-                break;
-            default:
-                break;
-        }
+        const { id, value } = e.target;
+        setUser(prevState => ({
+            ...prevState,
+            [id]: value
+        }));
     }
 
 
