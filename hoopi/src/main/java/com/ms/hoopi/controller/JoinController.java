@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("hoopi")
+@RequestMapping("/hoopi")
 public class JoinController {
 
     @Autowired
@@ -20,7 +20,7 @@ public class JoinController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<String> userJoin(@RequestBody UserJoinDto user) throws Exception{
+    public ResponseEntity<String> userJoin(@RequestBody UserJoinDto user) {
             return joinService.joinUser(user);
     }
 }

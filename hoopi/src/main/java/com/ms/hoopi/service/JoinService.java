@@ -52,9 +52,9 @@ public class JoinService {
 
         //db에 저장 - user 저장, user의 주소 저장
         try{
-            log.info("Creating user {}", user);
+            log.info("<<<<<<<<유저유저1>>>>>>>{}",user);
             userRepository.save(user);
-            log.info("User {} created", user);
+            log.info("<<<<<<<<유저유저2>>>>>>>{}",user);
             saveAddress(user, userJoinDto.getAddress());
             log.info("Address {} created", userJoinDto.getAddress());
             return ResponseEntity.ok(Constants.JOIN_SUCCESS);
