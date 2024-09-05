@@ -23,7 +23,12 @@ axios.interceptors.response.use(
           return axios(originalRequest);
         } catch (error) {
           console.error('Refresh token request failed:', error);
-          window.location.reload('/');
+
+          // 토큰 갱신에 실패하면, 새로고침 전에 무한 루프 방지 플래그를 설정합니다
+          if (!originalRequest._failed) {
+            originalRequest._failed = true;
+            window.location.reload('/');
+          }
         }
       }
 

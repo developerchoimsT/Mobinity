@@ -3,6 +3,8 @@ package com.ms.hoopi.service.serviceImpl;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.ms.hoopi.constants.Constants;
+import com.ms.hoopi.filter.JwtFilter;
+import com.ms.hoopi.model.dto.UserCustom;
 import com.ms.hoopi.model.dto.UserLoginDto;
 import com.ms.hoopi.model.entity.User;
 import com.ms.hoopi.repository.UserRepository;
@@ -17,12 +19,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -34,6 +38,7 @@ public class LoginServiceImpl implements LoginService {
     private final RedisService redisService;
     private final JwtUtil jwtUtil;
     private final CookieUtil cookieUtil;
+    private final JwtFilter jwtFilter;
 
     @Override
     public ResponseEntity<Map> validateUser(HttpServletResponse response, HttpServletRequest request, UserLoginDto user) {
@@ -113,6 +118,17 @@ public class LoginServiceImpl implements LoginService {
 
         String acsToken = jwtUtil.generateAccessToken(id);
         cookieUtil.createAccessTokenCookie(response, acsToken, true);
+        List<String> roles = jwtUtil.getRolesFromToken(acsToken);
+        // GrantedAuthority를 List로 변환
+        List<SimpleGrantedAuthority> authorities = roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role))
+                .toList();
+
+        // UserCustom 객체 생성
+        UserCustom user = new UserCustom(id, "", "", true, true, true, true, authorities);
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
     }
 
