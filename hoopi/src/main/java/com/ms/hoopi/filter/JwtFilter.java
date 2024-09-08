@@ -31,8 +31,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
         // 특정 경로에서는 필터를 거치지 않고 바로 넘김
         String path = request.getServletPath();
-        if (path.equals("hoopi/login") || path.equals("hoopi/join") || path.equals("hoopi/refresh-token")
-            || path.equals("hoopi/phone") || path.equals("hoopi/email")) {
+        if (path.equals("/hoopi/login") || path.equals("/hoopi/join") || path.equals("/hoopi/refresh-token")
+            || path.equals("/hoopi/phone") || path.equals("/hoopi/email")) {
             filterChain.doFilter(request, response);
             return;
         }

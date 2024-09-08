@@ -30,7 +30,7 @@ public class SecurityConfig {
         log.info("시큐리티작동중?");
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("hoopi/refresh-token", "hoopi/login", "hoopi/join", "hoopi/email", "hoopi/phone").permitAll()
+                        .requestMatchers("/hoopi/refresh-token", "/hoopi/login", "/hoopi/join", "/hoopi/email", "/hoopi/phone").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(formLogin -> formLogin.disable())
                 .logout(logout -> logout.disable())
