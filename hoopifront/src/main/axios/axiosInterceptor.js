@@ -24,7 +24,7 @@ axios.interceptors.response.use(
           // 서버로 userId를 보내서 Redis에 있는 Refresh Token으로 새로운 Access Token 요청
           const tokenResponse = await axios.post('http://hoopi.p-e.kr/api/hoopi/refresh-token', { id });
           console.log(id);
-          if (tokenResponse.status === 200) {
+          if (tokenResponse.status == 200) {
             // 새 Access Token을 쿠키에 저장한 후 원래 요청을 다시 시도
             return axios(originalRequest);
           } else {

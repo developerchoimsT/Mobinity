@@ -25,6 +25,7 @@ const Login = () => {
 
         try {
             const response = await axios.post("http://hoopi.p-e.kr/api/hoopi/login", user);
+            console.log('user:'+user);
             localStorage.setItem("id", response.data.id);
             localStorage.setItem("role", response.data.role);
             alert(response.data.msg);
