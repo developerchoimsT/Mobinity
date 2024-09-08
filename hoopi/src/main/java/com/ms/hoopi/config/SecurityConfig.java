@@ -1,5 +1,6 @@
 package com.ms.hoopi.config;
 
+import com.ms.hoopi.common.CustomAuthenticationEntryPoint;
 import com.ms.hoopi.filter.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
-    private AuthenticationEntryPoint authenticationEntryPoint;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     @Bean
     public SecurityFilterChain MySecurityfilterChain(HttpSecurity http) throws Exception {
@@ -30,12 +31,13 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("hoopi/refresh-token", "hoopi/login", "hoopi/join", "hoopi/email", "hoopi/phone").permitAll()
+                        .requestMatchers("/hoopi/refresh-token", "/hoopi/login", "/hoopi/join", "/hoopi/email", "/hoopi/phone").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(formLogin -> formLogin.disable())
                 .logout(logout -> logout.disable())
-                .exceptionHandling(e -> e.authenticationEntryPoint(authenticationEntryPoint))
+                .exceptionHandling(e -> e.authenticationEntryPoint(customAuthenticationEntryPoint))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        log.info("시큐리티 동작 완료");
         return http.build();
     }
 
