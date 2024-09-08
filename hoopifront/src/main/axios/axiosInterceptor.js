@@ -17,6 +17,7 @@ axios.interceptors.response.use(
           const id = localStorage.getItem("id");
           if(id === null || id === ''){
             console.log('id가 저장이 안 돼있음');
+            window.location.reload('/login');
             return false;
           } else {
             console.log('id임:'+id);

@@ -29,6 +29,13 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
+        // 특정 경로에서는 필터를 거치지 않고 바로 넘김
+        String path = request.getServletPath();
+        if (path.equals("hoopi/login") || path.equals("hoopi/join") || path.equals("hoopi/refresh-token")
+            || path.equals("hoopi/phone") || path.equals("hoopi/email")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
         // 쿠키에서 access token 추출
         String accessToken = cookieUtil.getAccessTokenFromCookie(request);
 
