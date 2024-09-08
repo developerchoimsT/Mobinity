@@ -15,7 +15,10 @@ axios.interceptors.response.use(
         try {
           // localStorage에서 user ID 가져오기
           const id = localStorage.getItem("id");
-
+          if(id === null || id === ''){
+            console.log('id가 저장이 안 돼있음');
+            return false;
+          }
           // 서버로 userId를 보내서 Redis에 있는 Refresh Token으로 새로운 Access Token 요청
           const tokenResponse = await axios.post('http://hoopi.p-e.kr/api/hoopi/refresh-token', { id });
           console.log(id);
@@ -25,7 +28,7 @@ axios.interceptors.response.use(
           } else {
             // 리프레시 토큰 요청 실패 시
             console.error('Failed to refresh token');
-            window.location.reload('/'); // 로그인 페이지로 리디렉션
+            window.location.reload('/');
             return Promise.reject(error);
           }
 
