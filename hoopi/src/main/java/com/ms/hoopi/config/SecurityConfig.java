@@ -31,7 +31,7 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/hoopi/refresh-token", "/hoopi/login", "/hoopi/join", "/hoopi/email", "/hoopi/phone").permitAll()
+                        .requestMatchers("hoopi/refresh-token", "hoopi/login", "hoopi/join", "hoopi/email", "hoopi/phone").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(formLogin -> formLogin.disable())
                 .logout(logout -> logout.disable())
