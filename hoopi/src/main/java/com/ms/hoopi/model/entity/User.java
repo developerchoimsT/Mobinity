@@ -43,7 +43,6 @@ public class User {
     @Column(name = "quit_yn", length = 1)
     private String quitYn = "N";
 
-    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "join_date")
     private LocalDateTime joinDate = LocalDateTime.now();
 
