@@ -1,7 +1,7 @@
 ---
 name: goal template
 about: goal template
-title: ''
+title: "[GOAL]"
 labels: goal
 assignees: ''
 
