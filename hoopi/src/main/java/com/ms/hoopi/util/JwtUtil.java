@@ -13,6 +13,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.time.Instant;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -65,7 +66,7 @@ public class JwtUtil {
                     .getBody();
 
             // 만료 시간 확인
-            return !claims.getExpiration().before(Date.from(Instant.now()));
+            return !claims.getExpiration().before(Date.from(Instant.now().atZone(ZoneId.of("Asia/Seoul")).toInstant()));
         } catch (Exception e) {
             // 예외 발생 시, 유효하지 않은 토큰으로 간주
             return false;

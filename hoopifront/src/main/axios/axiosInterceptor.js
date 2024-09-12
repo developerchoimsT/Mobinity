@@ -20,7 +20,7 @@ axios.interceptors.response.use(
             window.location.reload('/login');
             return false;
           } else {
-            console.log('id임:'+id);
+            console.log('id :'+id);
           }
           // 서버로 userId를 보내서 Redis에 있는 Refresh Token으로 새로운 Access Token 요청
           const tokenResponse = await axios.post('http://hoopi.p-e.kr/api/hoopi/refresh-token', { id });
@@ -30,14 +30,20 @@ axios.interceptors.response.use(
             return axios(originalRequest);
           } else {
             // 리프레시 토큰 요청 실패 시
-            console.error('Failed to refresh token');
-            window.location.reload('/');
+            alert(tokenResponse.error.data);
+            console.error(tokenResponse.error);
+            localStorage.removeItem("id");
+            localStorage.removeItem("role");
+            window.location.reload('/login');
             return Promise.reject(error);
           }
 
         } catch (refreshError) {
-          console.error('Refresh token request failed:', refreshError);
-          window.location.reload('/'); // 로그인 페이지로 리디렉션
+          alert(refreshError.data);
+          console.error(refreshError);
+          localStorage.removeItem("id");
+          localStorage.removeItem("role");
+          window.location.reload('/login');
           return Promise.reject(refreshError);
         }
       }

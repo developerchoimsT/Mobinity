@@ -2,6 +2,7 @@ package com.ms.hoopi.controller;
 
 import com.ms.hoopi.constants.Constants;
 import com.ms.hoopi.model.dto.UserLoginDto;
+import com.ms.hoopi.model.dto.UserLoginResponseDto;
 import com.ms.hoopi.model.entity.User;
 import com.ms.hoopi.service.LoginService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,7 +28,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Map> login(HttpServletResponse response, HttpServletRequest request, @RequestBody UserLoginDto user){
+    public ResponseEntity<UserLoginResponseDto> login(HttpServletResponse response, HttpServletRequest request, @RequestBody UserLoginDto user){
         return loginService.validateUser(response, request, user);
     }
 

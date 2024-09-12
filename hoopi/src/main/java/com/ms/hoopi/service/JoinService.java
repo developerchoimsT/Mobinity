@@ -29,46 +29,54 @@ public class JoinService {
     private static final Logger log = LoggerFactory.getLogger(JoinService.class);
     private final UserRepository userRepository;
     private final AddressRepository addressRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
     private final CommonUtil commonUtil;
 
 
     @Transactional
     public ResponseEntity<String> joinUser(UserJoinDto userJoinDto) {
-        //id가 이미 존재할 경우 exception 발생
-        Optional<User> storedUser = userRepository.findById(userJoinDto.getId());
-        if (storedUser.isPresent()) {
-            throw new DuplicateKeyException(Constants.ALREADY_EXIST);
-        }
-        // 새로운 user 엔티티 생성
-        User user = User.builder()
-                .code(commonUtil.createCode())
-                .id(userJoinDto.getId())
-                .pwd(commonUtil.hashPwd(userJoinDto.getPwd()))
-                .name(userJoinDto.getName())
-                .birth(userJoinDto.getBirth())
-                .phone(userJoinDto.getPhone())
-                .email(userJoinDto.getEmail())
-                .build();
 
         //db에 저장 - user 저장, user의 주소 저장
         try {
+            //id가 이미 존재할 경우 exception 발생
+            Optional<User> storedUser = userRepository.findById(userJoinDto.getId());
+            if (storedUser.isPresent()) {
+                throw new DuplicateKeyException(Constants.ALREADY_EXIST);
+            }
+            // 새로운 user 엔티티 생성
+            User user = User.builder()
+                    .code(commonUtil.createCode())
+                    .id(userJoinDto.getId())
+                    .pwd(commonUtil.hashPwd(userJoinDto.getPwd()))
+                    .name(userJoinDto.getName())
+                    .birth(userJoinDto.getBirth())
+                    .phone(userJoinDto.getPhone())
+                    .email(userJoinDto.getEmail())
+                    .build();
+
             userRepository.save(user);
             saveAddress(user, userJoinDto.getAddress());
+
             return ResponseEntity.ok(Constants.JOIN_SUCCESS);
-        } catch (Exception e) {
-            throw new RuntimeException(Constants.JOIN_FAIL, e);
+
+        } catch(Exception e) {
+            log.error(Constants.JOIN_FAIL, e);
+            throw new RuntimeException(Constants.JOIN_FAIL);
         }
     }
 
     public void saveAddress(User user, String userAddress){
-        //새로운 address 엔티티 생성
-        Address address = Address.builder()
-                .addressCode(commonUtil.createCode())
-                .code(user)
-                .address(userAddress)
-                .build();
-        addressRepository.save(address);
+        try{
+            //새로운 address 엔티티 생성
+            Address address = Address.builder()
+                    .addressCode(commonUtil.createCode())
+                    .code(user)
+                    .address(userAddress)
+                    .build();
+            addressRepository.save(address);
+        } catch (Exception e) {
+            log.error(Constants.ADDRESS_NOT_STORED, e);
+        }
+
     }
 
 
