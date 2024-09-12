@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
-    User save(User user);
+    Optional<User> save(User user);
     @Query("SELECT u FROM User u WHERE u.id = :id")
     Optional<User> findById(@Param("id") String id);
 }

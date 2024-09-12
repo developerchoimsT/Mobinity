@@ -1,12 +1,12 @@
 import React, { useContext, createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import Login from './Login';
-import Join from './Join';
+import Login from '../auth/Login';
+import Join from '../auth/Join';
 import './App.css';
-import Main from "./main/Main";
-import Search from "./search/Search";
-import './main/axios/axiosInterceptor.js';
+import Main from "./Main";
+import Search from "../search/Search";
+import './axios/axiosInterceptor.js';
 
 // Context 생성
 const UserContext = createContext(null);
