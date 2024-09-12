@@ -1,7 +1,7 @@
 ---
 name: enhancement template
 about: enhancement template
-title: "[ENHANCEMENT]"
+title: ''
 labels: enhancement
 assignees: ''
 
