@@ -111,16 +111,15 @@ const UserBody = () => {
                         <td></td>
                     </tr>
                     <tr>
-                        <td>address</td>
+                        <td>Address</td>
                         <td>
                             {userDetail.addressDto
-                                .sort((a, b) => b.main.localeCompare(a.main))
-                                .map((item, index)=> {
-                                <tr key={item.addressCode}>
-                                    <td>{item.main === 'Y' ? '메인 주소' : index}</td>
-                                    <td>{item.address}</td>
-                                </tr>
-                            })}
+                                .sort((a, b) => b.main.localeCompare(a.main)) // 'Y'를 최상위로 정렬
+                                .map((item, index) => (
+                                    <div key={item.addressCode}>
+                                        <span>{item.main === 'Y' ? '메인 주소' : index}</span>: {item.address}
+                                    </div>
+                                ))}
                         </td>
                     </tr>
                     </tbody>
@@ -135,7 +134,7 @@ const UserBody = () => {
                 </table>
             </div>
         </div>
-    );
+);
 }
 
 export default UserBody;
