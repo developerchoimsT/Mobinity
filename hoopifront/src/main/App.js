@@ -7,6 +7,7 @@ import './App.css';
 import Main from "./Main";
 import Search from "../search/Search";
 import './axios/axiosInterceptor.js';
+import AdminMain from "../admin/adminMain";
 
 // Context 생성
 const UserContext = createContext(null);
@@ -47,6 +48,7 @@ function App() {
                         <Route path='/' element={<Main/>}/>
                         <Route path='/join' element={<Join />}/>
                         <Route path='/login' element={<Login />}/>
+                        <Route path='/admin/main' element={<AdminMain/>}/>
                     </Routes>
                 </div>
             </Router>

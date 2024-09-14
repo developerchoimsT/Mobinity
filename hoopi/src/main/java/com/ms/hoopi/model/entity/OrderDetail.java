@@ -3,6 +3,8 @@ package com.ms.hoopi.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -26,5 +28,8 @@ public class OrderDetail {
 
     @Column(name = "order_amount", nullable = false)
     private Long orderAmount;
+
+    @Column(name = "total_price", nullable = false)
+    private BigDecimal totalPrice;
 
 }
