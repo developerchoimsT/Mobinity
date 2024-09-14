@@ -113,11 +113,11 @@ const UserBody = () => {
                     <tr>
                         <td>Address</td>
                         <td>
-                            {userDetail.addressDto.map((item, index) => (
-                                    <div key={item.addressCode}>
-                                        <span>{item.main === 'Y' ? '메인 주소' : index}</span>: {item.address}
-                                    </div>
-                                ))}
+                            {userDetail?.addressDto?.map((item, index) => (
+                                <div key={item.addressCode}>
+                                    <span>{item.main === 'Y' ? '메인 주소' : index}</span>: {item.address}
+                                </div>
+                            ))}
                         </td>
                     </tr>
                     </tbody>
