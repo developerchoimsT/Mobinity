@@ -68,11 +68,13 @@ public class AdminUserServiceImpl implements AdminUserService {
                                 .orElseThrow(()-> new EntityNotFoundException(Constants.NONE_USER));
         try{
             //addressDetail완성하기
-            List<AddressSelectDto> addressDetail = user.getAddresses().stream().map(address -> AddressSelectDto.builder()
-                                                                                                                .addressCode(address.getAddressCode())
-                                                                                                                .address(address.getAddress())
-                                                                                                                .main(address.getMain())
-                                                                                                                .build())
+            List<AddressSelectDto> addressDetail = user.getAddresses().stream()
+                                                                        .sorted((a, b) -> b.getMain().compareTo(a.getMain()))
+                                                                        .map(address -> AddressSelectDto.builder()
+                                                                                                        .addressCode(address.getAddressCode())
+                                                                                                        .address(address.getAddress())
+                                                                                                        .main(address.getMain())
+                                                                                                        .build())
                                                                                 .toList();
             //uesrDetail완성하기
             UserDetailSelectResponseDto userDetail = UserDetailSelectResponseDto.builder()
