@@ -10,8 +10,8 @@ const UserBody = () => {
     const[detailVisible, setDetailVisible] = useState(false);
 
     useEffect(() => {
-        const handleUserPage = async function(id){
-            const response = await axios.get("http://hoopi.p-e.kr/hoopi/admin/user");
+        const handleUserPage = async function(){
+            const response = await axios.get("http://hoopi.p-e.kr/hoopi/admin/user", {params:{id:id}});
             if(response.data == null){
                 return false;
             }
@@ -22,7 +22,7 @@ const UserBody = () => {
 
     // user detail 정보 불러오기
     const handleUserDetail = () => {
-        axios.get("http://hoopi.p-e.kr/hoopi/admin/user-detail")
+        axios.get("http://localhost:8080/hoopi/admin/user-detail")
             .then(response => {
                 setUserDetail(response.data);
             })
