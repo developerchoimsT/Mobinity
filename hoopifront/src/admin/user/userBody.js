@@ -6,22 +6,23 @@ const UserBody = () => {
     const id = localStorage.getItem("id");
 
     const[userPage, setUserPage] = useState([]);
-    const[userDetail, setUserDetail] = useState({});
+    const[userDetail, setUserDetail] = useState({'': ''});
+    const[detailVisible, setDetailVisible] = useState(false);
 
     useEffect(() => {
-        const handleUserPage = async function(id){
-            const response = await axios.get("http://hoopi.p-e.kr/hoopi/admin/user");
+        const handleUserPage = async function(){
+            const response = await axios.get("http://hoopi.p-e.kr/hoopi/admin/user", {params:{id:id}});
             if(response.data == null){
                 return false;
             }
             setUserPage(response.data);
         }
         handleUserPage();
-    }, [userPage, userDetail])
+    }, [])
 
     // user detail 정보 불러오기
     const handleUserDetail = () => {
-        axios.get("http://hoopi.p-e.kr/hoopi/admin/user-detail")
+        axios.get("http://localhost:8080/hoopi/admin/user-detail")
             .then(response => {
                 setUserDetail(response.data);
             })
@@ -42,8 +43,8 @@ const UserBody = () => {
     }
 
     // user detail 정보 닫기
-    const handleClose = (e) => {
-        e.property('display', 'none');
+    const handleClose = () => {
+        setDetailVisible(false);
     }
 
     return (
@@ -60,17 +61,17 @@ const UserBody = () => {
                 <tbody>
                 {userPage.map((item, index) => {
                     return (
-                        <tr key={item.code} id={item.id} onClick={handleUserDetail}>
-                            <td>index</td>
-                            <td>item.id</td>
-                            <td>item.name</td>
-                            <td>item.phone</td>
+                        <tr key={item.code} id={item.id} onClick={() => handleUserDetail(item.id)}>
+                            <td>{index + 1}</td>
+                            <td>{item.id}</td>
+                            <td>{item.name}</td>
+                            <td>{item.phone}</td>
                         </tr>
                     )
                 })}
                 </tbody>
             </table>
-            <div className='admin-user-detail-container' style={'display:none'}>
+            <div className='admin-user-detail-container' style={{display: detailVisible?"block" : "none"}}>
                 <table>
                     <thead>
                     <th colSpan="2">
@@ -80,35 +81,35 @@ const UserBody = () => {
                     <tbody>
                     <tr>
                         <td>id</td>
-                        <td></td>
+                        <td>{userDetail.id}</td>
                     </tr>
                     <tr>
                         <td>name</td>
-                        <td></td>
+                        <td>{userDetail.name}</td>
                     </tr>
                     <tr>
                         <td>phone</td>
-                        <td></td>
+                        <td>{userDetail.phone}</td>
                     </tr>
                     <tr>
                         <td>email</td>
-                        <td></td>
+                        <td>{userDetail.email}</td>
                     </tr>
                     <tr>
                         <td>birth</td>
-                        <td></td>
+                        <td>{userDetail.birth}</td>
                     </tr>
                     <tr>
                         <td>joinDate</td>
-                        <td></td>
+                        <td>{userDetail.joinDate}</td>
                     </tr>
                     <tr>
                         <td>quitDate</td>
-                        <td></td>
+                        <td>{userDetail.quitDate}</td>
                     </tr>
                     <tr>
                         <td>quitYn</td>
-                        <td></td>
+                        <td>{userDetail.quitYn}</td>
                     </tr>
                     <tr>
                         <td>Address</td>
