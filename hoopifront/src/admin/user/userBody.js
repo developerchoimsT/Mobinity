@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
+import Pagination from '../../common/pagination';
 
 const UserBody = () => {
 
@@ -11,18 +12,16 @@ const UserBody = () => {
 
     useEffect(() => {
         const handleUserPage = async function(){
-            const response = await axios.get("http://hoopi.p-e.kr/hoopi/admin/user", {params:{id:id}});
-            if(response.data == null){
-                return false;
-            }
+            const response = await axios.get("http://hoopi.p-e.kr/hoopi/admin/user", {params:{searchCate:id, keyword:id}});
+            log.info("response.data : " + response.data);
             setUserPage(response.data);
         }
         handleUserPage();
-    }, [])
+    }, [userPage])
 
     // user detail 정보 불러오기
     const handleUserDetail = () => {
-        axios.get("http://localhost:8080/hoopi/admin/user-detail")
+        axios.get("http://hoopi.p-e.kr/hoopi/admin/user-detail")
             .then(response => {
                 setUserDetail(response.data);
             })
@@ -59,7 +58,7 @@ const UserBody = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {userPage.map((item, index) => {
+                {userPage.content.map((item, index) => {
                     return (
                         <tr key={item.code} id={item.id} onClick={() => handleUserDetail(item.id)}>
                             <td>{index + 1}</td>
@@ -69,6 +68,7 @@ const UserBody = () => {
                         </tr>
                     )
                 })}
+
                 </tbody>
             </table>
             <div className='admin-user-detail-container' style={{display: detailVisible?"block" : "none"}}>
@@ -132,6 +132,10 @@ const UserBody = () => {
                     </tfoot>
                 </table>
             </div>
+            <Pagination
+                currentPage={currentPage}
+                totalPages={userPage.size}
+            />
         </div>
 );
 }
