@@ -22,8 +22,8 @@ public class AdminUserController {
     @GetMapping("/user")
     public Page<UserSelectResponseDto> userSelect(@RequestParam String searchCate,
                                                   @RequestParam String keyword,
-                                                  @RequestParam int page,
-                                                  @RequestParam int size) {
+                                                  @RequestParam(defaultValue = "0") int page,
+                                                  @RequestParam(defaultValue = "10") int size) {
         return adminUserService.userSelect(searchCate, keyword, page, size);
     }
 
