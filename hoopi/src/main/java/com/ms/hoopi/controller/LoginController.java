@@ -37,7 +37,7 @@ public class LoginController {
         return loginService.logout(response, request, id);
     }
 
-    @PostMapping("/refresh-token")
+    @GetMapping("/refresh-token")
     public void refreshToken(HttpServletResponse response, HttpServletRequest request, @RequestParam String id){
         loginService.refreshToken(response, request, id);
     }

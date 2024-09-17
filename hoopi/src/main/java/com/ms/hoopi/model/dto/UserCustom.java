@@ -31,4 +31,14 @@ public class UserCustom extends User {
         this.userId = userId;
         this.authorities = (List<GrantedAuthority>) authorities;
     }
+
+    @Override
+    public String toString() {
+        return "UserCustom{" +
+                "userId='" + userId + '\'' +
+                ", authorities=" + authorities +
+                // 비밀번호는 로깅에서 제외
+                '}';
+    }
+
 }

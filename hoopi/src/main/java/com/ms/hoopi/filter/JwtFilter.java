@@ -2,9 +2,12 @@ package com.ms.hoopi.filter;
 
 import com.ms.hoopi.constants.Constants;
 import com.ms.hoopi.model.dto.UserCustom;
+import com.ms.hoopi.model.entity.User;
+import com.ms.hoopi.repository.UserRepository;
 import com.ms.hoopi.util.CookieUtil;
 import com.ms.hoopi.util.JwtUtil;
 import io.jsonwebtoken.JwtException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,6 +24,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -28,6 +32,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
     private final CookieUtil cookieUtil;
+    private final UserRepository userRepository;
     private static final List<String> UNFILTERED_PATHS = Arrays.asList(
             "/hoopi/login",
             "/hoopi/join",
@@ -76,9 +81,10 @@ public class JwtFilter extends OncePerRequestFilter {
         List<SimpleGrantedAuthority> authorities = roles.stream()
                 .map(SimpleGrantedAuthority::new)
                 .toList();
-
+        Optional<User> storedUser = Optional.ofNullable(userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(Constants.NONE_USER)));
         // UserCustom 객체 생성
-        UserCustom user = new UserCustom(id, "", "", true, true, true, true, authorities);
+        UserCustom user = new UserCustom(id, id, storedUser.get().getPwd(), true, true, true, true, authorities);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);

@@ -1,7 +1,6 @@
 package com.ms.hoopi.service.serviceImpl;
 
 import com.ms.hoopi.constants.Constants;
-import com.ms.hoopi.filter.JwtFilter;
 import com.ms.hoopi.model.dto.UserCustom;
 import com.ms.hoopi.model.dto.UserLoginDto;
 import com.ms.hoopi.model.dto.UserLoginResponseDto;
@@ -111,6 +110,7 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public void refreshToken(HttpServletResponse response, HttpServletRequest request, String id) {
         try{
+            log.info("아이디 체크 : {}", id);
             if(id == null || id.isEmpty()){
                 throw new NullPointerException(Constants.REFRESH_ID_NOT_FOUND);
             }
@@ -126,12 +126,18 @@ public class LoginServiceImpl implements LoginService {
                     .map(role -> new SimpleGrantedAuthority(role))
                     .toList();
 
+            Optional<User> storedUser = Optional.ofNullable(userRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException(Constants.NONE_USER)));
             // UserCustom 객체 생성
-            UserCustom user = new UserCustom(id, "", "", true, true, true, true, authorities);
+            UserCustom user = new UserCustom(id, id, storedUser.get().getPwd(), true, true, true, true, authorities);
+
 
             Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            response.setStatus(200);
+
         } catch (Exception e){
+            log.error(Constants.JWT_INVALID, e);
             throw new JwtException(Constants.JWT_INVALID);
         }
 

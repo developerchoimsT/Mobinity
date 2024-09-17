@@ -52,6 +52,7 @@ function App() {
                         <Route path='/admin/board' element={<AdminMain/>}/>
                         <Route path='/admin/user' element={<AdminMain/>}/>
                         <Route path='/admin/order' element={<AdminMain/>}/>
+                        <Route path='/admin/product' element={<AdminMain/>}/>
                     </Routes>
                 </div>
             </Router>

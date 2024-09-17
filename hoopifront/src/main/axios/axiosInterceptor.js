@@ -21,7 +21,7 @@ axios.interceptors.response.use(
             return false;
           }
           // 서버로 userId를 보내서 Redis에 있는 Refresh Token으로 새로운 Access Token 요청
-          const tokenResponse = await axios.post('http://hoopi.p-e.kr/api/hoopi/refresh-token', { id });
+          const tokenResponse = await axios.get('http://hoopi.p-e.kr/api/hoopi/refresh-token', { params: {id: id} });
           console.log(id);
           if (tokenResponse.status == 200) {
             // 새 Access Token을 쿠키에 저장한 후 원래 요청을 다시 시도
@@ -32,7 +32,8 @@ axios.interceptors.response.use(
             console.error(tokenResponse.error);
             localStorage.removeItem("id");
             localStorage.removeItem("role");
-            window.location.reload('/login');
+            window.location.href = '/login';
+            originalRequest._retry = false;
             return Promise.reject(error);
           }
 
