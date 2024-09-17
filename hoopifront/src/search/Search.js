@@ -29,6 +29,8 @@ const Search = () => {
             tempBoardId = 'product';
         } else if (path.includes('notice')) {
             tempBoardId = 'notice';
+        } else if (path.includes('admin/main')){
+            tempBoardId = 'user';
         }
 
         try {
