@@ -1,27 +1,35 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import Pagination from '../../common/pagination';
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
+import * as React from "react";
 
 const UserBody = () => {
 
     const id = localStorage.getItem("id");
+    const role = localStorage.getItem("role");
 
-    const[userPage, setUserPage] = useState([]);
+    const [userPage, setUserPage] = useState({ content: [], totalPages: 0 });
+    const [currentPage, setCurrentPage] = useState(1);
     const[userDetail, setUserDetail] = useState({'': ''});
     const[detailVisible, setDetailVisible] = useState(false);
 
     useEffect(() => {
+        if(role !== '관리자'){
+            window.location.reload('/');
+            return;
+        }
         const handleUserPage = async function(){
-            const response = await axios.get("http://hoopi.p-e.kr/hoopi/admin/user", {params:{searchCate:id, keyword:id}});
+            const response = await axios.get("http://hoopi.p-e.kr/hoopi/admin/user", {params:{searchCate:id, keyword:id, page: 0, size: 10 }});
             log.info("response.data : " + response.data);
             setUserPage(response.data);
         }
         handleUserPage();
-    }, [userPage])
+    }, [id])
 
     // user detail 정보 불러오기
     const handleUserDetail = () => {
-        axios.get("http://hoopi.p-e.kr/hoopi/admin/user-detail")
+        axios.get("http://hoopi.p-e.kr/hoopi/admin/user-detail", {params: {id: userId}})
             .then(response => {
                 setUserDetail(response.data);
             })
@@ -45,6 +53,13 @@ const UserBody = () => {
     const handleClose = () => {
         setDetailVisible(false);
     }
+
+    const handlePageChange = async (event, page) => {
+        setCurrentPage(page);
+        const response = await axios.get("http://hoopi.p-e.kr/hoopi/admin/user", {params: {searchCate: id, keyword: id, page: page - 1, size: 10}});
+        setUserPage(response.data);
+    };
+
 
     return (
         <div>
@@ -132,10 +147,13 @@ const UserBody = () => {
                     </tfoot>
                 </table>
             </div>
-            <Pagination
-                currentPage={currentPage}
-                totalPages={userPage.size}
-            />
+            <Stack spacing={2}>
+                <Pagination count={userPage.totalPages}
+                            page={currentPage}
+                            onChange={handlePageChange}
+                            variant="outlined"
+                            color="primary" />
+            </Stack>
         </div>
 );
 }
