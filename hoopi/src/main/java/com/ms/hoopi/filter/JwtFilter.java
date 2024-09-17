@@ -58,12 +58,10 @@ public class JwtFilter extends OncePerRequestFilter {
         }
         // 쿠키에서 access token 추출
         String accessToken = cookieUtil.getAccessTokenFromCookie(request);
-        logger.info("Access token: " + accessToken);
         if (accessToken != null && jwtUtil.validateToken(accessToken)) {
             // access token이 유효하면 사용자 정보 추출
             String id = jwtUtil.getIdFromToken(accessToken);
             List<String> roles = jwtUtil.getRolesFromToken(accessToken);
-            logger.info("정보 추출 완료");
             // 인증 객체 생성
             setSecurityContext(id, roles);
             filterChain.doFilter(request, response);

@@ -17,6 +17,8 @@ axios.interceptors.response.use(
           const id = localStorage.getItem("id");
           if(id === null || id === ''){
             console.log('id가 저장이 안 돼있음');
+            localStorage.removeItem("id");
+            localStorage.removeItem("role");
             window.location.reload('/login');
             return false;
           }
