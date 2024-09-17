@@ -15,17 +15,21 @@ const UserBody = () => {
     const[detailVisible, setDetailVisible] = useState(false);
 
     useEffect(() => {
+        if(role !== '관리자'){
+            window.location.reload('/');
+            return;
+        }
         const handleUserPage = async function(){
-            const response = await axios.get("http://hoopi.p-e.kr/hoopi/admin/user", {params:{searchCate:id, keyword:id}});
+            const response = await axios.get("http://hoopi.p-e.kr/hoopi/admin/user", {params:{searchCate:id, keyword:id, page: 0, size: 10 }});
             log.info("response.data : " + response.data);
             setUserPage(response.data);
         }
         handleUserPage();
-    }, [])
+    }, [id])
 
     // user detail 정보 불러오기
     const handleUserDetail = () => {
-        axios.get("http://hoopi.p-e.kr/hoopi/admin/user-detail")
+        axios.get("http://hoopi.p-e.kr/hoopi/admin/user-detail", {params: {id: userId}})
             .then(response => {
                 setUserDetail(response.data);
             })
@@ -50,9 +54,12 @@ const UserBody = () => {
         setDetailVisible(false);
     }
 
-    const handlePageChange = (event, page) => {
+    const handlePageChange = async (event, page) => {
         setCurrentPage(page);
+        const response = await axios.get("http://hoopi.p-e.kr/hoopi/admin/user", {params: {searchCate: id, keyword: id, page: page - 1, size: 10}});
+        setUserPage(response.data);
     };
+
 
     return (
         <div>
