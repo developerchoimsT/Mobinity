@@ -1,7 +1,6 @@
 package com.ms.hoopi.service.serviceImpl;
 
 import com.ms.hoopi.constants.Constants;
-import com.ms.hoopi.filter.JwtFilter;
 import com.ms.hoopi.model.dto.UserCustom;
 import com.ms.hoopi.model.dto.UserLoginDto;
 import com.ms.hoopi.model.dto.UserLoginResponseDto;
@@ -127,8 +126,11 @@ public class LoginServiceImpl implements LoginService {
                     .map(role -> new SimpleGrantedAuthority(role))
                     .toList();
 
+            Optional<User> storedUser = Optional.ofNullable(userRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException(Constants.NONE_USER)));
             // UserCustom 객체 생성
-            UserCustom user = new UserCustom(id, "", "", true, true, true, true, authorities);
+            UserCustom user = new UserCustom(id, id, storedUser.get().getPwd(), true, true, true, true, authorities);
+
 
             Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);

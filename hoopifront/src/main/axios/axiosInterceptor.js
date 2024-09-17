@@ -32,7 +32,8 @@ axios.interceptors.response.use(
             console.error(tokenResponse.error);
             localStorage.removeItem("id");
             localStorage.removeItem("role");
-            window.location.reload('/login');
+            window.location.href = '/login';
+            originalRequest._retry = false;
             return Promise.reject(error);
           }
 
