@@ -89,69 +89,72 @@ const UserBody = () => {
                 </tbody>
             </table>
             <div className='admin-user-detail-container' style={{display: detailVisible?"block" : "none"}}>
-                <table>
-                    <thead>
-                    <th colSpan="2">
-                        {userDetail.id}님의 상세 정보
-                    </th>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>id</td>
-                        <td>{userDetail.id}</td>
-                    </tr>
-                    <tr>
-                        <td>name</td>
-                        <td>{userDetail.name}</td>
-                    </tr>
-                    <tr>
-                        <td>phone</td>
-                        <td>{userDetail.phone}</td>
-                    </tr>
-                    <tr>
-                        <td>email</td>
-                        <td>{userDetail.email}</td>
-                    </tr>
-                    <tr>
-                        <td>birth</td>
-                        <td>{userDetail.birth}</td>
-                    </tr>
-                    <tr>
-                        <td>joinDate</td>
-                        <td>{userDetail.joinDate}</td>
-                    </tr>
-                    <tr>
-                        <td>quitDate</td>
-                        <td>{userDetail.quitDate}</td>
-                    </tr>
-                    <tr>
-                        <td>quitYn</td>
-                        <td>{userDetail.quitYn}</td>
-                    </tr>
-                    <tr>
-                        <td>Address</td>
-                        <td>
-                            {userDetail?.addressDto?.map((item, index) => (
-                                <div key={item.addressCode}>
-                                    <span>{item.main === 'Y' ? '메인 주소' : index}</span>: {item.address}
-                                </div>
-                            ))}
-                        </td>
-                    </tr>
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                        <td colSpan={2}>
-                            <button id={userDetail.id} onClick={handleUserQuit}>탈퇴</button>
-                            <button onClick={handleClose}>닫기</button>
-                        </td>
-                    </tr>
-                    </tfoot>
-                </table>
+                <div className='admin-user-detail-box'>
+                    <table>
+                        <thead>
+                        <th colSpan="2">
+                            {userDetail.id}님의 상세 정보
+                        </th>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>id</td>
+                            <td>{userDetail.id}</td>
+                        </tr>
+                        <tr>
+                            <td>name</td>
+                            <td>{userDetail.name}</td>
+                        </tr>
+                        <tr>
+                            <td>phone</td>
+                            <td>{userDetail.phone}</td>
+                        </tr>
+                        <tr>
+                            <td>email</td>
+                            <td>{userDetail.email}</td>
+                        </tr>
+                        <tr>
+                            <td>birth</td>
+                            <td>{userDetail.birth}</td>
+                        </tr>
+                        <tr>
+                            <td>joinDate</td>
+                            <td>{userDetail.joinDate}</td>
+                        </tr>
+                        <tr>
+                            <td>quitDate</td>
+                            <td>{userDetail.quitDate}</td>
+                        </tr>
+                        <tr>
+                            <td>quitYn</td>
+                            <td>{userDetail.quitYn}</td>
+                        </tr>
+                        <tr>
+                            <td>Address</td>
+                            <td>
+                                {userDetail?.addressDto?.map((item, index) => (
+                                    <div key={item.addressCode}>
+                                        <span>{item.main === 'Y' ? '메인 주소' : index}</span>: {item.address}
+                                    </div>
+                                ))}
+                            </td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colSpan={2}>
+                                <button id={userDetail.id} onClick={handleUserQuit}>탈퇴</button>
+                                <button onClick={handleClose}>닫기</button>
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
             <div className='user-body-pagination'>
                 <Stack spacing={2}>
-                    <Pagination count={userPage.totalPages} page={currentPage} onChange={handlePageChange} variant="outlined" color="primary" />
+                    <Pagination count={userPage.totalPages} page={currentPage} onChange={handlePageChange}
+                                variant="outlined" color="primary"/>
                 </Stack>
             </div>
         </div>
