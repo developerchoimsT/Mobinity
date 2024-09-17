@@ -15,10 +15,10 @@ const UserBody = () => {
     const[detailVisible, setDetailVisible] = useState(false);
 
     useEffect(() => {
-        if(role !== '관리자'){
-            window.location.reload('/');
-            return;
-        }
+        // if(role !== '관리자'){
+        //     window.location.reload('/');
+        //     return;
+        // }
         const handleUserPage = async function(){
             const response = await axios.get("http://hoopi.p-e.kr/hoopi/admin/user", {params:{searchCate:id, keyword:id, page: 0, size: 10 }});
             console.log("response.data : " + response.data);
