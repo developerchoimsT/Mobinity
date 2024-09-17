@@ -40,10 +40,16 @@ function App() {
                         <Link to='/'><img src='/nata_logo.png' /></Link>
                     </div>
                     <div className='mainNav-link-box'>
-                        <Link to="/join">회원가입</Link>
-                        {role ==null || role =='' || id == null || id == '' ?<Link to="/login">로그인</Link>
-                            :`${id} 님 환영합니다 ${<Link onClick={handleLogout}>로그아웃</Link>}`
-                        }
+                        {role == null || role === '' || id == null || id === '' ? (
+                            <>
+                                <Link to="/join">회원가입</Link>
+                                <Link to="/login">로그인</Link>
+                            </>
+                        ) : (
+                            <span>
+                    {id} 님 환영합니다 <Link to="/" onClick={handleLogout}>로그아웃</Link>
+                </span>
+                        )}
                     </div>
                 </div>
                 <Search/>

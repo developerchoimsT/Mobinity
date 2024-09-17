@@ -135,6 +135,7 @@ public class LoginServiceImpl implements LoginService {
             Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
             response.setStatus(200);
+            log.info("acs token 재생성 성공");
 
         } catch (Exception e){
             log.error(Constants.JWT_INVALID, e);
