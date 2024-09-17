@@ -111,6 +111,7 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public void refreshToken(HttpServletResponse response, HttpServletRequest request, String id) {
         try{
+            log.info("아이디 체크 : {}", id);
             if(id == null || id.isEmpty()){
                 throw new NullPointerException(Constants.REFRESH_ID_NOT_FOUND);
             }
@@ -131,7 +132,10 @@ public class LoginServiceImpl implements LoginService {
 
             Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            response.setStatus(200);
+
         } catch (Exception e){
+            log.error(Constants.JWT_INVALID, e);
             throw new JwtException(Constants.JWT_INVALID);
         }
 

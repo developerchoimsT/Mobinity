@@ -18,6 +18,8 @@ const Header = () => {
             setBoardName('주문')
         } else if(path.includes('board')){
             setBoardName('게시글 및 댓글')
+        } else if(path.includes('product')){
+            setBoardName('상품')
         }
     }
     return(
@@ -29,7 +31,9 @@ const Header = () => {
                       {boardName} 관리 게시판
                   </td>
                   <td>
-                      {path.includes('board')?<button>글쓰기</button>: ''}
+                      {path.includes('board')?<button>글쓰기</button>
+                          : path.includes('order')?<button>상품 추가</button>
+                              :''}
                   </td>
               </tr>
               </thead>

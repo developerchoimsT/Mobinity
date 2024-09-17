@@ -13,7 +13,7 @@ import org.springframework.data.redis.core.TimeToLive;
 @AllArgsConstructor
 public class RefreshToken {
     @Id
-    private String userId;
+    private String id;
     private String refreshToken;
     @TimeToLive
     private Long expiration;
