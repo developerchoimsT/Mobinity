@@ -33,7 +33,6 @@ const UserBody = () => {
             setUserPage(response.data);
         } catch (error) {
             console.error("Failed to fetch data:", error);
-            alert("데이터를 불러오는데 실패했습니다.");
         }
     };
 
@@ -43,7 +42,7 @@ const UserBody = () => {
             setUserDetail(response.data);
             setDetailVisible(true);
         } catch (error) {
-            alert("상세 정보를 불러오는데 실패했습니다.");
+            alert(error.response.data);
         }
     };
 
@@ -53,7 +52,7 @@ const UserBody = () => {
             alert("사용자 탈퇴 처리가 완료되었습니다.");
             fetchUsers(currentPage); // 상태 업데이트 후 목록 새로고침
         } catch (error) {
-            alert("탈퇴 처리에 실패했습니다.");
+            alert(error.response.data);
         }
     };
 
@@ -79,7 +78,7 @@ const UserBody = () => {
                 </thead>
                 <tbody>
                 {userPage.content.map((item, index) => (
-                    <tr key={item.code} id={item.userId} onClick={() => handleUserDetail(item.id)}>
+                    <tr key={item.code} id={item.userId} onClick={() => handleUserDetail(item.userId)}>
                         <td>{index + 1}</td>
                         <td>{item.userId}</td>
                         <td>{item.userName}</td>
@@ -87,13 +86,6 @@ const UserBody = () => {
                         <td>{item.phone}</td>
                     </tr>
                 ))}
-                <tr>
-                    <td>1</td>
-                    <td>ms123</td>
-                    <td>최미선</td>
-                    <td>developerchoims@gmail.com</td>
-                    <td>01079173342</td>
-                </tr>
                 </tbody>
             </table>
             <div className='admin-user-detail-container' style={{display: detailVisible?"block" : "none"}}>
