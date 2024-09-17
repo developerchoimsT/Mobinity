@@ -1,12 +1,13 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import Pagination from '../../common/pagination';
+import BasicPagination from "../../common/pagination";
 
 const UserBody = () => {
 
     const id = localStorage.getItem("id");
+    const role = localStorage.getItem("role");
 
-    const[userPage, setUserPage] = useState([]);
+    const [userPage, setUserPage] = useState([]);
     const[userDetail, setUserDetail] = useState({'': ''});
     const[detailVisible, setDetailVisible] = useState(false);
 
@@ -17,7 +18,7 @@ const UserBody = () => {
             setUserPage(response.data);
         }
         handleUserPage();
-    }, [userPage])
+    }, [])
 
     // user detail 정보 불러오기
     const handleUserDetail = () => {
@@ -132,10 +133,7 @@ const UserBody = () => {
                     </tfoot>
                 </table>
             </div>
-            <Pagination
-                currentPage={currentPage}
-                totalPages={userPage.size}
-            />
+            <BasicPagination/>
         </div>
 );
 }

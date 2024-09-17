@@ -5,6 +5,9 @@
   "dependencies": {
     "@babel/plugin-transform-class-properties": "^7.24.7",
     "@babel/plugin-transform-private-property-in-object": "^7.24.7",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^6.1.0",
     "@portone/browser-sdk": "^0.0.9",
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^16.0.0",

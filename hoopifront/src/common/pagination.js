@@ -1,23 +1,11 @@
-import React from 'react';
+import * as React from 'react';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 
-function Pagination({ currentPage, totalPages, onPageChange }) {
+export default function BasicPagination() {
     return (
-        <div>
-            <button
-                onClick={() => onPageChange(currentPage - 1)}
-                disabled={currentPage === 0}
-            >
-                Previous
-            </button>
-            <span> Page {currentPage + 1} of {totalPages} </span>
-            <button
-                onClick={() => onPageChange(currentPage + 1)}
-                disabled={currentPage >= totalPages - 1}
-            >
-                Next
-            </button>
-        </div>
+        <Stack spacing={2}>
+            <Pagination count={10} variant="outlined" color="primary" />
+        </Stack>
     );
 }
-
-export default Pagination;
