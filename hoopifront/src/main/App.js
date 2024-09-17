@@ -8,6 +8,7 @@ import Main from "./Main";
 import Search from "../search/Search";
 import './axios/axiosInterceptor.js';
 import AdminMain from "../admin/adminMain";
+import {SearchProvider} from "../search/SearchContext";
 
 // Context 생성
 const UserContext = createContext(null);
@@ -25,7 +26,7 @@ function App() {
                 localStorage.removeItem('id');
                 localStorage.removeItem('role');
                 alert(response.data);
-                window.location.href = '/';  // 수정된 부분
+                window.location.href = '/';
             })
             .catch(error => {
                 alert(error.response.data);
@@ -54,18 +55,21 @@ function App() {
                         )}
                     </div>
                 </div>
-                <Search/>
                 <div>
-                    <Routes>
-                        <Route path='/' element={<Main/>}/>
-                        <Route path='/join' element={<Join />}/>
-                        <Route path='/login' element={<Login />}/>
-                        <Route path='/admin/main' element={<AdminMain/>}/>
-                        <Route path='/admin/board' element={<AdminMain/>}/>
-                        <Route path='/admin/user' element={<AdminMain/>}/>
-                        <Route path='/admin/order' element={<AdminMain/>}/>
-                        <Route path='/admin/product' element={<AdminMain/>}/>
-                    </Routes>
+                    <SearchProvider>
+
+                        <Search/>
+                        <Routes>
+                            <Route path='/' element={<Main/>}/>
+                            <Route path='/join' element={<Join />}/>
+                            <Route path='/login' element={<Login />}/>
+                            <Route path='/admin/main' element={<AdminMain/>}/>
+                            <Route path='/admin/board' element={<AdminMain/>}/>
+                            <Route path='/admin/user' element={<AdminMain/>}/>
+                            <Route path='/admin/order' element={<AdminMain/>}/>
+                            <Route path='/admin/product' element={<AdminMain/>}/>
+                        </Routes>
+                    </SearchProvider>
                 </div>
             </Router>
     );
