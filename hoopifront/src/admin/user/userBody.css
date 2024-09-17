@@ -1,0 +1,37 @@
+.user-body-container{
+    width: 100%;
+    text-align: center;
+}
+
+.user-body-container>table{
+    border: 2px solid #c9dcf9;
+    border-radius: 15px;
+    border-spacing: 0;
+    margin: auto;
+    width: 80%;
+}
+
+.user-body-container>table tr>td, .user-body-container>table tr>th{
+    border: 1px solid #c9dcf9;
+    padding: 0.5%;
+    border-spacing: 0;
+}
+
+.user-body-container>table>thead>tr>th:first-child{
+    border-radius: 10px 0 0 0;
+}
+.user-body-container>table>thead>tr>th:last-child{
+    border-radius: 0 10px 0 0;
+}
+.user-body-container>table>tbody>tr:last-child>td:first-child{
+    border-radius: 0 0 0 10px;
+}
+.user-body-container>table>tbody>tr:last-child>td:last-child{
+    border-radius: 0 0 10px 0;
+}
+
+.user-body-container>.user-body-pagination{
+    display: flex;
+    justify-content: center;
+    margin: 1% 0 1% 0;
+}

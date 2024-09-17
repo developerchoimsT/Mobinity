@@ -19,8 +19,6 @@ axios.interceptors.response.use(
             console.log('id가 저장이 안 돼있음');
             window.location.reload('/login');
             return false;
-          } else {
-            console.log('id :'+id);
           }
           // 서버로 userId를 보내서 Redis에 있는 Refresh Token으로 새로운 Access Token 요청
           const tokenResponse = await axios.post('http://hoopi.p-e.kr/api/hoopi/refresh-token', { id });
