@@ -21,7 +21,7 @@ const UserBody = () => {
         }
         const handleUserPage = async function(){
             const response = await axios.get("http://hoopi.p-e.kr/hoopi/admin/user", {params:{searchCate:id, keyword:id, page: 0, size: 10 }});
-            log.info("response.data : " + response.data);
+            console.log("response.data : " + response.data);
             setUserPage(response.data);
         }
         handleUserPage();
@@ -29,7 +29,7 @@ const UserBody = () => {
 
     // user detail 정보 불러오기
     const handleUserDetail = () => {
-        axios.get("http://hoopi.p-e.kr/hoopi/admin/user-detail", {params: {id: userId}})
+        axios.get("http://hoopi.p-e.kr/hoopi/admin/user-detail", {params: {id: id}})
             .then(response => {
                 setUserDetail(response.data);
             })
