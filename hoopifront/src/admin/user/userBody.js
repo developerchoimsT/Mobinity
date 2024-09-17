@@ -36,9 +36,9 @@ const UserBody = () => {
         }
     };
 
-    const handleUserDetail = async (userId) => {
+    const handleUserDetail = async (code) => {
         try {
-            const response = await axios.get(`http://hoopi.p-e.kr/api/hoopi/admin/user-detail/${userId}`);
+            const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/admin/user-detail', {params: {code: code}});
             setUserDetail(response.data);
             setDetailVisible(true);
         } catch (error) {
@@ -78,7 +78,7 @@ const UserBody = () => {
                 </thead>
                 <tbody>
                 {userPage.content.map((item, index) => (
-                    <tr key={item.code} id={item.userId} onClick={() => handleUserDetail(item.userId)}>
+                    <tr key={item.code} id={item.userId} onClick={() => handleUserDetail(item.code)}>
                         <td>{index + 1}</td>
                         <td>{item.userId}</td>
                         <td>{item.userName}</td>
