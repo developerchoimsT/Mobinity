@@ -10,7 +10,14 @@ const UserBody = () => {
 
     const [userPage, setUserPage] = useState({ content: [], totalPages: 0 });
     const [currentPage, setCurrentPage] = useState(1);
-    const [userDetail, setUserDetail] = useState(null);
+    const [userDetail, setUserDetail] = useState({id: ''
+                                                                , name:''
+                                                                , phone:''
+                                                                , birth: ''
+                                                                , email: ''
+                                                                , quitYn: ''
+                                                                , quitDate: ''
+                                                                , joinDate: ''});
     const [detailVisible, setDetailVisible] = useState(false);
 
     useEffect(() => {
