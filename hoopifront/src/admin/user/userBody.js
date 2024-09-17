@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+import './userBody.css'
 
 const UserBody = () => {
     const id = localStorage.getItem("id");
@@ -58,7 +59,7 @@ const UserBody = () => {
     };
 
     return (
-        <div>
+        <div className='user-body-container'>
             <table>
                 <thead>
                 <tr>
@@ -79,16 +80,81 @@ const UserBody = () => {
                         <td>{item.phone}</td>
                     </tr>
                 ))}
+                <tr>
+                    <td>1</td>
+                    <td>ms123</td>
+                    <td>최미선</td>
+                    <td>developerchoims@gmail.com</td>
+                    <td>01079173342</td>
+                </tr>
                 </tbody>
             </table>
-            {detailVisible && userDetail && (
-                <div className='admin-user-detail-container' style={{ display: "block" }}>
-                    {/* 상세 정보 테이블 */}
-                </div>
-            )}
-            <Stack spacing={2}>
-                <Pagination count={userPage.totalPages} page={currentPage} onChange={handlePageChange} variant="outlined" color="primary" />
-            </Stack>
+            <div className='admin-user-detail-container' style={{display: detailVisible?"block" : "none"}}>
+                <table>
+                    <thead>
+                    <th colSpan="2">
+                        {userDetail.id}님의 상세 정보
+                    </th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>id</td>
+                        <td>{userDetail.id}</td>
+                    </tr>
+                    <tr>
+                        <td>name</td>
+                        <td>{userDetail.name}</td>
+                    </tr>
+                    <tr>
+                        <td>phone</td>
+                        <td>{userDetail.phone}</td>
+                    </tr>
+                    <tr>
+                        <td>email</td>
+                        <td>{userDetail.email}</td>
+                    </tr>
+                    <tr>
+                        <td>birth</td>
+                        <td>{userDetail.birth}</td>
+                    </tr>
+                    <tr>
+                        <td>joinDate</td>
+                        <td>{userDetail.joinDate}</td>
+                    </tr>
+                    <tr>
+                        <td>quitDate</td>
+                        <td>{userDetail.quitDate}</td>
+                    </tr>
+                    <tr>
+                        <td>quitYn</td>
+                        <td>{userDetail.quitYn}</td>
+                    </tr>
+                    <tr>
+                        <td>Address</td>
+                        <td>
+                            {userDetail?.addressDto?.map((item, index) => (
+                                <div key={item.addressCode}>
+                                    <span>{item.main === 'Y' ? '메인 주소' : index}</span>: {item.address}
+                                </div>
+                            ))}
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colSpan={2}>
+                            <button id={userDetail.id} onClick={handleUserQuit}>탈퇴</button>
+                            <button onClick={handleClose}>닫기</button>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div className='user-body-pagination'>
+                <Stack spacing={2}>
+                    <Pagination count={userPage.totalPages} page={currentPage} onChange={handlePageChange} variant="outlined" color="primary" />
+                </Stack>
+            </div>
         </div>
     );
 };

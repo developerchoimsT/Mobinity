@@ -33,8 +33,7 @@ public class JwtFilter extends OncePerRequestFilter {
             "/hoopi/join",
             "/hoopi/refresh-token",
             "/hoopi/phone",
-            "/hoopi/email",
-            "/hoopi/admin/user"
+            "/hoopi/email"
     );
 
     private AntPathMatcher pathMatcher = new AntPathMatcher();

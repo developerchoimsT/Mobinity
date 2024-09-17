@@ -1,14 +1,35 @@
+import {useLocation} from "react-router-dom";
+import {useEffect, useState} from "react";
+import './header.css';
+
 const Header = () => {
+    const locatoin = useLocation();
+    const path = locatoin.pathname;
+    const [boardName, setBoardName] = useState();
+
+    useEffect(() => {
+        fetchPath(path)
+    }, [path])
+
+    const fetchPath = (path) => {
+        if(path.includes('main')){
+            setBoardName('회원')
+        } else if(path.includes('order')){
+            setBoardName('주문')
+        } else if(path.includes('board')){
+            setBoardName('게시글 및 댓글')
+        }
+    }
     return(
-      <div>
+      <div className='admin-header-container'>
           <table>
               <thead>
               <tr>
                   <td>
-                      ㅇㅇ게시판
+                      {boardName} 관리 게시판
                   </td>
                   <td>
-                      글쓰기/글수정
+                      {path.includes('board')?<button>글쓰기</button>: ''}
                   </td>
               </tr>
               </thead>
