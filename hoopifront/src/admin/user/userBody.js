@@ -21,7 +21,7 @@ const UserBody = () => {
             const response = await axios.get("http://hoopi.p-e.kr/hoopi/admin/user", {
                 params: { searchCate: "id", keyword: id, page: page - 1, size: 10 }
             });
-            console.log("response.data : ", response.data);
+            console.log("response.data : ", response.data.content);
             setUserPage(response.data);
         } catch (error) {
             console.error("Failed to fetch data:", error);
@@ -65,15 +65,17 @@ const UserBody = () => {
                     <th>순서</th>
                     <th>아이디</th>
                     <th>이름</th>
+                    <th>이메일</th>
                     <th>핸드폰 번호</th>
                 </tr>
                 </thead>
                 <tbody>
                 {userPage.content.map((item, index) => (
-                    <tr key={item.code} id={item.id} onClick={() => handleUserDetail(item.id)}>
+                    <tr key={item.code} id={item.userId} onClick={() => handleUserDetail(item.id)}>
                         <td>{index + 1}</td>
-                        <td>{item.id}</td>
-                        <td>{item.name}</td>
+                        <td>{item.userId}</td>
+                        <td>{item.userName}</td>
+                        <td>{item.email}</td>
                         <td>{item.phone}</td>
                     </tr>
                 ))}
