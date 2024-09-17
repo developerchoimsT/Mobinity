@@ -92,11 +92,9 @@ public class LoginServiceImpl implements LoginService {
         try{
             //쿠키에서 token, id 추출
             String token = cookieUtil.getAccessTokenFromCookie(request);
-            String cookieId = jwtUtil.getIdFromToken(token);
 
             //cookie와 redis에서 acs, rfr token 삭제
-            cookieUtil.deleteAccessTokenCookie(response, true);
-            redisService.deleteRefreshToken(cookieId);
+            jwtUtil.deleteToken(response, id);
 
             return ResponseEntity.ok(Constants.LOGOUT_SUCCESS);
 

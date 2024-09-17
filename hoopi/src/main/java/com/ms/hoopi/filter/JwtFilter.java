@@ -38,7 +38,8 @@ public class JwtFilter extends OncePerRequestFilter {
             "/hoopi/join",
             "/hoopi/refresh-token",
             "/hoopi/phone",
-            "/hoopi/email"
+            "/hoopi/email",
+            "/hoopi/logout"
     );
 
     private AntPathMatcher pathMatcher = new AntPathMatcher();
@@ -57,24 +58,23 @@ public class JwtFilter extends OncePerRequestFilter {
         }
         // 쿠키에서 access token 추출
         String accessToken = cookieUtil.getAccessTokenFromCookie(request);
-
+        logger.info("Access token: " + accessToken);
         if (accessToken != null && jwtUtil.validateToken(accessToken)) {
             // access token이 유효하면 사용자 정보 추출
             String id = jwtUtil.getIdFromToken(accessToken);
             List<String> roles = jwtUtil.getRolesFromToken(accessToken);
-
+            logger.info("정보 추출 완료");
             // 인증 객체 생성
             setSecurityContext(id, roles);
-
+            filterChain.doFilter(request, response);
         } else {
             // Access Token이 유효하지 않을 때 401 또는 403 반환
             logger.error(Constants.JWT_INVALID);
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401 Unauthorized
             return; // 필터 체인을 중단하고, 에러 응답을 반환
         }
-
-        filterChain.doFilter(request, response);
     }
+
 
     private void setSecurityContext(String id, List<String> roles) {
         // GrantedAuthority를 List로 변환

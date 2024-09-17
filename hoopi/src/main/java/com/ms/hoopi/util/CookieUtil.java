@@ -52,8 +52,4 @@ public class CookieUtil {
         create(response, ACCESS_TOKEN_COOKIE_NAME, "", 0, true, secure);
     }
 
-    // rfr token 쿠키 삭제
-    public void deleteRefreshTokenCookie(HttpServletResponse response, boolean secure) {
-        create(response, REFRESH_TOKEN_COOKIE_NAME, "", 0, true, secure);
-    }
 }
