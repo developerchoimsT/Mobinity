@@ -18,7 +18,7 @@ const UserBody = () => {
 
     const fetchUsers = async (page) => {
         try {
-            const response = await axios.get("http://hoopi.p-e.kr/hoopi/admin/user", {
+            const response = await axios.get("http://hoopi.p-e.kr/api/hoopi/admin/user", {
                 params: { searchCate: "id", keyword: id, page: page - 1, size: 10 }
             });
             console.log("response.data : ", response.data.content);
@@ -31,7 +31,7 @@ const UserBody = () => {
 
     const handleUserDetail = async (userId) => {
         try {
-            const response = await axios.get(`http://hoopi.p-e.kr/hoopi/admin/user-detail/${userId}`);
+            const response = await axios.get(`http://hoopi.p-e.kr/api/hoopi/admin/user-detail/${userId}`);
             setUserDetail(response.data);
             setDetailVisible(true);
         } catch (error) {
@@ -41,7 +41,7 @@ const UserBody = () => {
 
     const handleUserQuit = async (userId) => {
         try {
-            const response = await axios.delete(`http://hoopi.p-e.kr/hoopi/admin/user-quit/${userId}`);
+            const response = await axios.delete(`http://hoopi.p-e.kr/api/hoopi/admin/user-quit/${userId}`);
             alert("사용자 탈퇴 처리가 완료되었습니다.");
             fetchUsers(currentPage); // 상태 업데이트 후 목록 새로고침
         } catch (error) {
