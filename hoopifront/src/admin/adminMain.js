@@ -12,8 +12,11 @@ const AdminMain = () => {
 
     const fetchAdmin = () => {
         if(id == null || id == '' || role == null || role == '' || role == 'user'){
-            window.location.href('/login');
-            return false;
+            if(error.status == 401 || error.status == 403){
+                alert("관리자만 접근가능합니다.");
+                window.location.href = '/';
+                return;
+            }
         }
     }
 
