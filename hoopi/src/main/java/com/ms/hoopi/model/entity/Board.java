@@ -21,8 +21,11 @@ public class Board {
     @Column(name = "depth", nullable = false, length = 1)
     private String depth;
 
-    @Column(name = "super_code", nullable = false)
-    private String superCode;
+    @Column(name = "super_id", nullable = false)
+    private String superId;
+
+    @Column(name = "board_id", nullable = false)
+    private String boardId;
 
     @OneToMany(mappedBy = "boardCode")
     private Set<Article> articles = new LinkedHashSet<>();

@@ -1,6 +1,7 @@
 package com.ms.hoopi.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -45,4 +46,12 @@ public class Article {
     @OneToMany(mappedBy = "articleCode")
     private Set<Reply> replies = new LinkedHashSet<>();
 
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }
