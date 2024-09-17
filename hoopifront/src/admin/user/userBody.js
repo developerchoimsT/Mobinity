@@ -1,13 +1,16 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import BasicPagination from "../../common/pagination";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
+import * as React from "react";
 
 const UserBody = () => {
 
     const id = localStorage.getItem("id");
     const role = localStorage.getItem("role");
 
-    const [userPage, setUserPage] = useState([]);
+    const [userPage, setUserPage] = useState({ content: [], totalPages: 0 });
+    const [currentPage, setCurrentPage] = useState(1);
     const[userDetail, setUserDetail] = useState({'': ''});
     const[detailVisible, setDetailVisible] = useState(false);
 
@@ -46,6 +49,10 @@ const UserBody = () => {
     const handleClose = () => {
         setDetailVisible(false);
     }
+
+    const handlePageChange = (event, page) => {
+        setCurrentPage(page);
+    };
 
     return (
         <div>
@@ -133,7 +140,13 @@ const UserBody = () => {
                     </tfoot>
                 </table>
             </div>
-            <BasicPagination/>
+            <Stack spacing={2}>
+                <Pagination count={userPage.totalPages}
+                            page={currentPage}
+                            onChange={handlePageChange}
+                            variant="outlined"
+                            color="primary" />
+            </Stack>
         </div>
 );
 }
