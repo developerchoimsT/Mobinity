@@ -58,13 +58,14 @@
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     z-index: 1000;
     text-align: center;
+    padding: 5%;
 }
 .admin-user-detail-box>table{
     border: 2px solid #c9dcf9;
     border-radius: 15px;
     width: 60%;
     border-spacing: 0;
-    margin: 5% 20% 5% 20%;
+    margin: 0 20% 0 20%;
 }
 .admin-user-detail-box>table tr>td, .admin-user-detail-box tr>th{
     border: 1px solid #c9dcf9;
