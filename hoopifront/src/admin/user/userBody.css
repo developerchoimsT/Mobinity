@@ -35,3 +35,15 @@
     justify-content: center;
     margin: 1% 0 1% 0;
 }
+
+
+.admin-user-detail-container{
+    background: white;
+    border: 2px solid #c9dcf9;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 60%;
+    z-index: 1000;
+    top: 0;
+    left: 20%;
+}
