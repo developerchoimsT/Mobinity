@@ -53,7 +53,7 @@
     background: white;
     width: 60%;
     height: 100%;
-    margin: 0 20% 0 20%;
+    margin: auto;
     border-radius: 5px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     z-index: 1000;
@@ -62,7 +62,8 @@
 .admin-user-detail-box>table{
     border: 2px solid #c9dcf9;
     border-radius: 15px;
-    width: 100%;
+    width: 60%;
+    border-spacing: 0;
 }
 .admin-user-detail-box>table tr>td, .admin-user-detail-box tr>th{
     border: 1px solid #c9dcf9;
@@ -71,9 +72,11 @@
 }
 .admin-user-detail-box>table>thead>tr>th:first-child{
     border-radius: 10px 10px 0 0;
+    padding: 1%;
 }
-.admin-user-detail-box>table>tbody>tr:last-child>td:first-child{
+.admin-user-detail-box>table>tfoot>tr:last-child>td:first-child{
     border-radius: 0 0 10px 10px;
+    padding: 1%;
 }
 .admin-user-detail-box>table button{
     font-family: 'LeeSeoyun', sans-serif;
