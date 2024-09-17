@@ -18,12 +18,9 @@ function App() {
     const id = localStorage.getItem("id");
     const role = localStorage.getItem("role");
 
-    useEffect(() => {
-        handleLogout();
-    }, []);
 
-    const handleLogout = async () => {
-        await axios.delete('http://hoopi.p-e.kr/api/hoopi/logout', { params: { id: id } })
+    const handleLogout =  () => {
+         axios.delete('http://hoopi.p-e.kr/api/hoopi/logout', { params: { id: id } })
             .then(response => {
                 localStorage.removeItem('id');
                 localStorage.removeItem('role');
