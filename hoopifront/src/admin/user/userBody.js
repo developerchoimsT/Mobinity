@@ -32,11 +32,6 @@ const UserBody = () => {
             console.log("response.data : ", response.data.content);
             setUserPage(response.data);
         } catch (error) {
-            if(error.status == 401 || error.status == 403){
-                alert("관리자만 접근가능합니다.");
-                window.location.href = '/';
-                return;
-            }
             console.error("Failed to fetch data:", error);
             alert("데이터를 불러오는데 실패했습니다.");
         }
