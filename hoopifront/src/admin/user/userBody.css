@@ -64,6 +64,7 @@
     border-radius: 15px;
     width: 60%;
     border-spacing: 0;
+    margin: 5% 20% 5% 20%;
 }
 .admin-user-detail-box>table tr>td, .admin-user-detail-box tr>th{
     border: 1px solid #c9dcf9;
@@ -72,7 +73,7 @@
 }
 .admin-user-detail-box>table>thead>tr>th:first-child{
     border-radius: 10px 10px 0 0;
-    padding: 1%;
+    padding: 3%;
 }
 .admin-user-detail-box>table>tfoot>tr:last-child>td:first-child{
     border-radius: 0 0 10px 10px;
