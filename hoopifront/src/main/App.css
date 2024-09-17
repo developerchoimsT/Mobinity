@@ -34,6 +34,17 @@
     font-size: 3.5vh;
     color: #91bee3;
 }
+.mainNav-link-box>span{
+    padding: 0 10px 0 10px;
+    font-size: 3.5vh;
+    color: grey;
+}
+.mainNav-link-box>span>a{
+    padding: 0 10px 0 10px;
+    text-decoration: none;
+    font-size: 3.5vh;
+    color: #91bee3;
+}
 
 /*스크롤 css*/
 /* 스크롤바 전체 */

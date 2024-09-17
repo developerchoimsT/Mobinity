@@ -18,18 +18,23 @@ function App() {
     const id = localStorage.getItem("id");
     const role = localStorage.getItem("role");
 
-    const handleLogout = () => {
-        axios.delete('http://hoopi.p-e.kr/api/hoopi/logout', {params: {id: id}})
+    useEffect(() => {
+        handleLogout();
+    }, [id, role]);
+
+    const handleLogout = async () => {
+        await axios.delete('http://hoopi.p-e.kr/api/hoopi/logout', { params: { id: id } })
             .then(response => {
                 localStorage.removeItem('id');
                 localStorage.removeItem('role');
                 alert(response.data);
-                window.location.href('/');
+                window.location.href = '/';  // 수정된 부분
             })
             .catch(error => {
-                alert(error.response.data)
+                alert(error.response.data);
             });
     }
+
     return (
             <Router>
                 <div className='mainNav-container'>
@@ -47,8 +52,8 @@ function App() {
                             </>
                         ) : (
                             <span>
-                    {id} 님 환영합니다 <Link to="/" onClick={handleLogout}>로그아웃</Link>
-                </span>
+                                {id} 님 환영합니다 <Link to="/" onClick={handleLogout}>로그아웃</Link>
+                            </span>
                         )}
                     </div>
                 </div>
