@@ -20,7 +20,7 @@ function App() {
 
     useEffect(() => {
         handleLogout();
-    }, [id, role]);
+    }, []);
 
     const handleLogout = async () => {
         await axios.delete('http://hoopi.p-e.kr/api/hoopi/logout', { params: { id: id } })
