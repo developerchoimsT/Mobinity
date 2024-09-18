@@ -9,4 +9,6 @@ public interface BoardAndCateService {
     public List<CategoryResponseDto> getCategory(String boardCode);
 
     BoardResponseDto getBoard(String boardId);
+
+    List<BoardResponseDto> getMenu();
 }

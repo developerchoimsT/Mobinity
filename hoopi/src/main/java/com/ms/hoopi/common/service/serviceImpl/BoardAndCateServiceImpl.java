@@ -45,4 +45,17 @@ public class BoardAndCateServiceImpl implements BoardAndCateService {
                                                 .build();
         return board;
     }
+
+    @Override
+    public List<BoardResponseDto> getMenu() {
+        List<Board> menuEntity = boardRepository.findAll();
+        List<BoardResponseDto> menu = menuEntity.stream().map(m -> BoardResponseDto.builder()
+                                                                                    .boardCode(m.getBoardCode())
+                                                                                    .boardId(m.getBoardId())
+                                                                                    .name(m.getName())
+                                                                                    .depth(m.getDepth())
+                                                                                    .superId(m.getSuperId())
+                                                                                    .build()).toList();
+        return menu;
+    }
 }
