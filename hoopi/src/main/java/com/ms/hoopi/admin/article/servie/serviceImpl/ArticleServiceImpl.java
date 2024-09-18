@@ -44,6 +44,7 @@ public class ArticleServiceImpl implements ArticleService {
             Board board = boardRepository.findBoardByBoardCode(article.getBoardCode())
                     .orElseThrow(() -> new EntityNotFoundException(Constants.NONE_BOARD));
             log.info("board:{}",board);
+            Article articleEntity;
             // product 정보 존재할때만 실행
             boolean flag = false;
             if(!product.getName().isEmpty() && product.getPrice() != 0 && product.getStock() != 0){
@@ -51,7 +52,7 @@ public class ArticleServiceImpl implements ArticleService {
                 flag = true;
                 // article 정보 저장
                 String articleCode = commonUtil.createCode();
-                Article articleEntity = Article.builder()
+                articleEntity = Article.builder()
                         .articleCode(articleCode)
                         .articleTitle(article.getArticleTitle())
                         .code(user)
@@ -59,18 +60,21 @@ public class ArticleServiceImpl implements ArticleService {
                         .productCode(productEntity)
                         .boardCode(board)
                         .build();
+                articleRepository.save(articleEntity);
+            } else {
+                // productEntity없을 때 article 정보 저장
+                String articleCode = commonUtil.createCode();
+                articleEntity = Article.builder()
+                        .articleCode(articleCode)
+                        .articleTitle(article.getArticleTitle())
+                        .code(user)
+                        .boardContent(article.getBoardContent())
+                        .boardCode(board)
+                        .build();
+                articleRepository.save(articleEntity);
             }
 
-            // productEntity없을 때 article 정보 저장
-            String articleCode = commonUtil.createCode();
-            Article articleEntity = Article.builder()
-                    .articleCode(articleCode)
-                    .articleTitle(article.getArticleTitle())
-                    .code(user)
-                    .boardContent(article.getBoardContent())
-                    .boardCode(board)
-                    .build();
-            articleRepository.save(articleEntity);
+
             log.info("article:{}",articleEntity);
 
             if(!flag){
