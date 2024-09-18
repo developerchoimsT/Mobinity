@@ -53,7 +53,10 @@ const Search = () => {
             console.log(boardCode);
             const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/category', {params: {boardCode: boardCode}});
             setCategory(response.data);
-            console.log(response.data);
+            // 첫 번째 카테고리의 ID를 searchCate 상태에 설정
+            if (response.data && response.data.length > 0) {
+                setSearchCate(response.data[0].categoryId);
+            }
         } catch (error){
             console.log(error);
         }
