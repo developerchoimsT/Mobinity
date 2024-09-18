@@ -2,10 +2,20 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
     height: 100vh;
     font-size: 3vh;
     font-family: 'LeeSeoyun', sans-serif;
+}
+.admin-product-container{
+    display: block;
+}
+.admin-product-container>.admin-product-box{
+    color: grey;
+}
+.admin-product-container>.admin-product-box>input{
+    margin: 2%;
+    font-family: 'LeeSeoyun', sans-serif;
+    font-size: 3vh;
 }
 
 .admin-article-box {
@@ -23,7 +33,8 @@
 .admin-article-title select {
     margin-right: 10px;
     padding: 5px 10px;
-    width: 7vh;
+    width: 10vh;
+    height: 4vh;
     border-radius: 5px;
     border: 2px solid #c9dcf9;
     font-family: 'LeeSeoyun', sans-serif;
@@ -35,14 +46,15 @@
     margin-right: 10px;
     padding: 5px 10px;
     width: 15vh;
+    height: 4vh;
     border-radius: 5px;
     border: 2px solid #c9dcf9;
     font-family: 'LeeSeoyun', sans-serif;
     font-size: 3vh;
 }
 
-.admin-article-title input[type="image"] {
-    width: 5vh;
+.admin-article-title input[type="file"] {
+    width: 10vh;
     height: 4vh;
     cursor: pointer;
     color: grey;
@@ -58,6 +70,8 @@
     padding: 10px;
     border: 3px solid #c9dcf9;
     box-sizing: border-box;
+    border-radius: 10px;
+    resize: none;
 }
 
 .admin-article-footer {
@@ -72,8 +86,8 @@
     border: none;
     border-radius: 5px;
     background: #c9dcf9;
-    width: 4vh;
-    height: 3vh;
+    width: 7vh;
+    height: 4vh;
     color: grey;
     cursor: pointer;
 }
