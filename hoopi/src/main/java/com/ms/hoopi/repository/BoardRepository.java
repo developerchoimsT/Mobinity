@@ -14,5 +14,5 @@ public interface BoardRepository extends JpaRepository<Board, String> {
     Board findBoardByBoardId(String boardId);
 
     @Query("SELECT b FROM Board b WHERE b.boardCode = :boardCode")
-    Optional<Board> findBoardByBoardCode(Board boardCode);
+    Optional<Board> findBoardByBoardCode(String boardCode);
 }
