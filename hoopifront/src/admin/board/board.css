@@ -1,12 +1,16 @@
 .admin-article-container {
     width: 100%;
-    margin: auto;
+    text-align: center;
+    position: relative;
     height: 100vh;
     font-size: 3vh;
     font-family: 'LeeSeoyun', sans-serif;
 }
-.admin-product-container{
+.admin-article-box, .admin-product-container {
+    margin: 0 auto;
     width: 50%;
+    padding: 20px;
+    box-sizing: border-box;
 }
 .admin-product-container>.admin-product-box{
     color: grey;
@@ -14,7 +18,8 @@
 .admin-product-container>.admin-product-box input{
     margin: 2%;
     font-family: 'LeeSeoyun', sans-serif;
-    font-size: 3vh;
+    font-size: 3.5vh;
+    width: 25vw;
 }
 
 .admin-article-box {
@@ -47,20 +52,18 @@
     width: 15vh;
     height: 4vh;
     border-radius: 5px;
-    border: 2px solid #c9dcf9;
+    border: 3px solid #c9dcf9;
     font-family: 'LeeSeoyun', sans-serif;
     font-size: 3vh;
+    box-sizing: border-box;
 }
 
 .admin-article-title input[type="file"] {
     width: 10vh;
-    height: 4vh;
+    height: 5vh;
     cursor: pointer;
     color: grey;
     border-radius: 5px;
-    border: 2px solid #c9dcf9;
-    font-family: 'LeeSeoyun', sans-serif;
-    font-size: 3vh;
     background: none;
     box-sizing: border-box;
 }
