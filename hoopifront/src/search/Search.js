@@ -48,7 +48,7 @@ const Search = () => {
 
     const fetchCategory = async() => {
         try{
-            const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/board', {params: {boardCode: board.boardCode}});
+            const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/category', {params: {boardCode: board.boardCode}});
             setCategory(response.data);
         } catch (error){
             console.log(error);
