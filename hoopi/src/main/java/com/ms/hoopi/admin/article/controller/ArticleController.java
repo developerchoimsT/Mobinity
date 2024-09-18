@@ -21,7 +21,7 @@ public class ArticleController {
 
     @PostMapping("/article")
     public ResponseEntity<String> addArticle(@RequestParam("imgs")List<MultipartFile> imgs
-                                            , @RequestBody ArticleCreationRequestDto request) throws IOException {
+                                            , @RequestParam("data") ArticleCreationRequestDto request) throws IOException {
         return articleService.addArticle(imgs, request.getProduct(), request.getArticle());
     }
 }

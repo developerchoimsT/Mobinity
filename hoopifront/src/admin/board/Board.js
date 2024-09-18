@@ -93,11 +93,7 @@ const Board = () => {
         });
 
         try {
-                const response = await axios.post('http://hoopi.p-e.kr/api/hoopi/article', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
+                const response = await axios.post('http://hoopi.p-e.kr/api/hoopi/article', formData);
             alert(response.data);
         } catch (error) {
             console.error(error);
