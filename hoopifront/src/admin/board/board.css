@@ -52,20 +52,18 @@
     width: 15vh;
     height: 4vh;
     border-radius: 5px;
-    border: 2px solid #c9dcf9;
+    border: 3px solid #c9dcf9;
     font-family: 'LeeSeoyun', sans-serif;
     font-size: 3vh;
+    box-sizing: border-box;
 }
 
 .admin-article-title input[type="file"] {
     width: 10vh;
-    height: 4vh;
+    height: 5vh;
     cursor: pointer;
     color: grey;
     border-radius: 5px;
-    border: 2px solid #c9dcf9;
-    font-family: 'LeeSeoyun', sans-serif;
-    font-size: 3vh;
     background: none;
     box-sizing: border-box;
 }
