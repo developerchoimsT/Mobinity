@@ -38,6 +38,7 @@ const Board = () => {
             console.log(path);
             const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/board', { params: { boardId: tempBoardId } });
             setBoard(response.data);
+            setArticle({id: id, boardCode : response.data.boardCode});
         } catch (error) {
             console.error(error);
         }
@@ -69,7 +70,7 @@ const Board = () => {
     };
 
     // article 설정
-    const [article, setArticle] = useState({"id": id, "boardCode": board.boardCode});
+    const [article, setArticle] = useState({"id": id});
     const handleArticle = (e) => {
         const{id, value} = e.target;
         setArticle((prevState)=> ({
