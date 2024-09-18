@@ -8,6 +8,7 @@ const Search = () => {
 
     const { keyword, setKeyword, searchCate, setSearchCate } = useSearch();
 
+    const role = localStorage.getItem("role");
     const location = useLocation();
     const path = location.pathname;
     const [boardId, setBoardId] = useState('');
@@ -17,7 +18,7 @@ const Search = () => {
     useEffect(() => {
         fetchBoard();
         fetchCategory();
-    }, [path]);
+    }, [path, role]);
 
     const fetchBoard = async () => {
         let tempBoardId = '';
@@ -41,6 +42,7 @@ const Search = () => {
             const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/board', { params: { boardId: tempBoardId } });
             setBoardId(tempBoardId);  // boardId 업데이트
             setBoard(response.data);
+            console.log(response.data);
         } catch (error) {
             console.error(error);
         }
@@ -48,7 +50,7 @@ const Search = () => {
 
     const fetchCategory = async() => {
         try{
-            const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/category', {params: {boardCode: board.boardCode}});
+            const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/category', {params: {boardCode: board.code}});
             setCategory(response.data);
         } catch (error){
             console.log(error);
@@ -64,19 +66,19 @@ const Search = () => {
     }
 
     return(
-        <div className= 'search-container'>
-            <div className= 'search-input-box'>
-                <select className= 'search-input-box' onChange={handleSearchCate}>
-                    {category.map(m => (
-                        <option key={m.id} value={m.categoryId}>
-                            {m.name}
-                        </option>
-                    ))}
-                </select>
-                <input className='keyword' value={keyword} onChange={handleKeyword} placeholder='검색어를 입력하세요'/>
-                <button>검색</button>
+            <div className= 'search-container'>
+                <div className= 'search-input-box'>
+                    <select className= 'search-input-box' onChange={handleSearchCate}>
+                        {category.map(m => (
+                            <option key={m.id} value={m.categoryId}>
+                                {m.name}
+                            </option>
+                        ))}
+                    </select>
+                    <input className='keyword' value={keyword} onChange={handleKeyword} placeholder='검색어를 입력하세요'/>
+                    <button>검색</button>
+                </div>
             </div>
-        </div>
     );
 }
 export default Search;
