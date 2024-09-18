@@ -20,6 +20,8 @@
     font-family: 'LeeSeoyun', sans-serif;
     font-size: 3.5vh;
     width: 25vw;
+    border: 2px solid #c9dcf9;
+    border-radius: 5px;
 }
 
 .admin-article-box {
