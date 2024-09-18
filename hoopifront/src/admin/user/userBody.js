@@ -148,7 +148,7 @@ const UserBody = () => {
                         <tfoot>
                         <tr>
                             <td colSpan={2}>
-                                <button id={userDetail.id} onClick={(e) => handleUserQuit}>탈퇴</button>
+                                <button id={userDetail.id} onClick={handleUserQuit}>탈퇴</button>
                                 <button onClick={handleClose}>닫기</button>
                             </td>
                         </tr>
