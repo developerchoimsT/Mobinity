@@ -126,8 +126,8 @@ const Board = () => {
             <div className='admin-article-box'>
             <div className='admin-article-title'>
                     <select>
-                        <option key={board.boardCode} id='boardCode' value={board.boardCode} disabled={true}>
-                            {board.name}
+                        <option key={board?.boardCode} id='boardCode' value={board?.boardCode} disabled={true}>
+                            {board?.name}
                         </option>
                     </select>
                     <input type='text' id='articleTitle' value={article.articleTitle} onChange={handleArticle}/>
