@@ -1,9 +1,11 @@
 package com.ms.hoopi.admin.article.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ms.hoopi.admin.article.model.ArticleCreationRequestDto;
 import com.ms.hoopi.admin.article.model.ArticleRequestDto;
 import com.ms.hoopi.admin.article.model.ProductRequestDto;
 import com.ms.hoopi.admin.article.servie.ArticleService;
+import com.ms.hoopi.model.entity.Article;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +21,14 @@ import java.util.List;
 @RequestMapping("hoopi")
 public class ArticleController {
 
+    private final ObjectMapper objectMapper;
+
     private final ArticleService articleService;
 
     @PostMapping("/article")
-    public ResponseEntity<String> addArticle(@RequestParam("imgs")List<MultipartFile> imgs
-                                            , @RequestParam("data") ArticleCreationRequestDto data) throws IOException {
+    public ResponseEntity<String> addArticle(@RequestPart("imgs")List<MultipartFile> imgs
+                                            , @RequestPart("data") String request) throws IOException {
+        ArticleCreationRequestDto data = objectMapper.readValue(request, ArticleCreationRequestDto.class);
         log.info("imgs:{}", imgs);
         log.info("data:{}", data);
         return articleService.addArticle(imgs, data.getProduct(), data.getArticle());
