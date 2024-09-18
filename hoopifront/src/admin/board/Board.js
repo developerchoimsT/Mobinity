@@ -69,7 +69,7 @@ const Board = () => {
     };
 
     // article 설정
-    const [article, setArticle] = useState({"id": id});
+    const [article, setArticle] = useState({"id": id, "boardCode": board.boardCode});
     const handleArticle = (e) => {
         const{id, value} = e.target;
         setArticle((prevState)=> ({
@@ -125,11 +125,9 @@ const Board = () => {
             <div className='admin-article-box'>
             <div className='admin-article-title'>
                     <select>
-                        {board?.map(b => (
-                            <option key={b.boardCode} id='boardCode' value={b.boardCode} onChange={handleArticle}>
-                                {b.name}
-                            </option>
-                        ))}
+                        <option key={board.boardCode} id='boardCode' value={board.boardCode} disabled={true}>
+                            {board.name}
+                        </option>
                     </select>
                     <input type='text' id='articleTitle' value={article.articleTitle} onChange={handleArticle}/>
                     <input type='file' onChange={handleFileChange} multiple={true}/>

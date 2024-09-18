@@ -28,6 +28,7 @@ public class ArticleServiceImpl implements ArticleService {
     private final ProductImgRepository productImgRepository;
     private final UserRepository userRepository;
     private final CommonUtil commonUtil;
+    private final BoardRepository boardRepository;
 
     // 게시글 저장
     @Override
@@ -35,6 +36,9 @@ public class ArticleServiceImpl implements ArticleService {
         // 저장되어야할 user 정보 가져오기
         User user = userRepository.findById(article.getId())
                                     .orElseThrow(() -> new EntityNotFoundException(Constants.NONE_USER));
+        // 저장되어야할 board 정보 가져오기
+        Board board = boardRepository.findBoardByBoardCode(article.getBoardCode())
+                                        .orElseThrow(() -> new EntityNotFoundException(Constants.NONE_BOARD));
         // product 정보 존재할때만 실행
         boolean flag = false;
         Product productEntity = null;
@@ -51,7 +55,7 @@ public class ArticleServiceImpl implements ArticleService {
                                 .code(user)
                                 .boardContent(article.getBoardContent())
                                 .productCode(productEntity)
-                                .boardCode(article.getBoardCode())
+                                .boardCode(board)
                                 .build();
         articleRepository.save(articleEntity);
 
