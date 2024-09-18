@@ -140,7 +140,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 
         } catch (Exception e){
             log.error(Constants.USER_QUIT_FAIL, e);
-            return ResponseEntity.badRequest().body(Constants.USER_QUIT_FAIL);
+            return ResponseEntity.badRequest().body("{\"message\": \"" + Constants.USER_QUIT_FAIL+ "\"}");
         }
     }
 

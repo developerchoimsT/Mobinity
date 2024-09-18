@@ -51,12 +51,13 @@ const UserBody = () => {
 
     const handleUserQuit = async (e) => {
         try {
-            const response = await axios.put('http://hoopi.p-e.kr/api/hoopi/admin/user-quit', userDetail.id);
+            const response = await axios.put('http://hoopi.p-e.kr/api/hoopi/admin/user-quit', {id:e.target.id});
+            alert(userDetail.id);
             alert("사용자 탈퇴 처리가 완료되었습니다.");
             fetchUsers(currentPage); // 상태 업데이트 후 목록 새로고침
         } catch (error) {
             console.log(error);
-            alert(error.response);
+            alert(error.response.data);
         }
     };
 
@@ -147,7 +148,7 @@ const UserBody = () => {
                         <tfoot>
                         <tr>
                             <td colSpan={2}>
-                                <button id={userDetail.id} onClick={handleUserQuit}>탈퇴</button>
+                                <button id={userDetail.id} onClick={(e) => handleUserQuit}>탈퇴</button>
                                 <button onClick={handleClose}>닫기</button>
                             </td>
                         </tr>
