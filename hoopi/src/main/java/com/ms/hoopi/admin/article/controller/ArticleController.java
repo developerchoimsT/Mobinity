@@ -1,5 +1,6 @@
 package com.ms.hoopi.admin.article.controller;
 
+import com.ms.hoopi.admin.article.model.ArticleCreationRequestDto;
 import com.ms.hoopi.admin.article.model.ArticleRequestDto;
 import com.ms.hoopi.admin.article.model.ProductRequestDto;
 import com.ms.hoopi.admin.article.servie.ArticleService;
@@ -20,8 +21,7 @@ public class ArticleController {
 
     @PostMapping("/article")
     public ResponseEntity<String> addArticle(@RequestParam("imgs")List<MultipartFile> imgs
-                                            , @RequestParam("product") ProductRequestDto product
-                                            , @RequestParam("article")ArticleRequestDto article) throws IOException {
-        return articleService.addArticle(imgs, product, article);
+                                            , @RequestBody ArticleCreationRequestDto request) throws IOException {
+        return articleService.addArticle(imgs, request.getProduct(), request.getArticle());
     }
 }
