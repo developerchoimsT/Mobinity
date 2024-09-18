@@ -37,6 +37,8 @@ const Board = () => {
             console.log(path);
             const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/board', { params: { boardId: tempBoardId } });
             setBoard(response.data);
+            setArticle(prev => ({ ...prev, id: id, boardCode: response.data.boardCode }));
+
         } catch (error) {
             console.error(error);
         }
