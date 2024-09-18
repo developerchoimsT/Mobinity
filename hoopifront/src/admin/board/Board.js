@@ -116,8 +116,8 @@ const Board = () => {
             </div>
             <div className='admin-article-box'>
             <div className='admin-article-title'>
-                    <select>
-                        <option key={board?.boardCode} id='boardCode' value={board?.boardCode} disabled={true}>
+                    <select  disabled={true}>
+                        <option key={board?.boardCode} id='boardCode' value={board?.boardCode} selected={true}>
                             {board?.name}
                         </option>
                     </select>
@@ -126,12 +126,14 @@ const Board = () => {
                 </div>
                 <div className='admin-article-content'>
                     <textarea id='boardContent' value={article.boardContent} onChange={handleArticle}/>
+                </div>
+                <div className='admin-article-img'>
                     {imagePreviews?.map((image, index) => (
                         <img key={index} src={image} alt={`preview ${index}`}
-                             style={{width: '100px', height: '100px'}}/>
+                             style={{width: '100px'}}/>
                     ))}
                 </div>
-                <div className='admin-board-footer'>
+                <div className='admin-article-footer'>
                     <button onClick={handleUpload}>완료</button>
                     <button>취소</button>
                 </div>
