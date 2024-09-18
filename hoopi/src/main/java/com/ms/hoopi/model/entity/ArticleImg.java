@@ -1,6 +1,8 @@
 package com.ms.hoopi.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @Getter
@@ -23,5 +25,30 @@ public class ArticleImg {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "board_code", nullable = false)
     private Board boardCode;
+
+    @NotNull
+    @Column(name = "img_data", nullable = false)
+    private byte[] imgData;
+
+    @Size(max = 255)
+    @NotNull
+    @Column(name = "file_name", nullable = false)
+    private String fileName;
+
+    @Size(max = 50)
+    @NotNull
+    @Column(name = "img_type", nullable = false, length = 50)
+    private String imgType;
+
+    @Builder
+    public ArticleImg(String articleImgCode, Article articleCode, User code, Board boardCode, byte[] imgData, String fileName, String imgType) {
+        this.articleImgCode = articleImgCode;
+        this.articleCode = articleCode;
+        this.code = code;
+        this.boardCode = boardCode;
+        this.imgData = imgData;
+        this.fileName = fileName;
+        this.imgType = imgType;
+    }
 
 }

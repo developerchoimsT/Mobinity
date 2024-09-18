@@ -64,11 +64,7 @@ function App() {
                             <Route path='/' element={<Main/>}/>
                             <Route path='/join' element={<Join />}/>
                             <Route path='/login' element={<Login />}/>
-                            <Route path='/admin/main' element={<AdminMain/>}/>
-                            <Route path='/admin/board' element={<AdminMain/>}/>
-                            <Route path='/admin/user' element={<AdminMain/>}/>
-                            <Route path='/admin/order' element={<AdminMain/>}/>
-                            <Route path='/admin/product' element={<AdminMain/>}/>
+                            <Route path='/admin/*' element={<AdminMain/>}/>
                         </Routes>
                     </SearchProvider>
                 </div>
