@@ -38,7 +38,7 @@ public class Article {
     private String deleteYn = "N";
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "product_code", nullable = false)
+    @JoinColumn(name = "product_code")
     private Product productCode;
 
     @OneToMany(mappedBy = "articleCode")
