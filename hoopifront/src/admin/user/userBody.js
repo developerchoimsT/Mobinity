@@ -8,6 +8,8 @@ const UserBody = () => {
     const id = localStorage.getItem("id");
     const role = localStorage.getItem("role");
 
+    const { keyword, searchCate } = useSearch();
+
     const [userPage, setUserPage] = useState({ content: [], totalPages: 0 });
     const [currentPage, setCurrentPage] = useState(1);
     const [userDetail, setUserDetail] = useState({id: ''
@@ -27,7 +29,7 @@ const UserBody = () => {
     const fetchUsers = async (page) => {
         try {
             const response = await axios.get("http://hoopi.p-e.kr/api/hoopi/admin/user", {
-                params: { searchCate: "id", keyword: id, page: page - 1, size: 10 }
+                params: { searchCate: searchCate, keyword: keyword, page: page - 1, size: 10 }
             });
             console.log("response.data : ", response.data.content);
             setUserPage(response.data);
