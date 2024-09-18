@@ -9,6 +9,7 @@ import Search from "../search/Search";
 import './axios/axiosInterceptor.js';
 import AdminMain from "../admin/adminMain";
 import {SearchProvider} from "../search/SearchContext";
+import Menu from "../menu/Menu";
 
 // Context 생성
 const UserContext = createContext(null);
@@ -57,7 +58,7 @@ function App() {
                 </div>
                 <div>
                     <SearchProvider>
-
+                        <Menu/>
                         <Search/>
                         <Routes>
                             <Route path='/' element={<Main/>}/>
