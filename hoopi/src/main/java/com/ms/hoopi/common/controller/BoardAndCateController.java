@@ -3,6 +3,7 @@ package com.ms.hoopi.common.controller;
 import com.ms.hoopi.common.model.BoardResponseDto;
 import com.ms.hoopi.common.model.CategoryResponseDto;
 import com.ms.hoopi.common.service.BoardAndCateService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,5 +27,10 @@ public class BoardAndCateController {
     @GetMapping("/category")
     public List<CategoryResponseDto> getCategory(@RequestParam String boardCode) {
         return boardAndCateService.getCategory(boardCode);
+    }
+
+    @GetMapping("/menu")
+    public List<BoardResponseDto> getMenu() {
+        return boardAndCateService.getMenu();
     }
 }
