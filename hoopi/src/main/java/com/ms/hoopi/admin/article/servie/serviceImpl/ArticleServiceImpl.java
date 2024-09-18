@@ -39,9 +39,11 @@ public class ArticleServiceImpl implements ArticleService {
             // 저장되어야할 user 정보 가져오기
             User user = userRepository.findById(article.getId())
                     .orElseThrow(() -> new EntityNotFoundException(Constants.NONE_USER));
+            log.info("user:{}",user);
             // 저장되어야할 board 정보 가져오기
             Board board = boardRepository.findBoardByBoardCode(article.getBoardCode())
                     .orElseThrow(() -> new EntityNotFoundException(Constants.NONE_BOARD));
+            log.info("board:{}",board);
             // product 정보 존재할때만 실행
             boolean flag = false;
             Product productEntity = null;
@@ -61,6 +63,7 @@ public class ArticleServiceImpl implements ArticleService {
                     .boardCode(board)
                     .build();
             articleRepository.save(articleEntity);
+            log.info("article:{}",articleEntity);
 
             if(!flag){
                 List<ArticleImg> articleImgs = new ArrayList<>();
@@ -78,6 +81,7 @@ public class ArticleServiceImpl implements ArticleService {
                     articleImgs.add(articleImgEntity);
                 }
                 articleImgRepository.saveAll(articleImgs);
+                log.info("articleImgs:{}",articleImgs);
             }
             return ResponseEntity.ok(Constants.ARTICLE_SUCCESS);
         } catch (Exception e) {
@@ -97,6 +101,7 @@ public class ArticleServiceImpl implements ArticleService {
                                         .stock(product.getStock())
                                         .build();
         productRepository.save(productEntity);
+        log.info("product:{}",productEntity);
 
         //productImg 정보 저장
         String productImgCode = commonUtil.createCode();
@@ -112,6 +117,7 @@ public class ArticleServiceImpl implements ArticleService {
             productImgs.add(productImg);
         }
         productImgRepository.saveAll(productImgs);
+        log.info("productImgs:{}",productImgs);
 
         return productEntity;
     }
