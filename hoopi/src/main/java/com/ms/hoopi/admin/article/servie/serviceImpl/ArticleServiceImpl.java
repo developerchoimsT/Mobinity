@@ -46,20 +46,28 @@ public class ArticleServiceImpl implements ArticleService {
             log.info("board:{}",board);
             // product 정보 존재할때만 실행
             boolean flag = false;
-            Product productEntity = null;
             if(!product.getName().isEmpty() && product.getPrice() != 0 && product.getStock() != 0){
-                productEntity = addProduct(product, imgs);
+                Product productEntity = addProduct(product, imgs);
                 flag = true;
+                // article 정보 저장
+                String articleCode = commonUtil.createCode();
+                Article articleEntity = Article.builder()
+                        .articleCode(articleCode)
+                        .articleTitle(article.getArticleTitle())
+                        .code(user)
+                        .boardContent(article.getBoardContent())
+                        .productCode(productEntity)
+                        .boardCode(board)
+                        .build();
             }
 
-            // article 정보 저장
+            // productEntity없을 때 article 정보 저장
             String articleCode = commonUtil.createCode();
             Article articleEntity = Article.builder()
                     .articleCode(articleCode)
                     .articleTitle(article.getArticleTitle())
                     .code(user)
                     .boardContent(article.getBoardContent())
-                    .productCode(productEntity)
                     .boardCode(board)
                     .build();
             articleRepository.save(articleEntity);
