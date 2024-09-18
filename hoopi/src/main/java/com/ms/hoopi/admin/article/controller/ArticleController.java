@@ -16,7 +16,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("hoopi/")
+@RequestMapping("hoopi")
 public class ArticleController {
 
     private final ArticleService articleService;
