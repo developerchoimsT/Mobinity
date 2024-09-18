@@ -12,7 +12,7 @@ const Header = () => {
     }, [path])
 
     const fetchPath = (path) => {
-        if(path.includes('main')){
+        if(path.includes('main')||path.includes('user')){
             setBoardName('회원')
         } else if(path.includes('order')){
             setBoardName('주문')
@@ -20,6 +20,8 @@ const Header = () => {
             setBoardName('게시글 및 댓글')
         } else if(path.includes('product')){
             setBoardName('상품')
+        } else if(path.includes('notice')){
+            setBoardName('공지')
         }
     }
     return(
