@@ -115,7 +115,7 @@ const Board = () => {
                 </div>
             </div>
             <div className='admin-article-box'>
-            <div className='admin-article-title'>
+                <div className='admin-article-title'>
                     <select  disabled={true} defaultValue={board?.boardCode}>
                         <option key={board?.boardCode} id='boardCode' value={board?.boardCode}>
                             {board?.name}
