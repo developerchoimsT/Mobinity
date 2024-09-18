@@ -32,7 +32,7 @@ const Menu = () => {
                 <table>
                     <tbody>
                     <tr>
-                        {menu.map(m=>(
+                        {menu?.map(m=>(
                             <td style={{display: m.name === '회원' && visible ? 'display'
                                     : m.name !== '회원'? 'display'
                                     :'none'}} key={m.boardCode}>
