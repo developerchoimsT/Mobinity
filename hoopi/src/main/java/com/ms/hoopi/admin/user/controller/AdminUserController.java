@@ -45,7 +45,8 @@ public class AdminUserController {
 
     // user 정보 수정(탈퇴)
     @PutMapping("/user-quit")
-    public ResponseEntity<String> userQuit(@RequestBody String id) {
+    public ResponseEntity<String> userQuit(@RequestParam String id) {
+        log.info("id={}", id);
         return adminUserService.userQuit(id);
     }
 

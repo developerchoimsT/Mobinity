@@ -1,5 +1,6 @@
 package com.ms.hoopi.common;
 
+import com.google.protobuf.Api;
 import io.jsonwebtoken.JwtException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
