@@ -28,7 +28,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/hoopi/refresh-token", "/hoopi/login"
                                             , "/hoopi/join", "/hoopi/email"
-                                            , "/hoopi/phone", "/hoopi/logout").permitAll()
+                                            , "/hoopi/phone", "/hoopi/logout",
+                                "/hoopi/category", "/hoopi/board", "/hoopi/menu").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(formLogin -> formLogin.disable())
                 .logout(logout -> logout.disable())

@@ -12,7 +12,7 @@ const Search = () => {
     const location = useLocation();
     const path = location.pathname;
     const [boardId, setBoardId] = useState('');
-    const [board, setBoard] = useState('');
+    const [board, setBoard] = useState({});
     const [category, setCategory] = useState([]);
 
     useEffect(() => {
@@ -41,17 +41,17 @@ const Search = () => {
             const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/board', { params: { boardId: tempBoardId } });
             setBoardId(tempBoardId);  // boardId 업데이트
             setBoard(response.data);
-            console.log(response.data);
-            fetchCategory();
+            console.log(response.data.boardCode);
+            fetchCategory(response.data.boardCode);
         } catch (error) {
             console.error(error);
         }
     };
 
-    const fetchCategory = async() => {
+    const fetchCategory = async(boardCode) => {
         try{
-            console.log("board값 확인", board);
-            const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/category', {params: {boardCode: board.boardCode}});
+            console.log(boardCode);
+            const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/category', {params: {boardCode: boardCode}});
             setCategory(response.data);
         } catch (error){
             console.log(error);
