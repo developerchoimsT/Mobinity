@@ -121,11 +121,11 @@ const Board = () => {
                             {board?.name}
                         </option>
                     </select>
-                    <input type='text' id='articleTitle' value={article.articleTitle} onChange={handleArticle}/>
+                    <input type='text' id='articleTitle' value={article?.articleTitle} onChange={handleArticle}/>
                     <input type='file' onChange={handleFileChange} multiple={true}/>
                 </div>
                 <div className='admin-article-content'>
-                    <textarea id='boardContent' value={article.boardContent} onChange={handleArticle}/>
+                    <textarea id='boardContent' value={article?.boardContent} onChange={handleArticle}/>
                 </div>
                 <div className='admin-article-img'>
                     {imagePreviews?.map((image, index) => (
