@@ -1,0 +1,52 @@
+.admin-board-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.admin-board-box {
+    width: 50%;
+    background: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.admin-board-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.admin-board-title select {
+    margin-right: 10px;
+    padding: 5px 10px;
+    width: 200px;
+}
+
+.admin-board-title input[type="text"] {
+    flex-grow: 1;
+    margin-right: 10px;
+    padding: 5px 10px;
+}
+
+.admin-board-title input[type="image"] {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.admin-board-content textarea {
+    width: 100%;
+    height: 200px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.admin-board-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}

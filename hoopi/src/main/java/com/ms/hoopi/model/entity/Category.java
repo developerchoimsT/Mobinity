@@ -40,7 +40,5 @@ public class Category {
     @Column(name = "category_id", nullable = false, length = 20)
     private String categoryId;
 
-    @OneToMany(mappedBy = "category")
-    private Set<Article> articles = new LinkedHashSet<>();
 
 }

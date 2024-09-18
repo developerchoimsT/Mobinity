@@ -2,6 +2,7 @@ package com.ms.hoopi.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -29,12 +30,12 @@ public class Article {
     @Column(name = "board_content", nullable = false, length = 2000)
     private String boardContent;
 
-        @Column(name = "article_date")
-    private LocalDateTime articleDate;
+    @Column(name = "article_date")
+    private LocalDateTime articleDate = LocalDateTime.now();
 
     @ColumnDefault("'N'")
     @Column(name = "delete_yn", nullable = false, length = 1)
-    private String deleteYn;
+    private String deleteYn = "N";
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_code", nullable = false)
@@ -46,12 +47,18 @@ public class Article {
     @OneToMany(mappedBy = "articleCode")
     private Set<Reply> replies = new LinkedHashSet<>();
 
+    @Size(max = 100)
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "category_id", nullable = false)
-    private Category category;
+    @Column(name = "article_title", nullable = false, length = 100)
+    private String articleTitle;
 
-    public void setCategory(Category category) {
-        this.category = category;
+    @Builder
+    public Article(String articleCode, User code, Board boardCode, String boardContent, Product productCode, String articleTitle) {
+        this.articleCode = articleCode;
+        this.code = code;
+        this.boardCode = boardCode;
+        this.boardContent = boardContent;
+        this.productCode = productCode;
+        this.articleTitle = articleTitle;
     }
 }

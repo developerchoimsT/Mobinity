@@ -38,4 +38,12 @@ public class Product {
     @OneToMany(mappedBy = "productCode")
     private Set<ProductImg> productImgs = new LinkedHashSet<>();
 
+    @Builder
+    public Product(String productCode, String name, Long price, Long stock) {
+        this.productCode = productCode;
+        this.name = name;
+        this.price = price;
+        this.stock = stock;
+    }
+
 }

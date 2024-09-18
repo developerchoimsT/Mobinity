@@ -21,4 +21,5 @@ public class Constants {
     public static final String USER_QUIT_SUCCESS = "회원 탈퇴 처리가 완료되었습니다.";
     public static final String USER_UPDATE_FAIL = "회원 수정 처리 중에 오류가 발생하였습니다.";
     public static final String USER_UPDATE_SUCCESS = "회원 수정 처리가 완료되었습니다.";
+    public static final String ARTICLE_SUCCESS = "게시글 작성이 완료되었습니다.";
 }
