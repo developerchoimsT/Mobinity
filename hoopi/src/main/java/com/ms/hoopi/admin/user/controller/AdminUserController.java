@@ -20,8 +20,8 @@ public class AdminUserController {
 
     // user 정보 가져오기
     @GetMapping("/user")
-    public Page<UserSelectResponseDto> userSelect(@RequestParam String searchCate,
-                                                  @RequestParam String keyword,
+    public Page<UserSelectResponseDto> userSelect(@RequestParam(defaultValue = "") String searchCate,
+                                                  @RequestParam(defaultValue = "") String keyword,
                                                   @RequestParam(defaultValue = "0") int page,
                                                   @RequestParam(defaultValue = "10") int size) {
         return adminUserService.userSelect(searchCate, keyword, page, size);
