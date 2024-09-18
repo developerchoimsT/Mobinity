@@ -80,7 +80,7 @@ const UserBody = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {userPage.content.map((item, index) => (
+                {userPage?.content?.map((item, index) => (
                     <tr key={item.code} id={item.userId} onClick={() => handleUserDetail(item.code)}>
                         <td>{index + 1}</td>
                         <td>{item.userId}</td>
