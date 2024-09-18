@@ -17,7 +17,6 @@ const Search = () => {
 
     useEffect(() => {
         fetchBoard();
-        fetchCategory();
     }, [path, role]);
 
     const fetchBoard = async () => {
@@ -43,6 +42,7 @@ const Search = () => {
             setBoardId(tempBoardId);  // boardId 업데이트
             setBoard(response.data);
             console.log(response.data);
+            fetchCategory();
         } catch (error) {
             console.error(error);
         }
