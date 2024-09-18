@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("hoopi")
 @RequiredArgsConstructor
@@ -26,6 +27,7 @@ public class BoardAndCateController {
 
     @GetMapping("/category")
     public List<CategoryResponseDto> getCategory(@RequestParam String boardCode) {
+
         return boardAndCateService.getCategory(boardCode);
     }
 

@@ -24,6 +24,8 @@ public class AdminUserController {
                                                   @RequestParam(defaultValue = "") String keyword,
                                                   @RequestParam(defaultValue = "0") int page,
                                                   @RequestParam(defaultValue = "10") int size) {
+        log.info("searchCate={}", searchCate);
+        log.info("keyword={}", keyword);
         return adminUserService.userSelect(searchCate, keyword, page, size);
     }
 

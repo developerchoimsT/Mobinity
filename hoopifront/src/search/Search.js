@@ -53,6 +53,7 @@ const Search = () => {
             console.log(boardCode);
             const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/category', {params: {boardCode: boardCode}});
             setCategory(response.data);
+            console.log(response.data);
         } catch (error){
             console.log(error);
         }
