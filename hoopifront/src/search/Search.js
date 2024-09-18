@@ -31,9 +31,13 @@ const Search = () => {
             tempBoardId = 'notice';
         } else if (path.includes('admin/main')){
             tempBoardId = 'user';
+        } else {
+            tempBoardId = 'product';
         }
 
         try {
+            console.log(tempBoardId);
+            console.log(path);
             const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/board', { params: { boardId: tempBoardId } });
             setBoardId(tempBoardId);  // boardId 업데이트
             setBoard(response.data);
