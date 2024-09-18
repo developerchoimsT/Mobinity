@@ -82,20 +82,22 @@ const Board = () => {
 
     const handleUpload = async () => {
         const formData = new FormData();
-        if(path.includes('product')){
-            formData.append('product', JSON.stringify(product))
-        }
-        formData.append('article', JSON.stringify(article));
+        const combinedData = {
+            product: product,
+            article: article
+        };
+        formData.append('data', new Blob([JSON.stringify(combinedData)], {type: 'application/json'}));
+
         Array.from(files).forEach(file => {
             formData.append('imgs', file);
         });
 
         try {
-            const response = await axios.post('http://hoopi.p-e.kr/api/hoopi/article', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
+                const response = await axios.post('http://hoopi.p-e.kr/api/hoopi/article', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
             alert(response.data);
         } catch (error) {
             console.error(error);

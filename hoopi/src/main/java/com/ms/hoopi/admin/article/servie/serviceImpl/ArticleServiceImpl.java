@@ -10,6 +10,7 @@ import com.ms.hoopi.util.CommonUtil;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Transactional
 @Service
 @RequiredArgsConstructor
@@ -33,50 +35,55 @@ public class ArticleServiceImpl implements ArticleService {
     // 게시글 저장
     @Override
     public ResponseEntity<String> addArticle(List<MultipartFile> imgs, ProductRequestDto product, ArticleRequestDto article) throws IOException {
-        // 저장되어야할 user 정보 가져오기
-        User user = userRepository.findById(article.getId())
-                                    .orElseThrow(() -> new EntityNotFoundException(Constants.NONE_USER));
-        // 저장되어야할 board 정보 가져오기
-        Board board = boardRepository.findBoardByBoardCode(article.getBoardCode())
-                                        .orElseThrow(() -> new EntityNotFoundException(Constants.NONE_BOARD));
-        // product 정보 존재할때만 실행
-        boolean flag = false;
-        Product productEntity = null;
-        if(!product.getName().isEmpty() && product.getPrice() != 0 && product.getStock() != 0){
-            productEntity = addProduct(product, imgs);
-            flag = true;
-        }
-
-        // article 정보 저장
-        String articleCode = commonUtil.createCode();
-        Article articleEntity = Article.builder()
-                                .articleCode(articleCode)
-                                .articleTitle(article.getArticleTitle())
-                                .code(user)
-                                .boardContent(article.getBoardContent())
-                                .productCode(productEntity)
-                                .boardCode(board)
-                                .build();
-        articleRepository.save(articleEntity);
-
-        if(!flag){
-            List<ArticleImg> articleImgs = new ArrayList<>();
-            for(MultipartFile img : imgs){
-                String articleImgCode = commonUtil.createCode();
-                ArticleImg articleImgEntity = ArticleImg.builder()
-                                                        .articleImgCode(articleImgCode)
-                                                        .articleCode(articleEntity)
-                                                        .imgType(img.getContentType())
-                                                        .imgData(img.getBytes())
-                                                        .boardCode(articleEntity.getBoardCode())
-                                                        .fileName(img.getOriginalFilename())
-                                                        .code(user)
-                                                        .build();
-                articleImgs.add(articleImgEntity);
+        try{
+            // 저장되어야할 user 정보 가져오기
+            User user = userRepository.findById(article.getId())
+                    .orElseThrow(() -> new EntityNotFoundException(Constants.NONE_USER));
+            // 저장되어야할 board 정보 가져오기
+            Board board = boardRepository.findBoardByBoardCode(article.getBoardCode())
+                    .orElseThrow(() -> new EntityNotFoundException(Constants.NONE_BOARD));
+            // product 정보 존재할때만 실행
+            boolean flag = false;
+            Product productEntity = null;
+            if(!product.getName().isEmpty() && product.getPrice() != 0 && product.getStock() != 0){
+                productEntity = addProduct(product, imgs);
+                flag = true;
             }
-            articleImgRepository.saveAll(articleImgs);
+
+            // article 정보 저장
+            String articleCode = commonUtil.createCode();
+            Article articleEntity = Article.builder()
+                    .articleCode(articleCode)
+                    .articleTitle(article.getArticleTitle())
+                    .code(user)
+                    .boardContent(article.getBoardContent())
+                    .productCode(productEntity)
+                    .boardCode(board)
+                    .build();
+            articleRepository.save(articleEntity);
+
+            if(!flag){
+                List<ArticleImg> articleImgs = new ArrayList<>();
+                for(MultipartFile img : imgs){
+                    String articleImgCode = commonUtil.createCode();
+                    ArticleImg articleImgEntity = ArticleImg.builder()
+                            .articleImgCode(articleImgCode)
+                            .articleCode(articleEntity)
+                            .imgType(img.getContentType())
+                            .imgData(img.getBytes())
+                            .boardCode(articleEntity.getBoardCode())
+                            .fileName(img.getOriginalFilename())
+                            .code(user)
+                            .build();
+                    articleImgs.add(articleImgEntity);
+                }
+                articleImgRepository.saveAll(articleImgs);
+            }
+            return ResponseEntity.ok(Constants.ARTICLE_SUCCESS);
+        } catch (Exception e) {
+            log.error(Constants.ARTICLE_FAIL, e);
+            throw e;
         }
-        return ResponseEntity.ok(Constants.ARTICLE_SUCCESS);
     }
 
     // product정보 저장
