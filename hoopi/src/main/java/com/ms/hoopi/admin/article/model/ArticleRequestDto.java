@@ -9,6 +9,6 @@ import lombok.Data;
 public class ArticleRequestDto {
     private String id;
     private String articleTitle;
-    private Board boardCode;
+    private String boardCode;
     private String boardContent;
 }
