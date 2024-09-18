@@ -25,7 +25,7 @@ const UserBody = () => {
 
     useEffect(() => {
         fetchUsers(currentPage);
-    }, [currentPage]); // 페이지 변경시 자동으로 데이터 로딩
+    }, [currentPage, keyword, searchCate]); // 페이지 변경시 자동으로 데이터 로딩
 
     const fetchUsers = async (page) => {
         try {
