@@ -70,7 +70,7 @@ const Search = () => {
     return(
             <div className= 'search-container'>
                 <div className= 'search-input-box'>
-                    <select className= 'search-input-box' onChange={handleSearchCate}>
+                    <select className= 'search-input-box' value={searchCate} onChange={handleSearchCate}>
                         {category.map(m => (
                             <option key={m.id} value={m.categoryId}>
                                 {m.name}
