@@ -24,7 +24,6 @@ const Board = () => {
             tempBoardId = 'order';
         } else if (path.includes('product')) {
             tempBoardId = 'product';
-            setVisible(true);
         } else if (path.includes('notice')) {
             tempBoardId = 'notice';
         } else if (path.includes('admin/main')){
@@ -32,45 +31,37 @@ const Board = () => {
         } else {
             tempBoardId = 'product';
         }
-
+        setVisible(path.includes('product'));
         try {
             console.log(tempBoardId);
             console.log(path);
             const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/board', { params: { boardId: tempBoardId } });
             setBoard(response.data);
-            setArticle({id: id, boardCode : response.data.boardCode});
         } catch (error) {
             console.error(error);
         }
     };
 
     // 이미지 미리보기
-    const [images, setImages] = useState([]);
+    const [files, setFiles] = useState([]);
     const [imagePreviews, setImagePreviews] = useState([]);
 
-    const handleImageChange = (e) => {
-        const files = Array.from(e.target.files);
-        setImages(files);
-        const fileReaders = files.map(file => {
-            const fileReader = new FileReader();
-            fileReader.onload = (e) => {
+    const handleFileChange = (event) => {
+        const newFiles = Array.from(event.target.files);
+        setFiles(newFiles);
+
+        const newImagePreviews = newFiles.map(file => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
                 setImagePreviews(prev => [...prev, e.target.result]);
             };
-            fileReader.readAsDataURL(file);
-            return fileReader;
+            reader.readAsDataURL(file);
+            return reader;
         });
     };
 
-    // 이미지 파일 설정
-    const [files, setFiles] = useState([]);
-
-    const handleFileChange = (event) => {
-        setFiles(event.target.files);
-        handleImageChange();
-    };
-
     // article 설정
-    const [article, setArticle] = useState({"id": id});
+    const [article, setArticle] = useState({"id": id, "boardCode": board?.boardCode});
     const handleArticle = (e) => {
         const{id, value} = e.target;
         setArticle((prevState)=> ({
@@ -92,9 +83,9 @@ const Board = () => {
     const handleUpload = async () => {
         const formData = new FormData();
         if(path.includes('product')){
-            formData.append('product', product)
+            formData.append('product', JSON.stringify(product))
         }
-        formData.append('article', article);
+        formData.append('article', JSON.stringify(article));
         Array.from(files).forEach(file => {
             formData.append('imgs', file);
         });
@@ -116,7 +107,7 @@ const Board = () => {
 
     return(
         <div className='admin-article-container'>
-            <div className='admin-product-container' style={{display: visible?'display':'none'}}>
+            <div className='admin-product-container' style={{display: visible?'block':'none'}}>
                 <div className='admin-product-box'>
                     상품명 : <input type='text' id='name' value={product.name} onChange={handleProduct}/> <br/>
                     가 격 : <input type='text' id='price' value={product.price} onChange={handleProduct}/> <br/>
