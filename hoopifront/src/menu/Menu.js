@@ -6,6 +6,8 @@ const Menu = () => {
     const location = useLocation();
     const path = location.pathname;
 
+    const role = localStorage.getItem("id");
+
     useEffect(() => {
         fetchMenu();
     }, [path]);
