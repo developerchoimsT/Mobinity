@@ -34,7 +34,7 @@ public interface UserRepository extends JpaRepository<User, String> {
     Optional<User> findByCode(String code);
 
     @Modifying
-    @Query("UPDATE User u SET u.quitYn = 'Y' WHERE u.id = :id")
+    @Query("UPDATE User u SET u.quitYn = 'Y', u.quitDate = CURRENT_TIMESTAMP WHERE u.id = :id")
     void updateById(String id);
 
     @Modifying
