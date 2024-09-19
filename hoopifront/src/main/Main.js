@@ -8,9 +8,7 @@ const Main = () => {
     const location = useLocation();
     const path = location.pathname;
     useEffect(() => {
-        if(path === 'http://hoopi.p-e.kr/'){
             productNew();
-        }
     }, []);
 
     const[newProduct, setNewProduct] = useState([]);
