@@ -42,7 +42,7 @@ public class JwtFilter extends OncePerRequestFilter {
             "/hoopi/category",
             "/hoopi/board",
             "/hoopi/menu",
-            "/upload"
+            "/hoopi/product-new"
     );
 
     private AntPathMatcher pathMatcher = new AntPathMatcher();
