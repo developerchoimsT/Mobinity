@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, String> {
-    @Query(value = "SELECT p FROM product p ORDER BY p.created_at DESC LIMIT 10", nativeQuery = true)
+    @Query(value = "SELECT p FROM Product p ORDER BY p.createdAt DESC LIMIT 10")
     List<Product> findAllNew();
 }
