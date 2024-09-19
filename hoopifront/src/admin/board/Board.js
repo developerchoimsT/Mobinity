@@ -99,8 +99,9 @@ const Board = () => {
         });
 
         try {
-                const response = await axios.post('http://hoopi.p-e.kr/api/hoopi/article', formData);
+            const response = await axios.post('http://hoopi.p-e.kr/api/hoopi/article', formData);
             alert(response.data);
+            history.back();
         } catch (error) {
             console.error(error);
         }

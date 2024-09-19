@@ -2,7 +2,6 @@ import './Main.css';
 import Series from "./Series";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {getImg} from "../common/S3Config";
 const Main = () => {
 
     useEffect(() => {
@@ -26,7 +25,7 @@ const Main = () => {
             <div className= "main-letter-container">신상품</div>
             <div className="main-new-product-container">
                 {newProduct?.map(np=> (
-                    <div className="main-new-product-box" key={np.product.productCode}>
+                    <div className="main-new-product-box" key={np.product.productCode} id={np.product.productCode}>
                         <table>
                             <thead>
                             <tr>

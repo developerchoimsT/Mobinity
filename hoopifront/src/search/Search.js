@@ -17,7 +17,7 @@ const Search = () => {
 
     useEffect(() => {
         fetchBoard();
-    }, [path, role]);
+    }, [path]);
 
     const fetchBoard = async () => {
         let tempBoardId = '';
