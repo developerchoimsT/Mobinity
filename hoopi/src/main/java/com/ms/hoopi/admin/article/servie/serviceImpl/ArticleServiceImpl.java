@@ -122,10 +122,10 @@ public class ArticleServiceImpl implements ArticleService {
         log.info("product:{}",productEntity);
 
         //productImg 정보 저장
-        String productImgCode = commonUtil.createCode();
         List<ProductImg> productImgs = new ArrayList<>();
         List<String> keys = new ArrayList<>();
         for(MultipartFile img : imgs) {
+            String productImgCode = commonUtil.createCode();
             String key = commonUtil.createS3Key("product", img.getOriginalFilename());
             ProductImg productImg = ProductImg.builder()
                     .productImgCode(productImgCode)
