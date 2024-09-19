@@ -1,0 +1,28 @@
+.admin-header-container{
+    font-family: 'LeeSeoyun', sans-serif;
+    font-size: 3.5vh;
+}
+.admin-header-container>table{
+    width: 80%;
+    margin: auto;
+    padding : 2% 0 1% 0;
+}
+
+.admin-header-container>table>thead>tr>td:first-child{
+    color:grey;
+}
+
+.admin-header-container>table>thead>tr>td:last-child{
+    text-align: end;
+}
+
+.admin-header-container>table>thead>tr>td:last-child>a>button{
+    font-family: 'LeeSeoyun', sans-serif;
+    font-size: 2.5vh;
+    width: 7vw;
+    height: 5vh;
+    border: none;
+    border-radius: 5px;
+    background: #c9dcf9;
+    color: grey;
+}

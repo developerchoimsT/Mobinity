@@ -1,0 +1,99 @@
+.admin-article-container {
+    width: 100%;
+    text-align: center;
+    position: relative;
+    height: 100vh;
+    font-size: 3vh;
+    font-family: 'LeeSeoyun', sans-serif;
+}
+.admin-article-box, .admin-product-container {
+    margin: 0 auto;
+    width: 50%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+.admin-product-container>.admin-product-box{
+    color: grey;
+}
+.admin-product-container>.admin-product-box input{
+    margin: 2%;
+    font-family: 'LeeSeoyun', sans-serif;
+    font-size: 3.5vh;
+    width: 25vw;
+    border: 2px solid #c9dcf9;
+    border-radius: 5px;
+}
+
+.admin-article-box {
+    width: 50%;
+    background: white;
+    padding: 20px;
+}
+
+.admin-article-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.admin-article-title select {
+    margin-right: 10px;
+    padding: 5px 10px;
+    width: 12vh;
+    height: 5vh;
+    border-radius: 5px;
+    border: 2px solid #c9dcf9;
+    font-family: 'LeeSeoyun', sans-serif;
+    font-size: 3vh;
+    box-sizing: border-box;
+}
+
+.admin-article-title input[type="text"] {
+    flex-grow: 1;
+    margin-right: 10px;
+    width: 15vh;
+    height: 5vh;
+    border-radius: 5px;
+    border: 3px solid #c9dcf9;
+    font-family: 'LeeSeoyun', sans-serif;
+    font-size: 3vh;
+    box-sizing: border-box;
+}
+
+.admin-article-title input[type="file"] {
+    width: 13vh;
+    height: 4.5vh;
+    font-size: 2.5vh;
+    cursor: pointer;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.admin-article-content textarea {
+    width: 100%;
+    height: 50vh;
+    padding: 10px;
+    border: 3px solid #c9dcf9;
+    box-sizing: border-box;
+    border-radius: 10px;
+    resize: none;
+}
+
+.admin-article-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.admin-article-footer button{
+    font-family: 'LeeSeoyun', sans-serif;
+    font-size: 3vh;
+    border: none;
+    border-radius: 5px;
+    background: #c9dcf9;
+    width: 7vh;
+    height: 4vh;
+    color: grey;
+    cursor: pointer;
+    margin: 0 0 0 1vh;
+}
