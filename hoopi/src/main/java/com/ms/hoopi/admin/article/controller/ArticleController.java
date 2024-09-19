@@ -1,5 +1,6 @@
 package com.ms.hoopi.admin.article.controller;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ms.hoopi.admin.article.model.ArticleCreationRequestDto;
 import com.ms.hoopi.admin.article.model.ArticleRequestDto;
@@ -29,7 +30,7 @@ public class ArticleController {
     public ResponseEntity<String> addArticle(@RequestPart("file")List<MultipartFile> imgs
                                             , @RequestPart("data") String request) throws IOException {
         ArticleCreationRequestDto data = objectMapper.readValue(request, ArticleCreationRequestDto.class);
-        log.info("imgs:{}", imgs);
+        log.info("imgs:{}", objectMapper.readValue((JsonParser) imgs, MultipartFile.class));
         log.info("data:{}", data);
         return articleService.addArticle(imgs, data.getProduct(), data.getArticle());
     }
