@@ -1,4 +1,4 @@
-package com.ms.hoopi.util;
+package com.ms.hoopi.common.util;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

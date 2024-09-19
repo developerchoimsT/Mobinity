@@ -2,5 +2,7 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/75055e10-0a64-4dc2-b97a-29363d725417/console_6.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/hoopi/src/main/java/com/ms/hoopi/repository/ProductImgRepository.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/hoopi/src/main/java/com/ms/hoopi/repository/ProductRepository.java" dialect="GenericSQL" />
   </component>
 </project>

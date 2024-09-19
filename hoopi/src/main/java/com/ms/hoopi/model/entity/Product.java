@@ -1,9 +1,12 @@
 package com.ms.hoopi.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -37,6 +40,11 @@ public class Product {
 
     @OneToMany(mappedBy = "productCode")
     private Set<ProductImg> productImgs = new LinkedHashSet<>();
+
+    @NotNull
+    @ColumnDefault("CURRENT_TIMESTAMP")
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Builder
     public Product(String productCode, String name, Long price, Long stock) {

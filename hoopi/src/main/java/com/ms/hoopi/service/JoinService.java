@@ -6,21 +6,16 @@ import com.ms.hoopi.model.entity.Address;
 import com.ms.hoopi.model.entity.User;
 import com.ms.hoopi.repository.AddressRepository;
 import com.ms.hoopi.repository.UserRepository;
-import com.ms.hoopi.util.CommonUtil;
-import jakarta.persistence.EntityNotFoundException;
+import com.ms.hoopi.common.util.CommonUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service

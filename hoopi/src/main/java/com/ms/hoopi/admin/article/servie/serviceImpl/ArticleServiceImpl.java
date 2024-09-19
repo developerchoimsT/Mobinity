@@ -7,7 +7,7 @@ import com.ms.hoopi.common.service.FileUploadService;
 import com.ms.hoopi.constants.Constants;
 import com.ms.hoopi.model.entity.*;
 import com.ms.hoopi.repository.*;
-import com.ms.hoopi.util.CommonUtil;
+import com.ms.hoopi.common.util.CommonUtil;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

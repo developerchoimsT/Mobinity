@@ -6,6 +6,9 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -32,6 +35,12 @@ public class ProductImg {
     @NotNull
     @Column(name = "img_key", nullable = false)
     private String imgKey;
+
+    @NotNull
+    @ColumnDefault("CURRENT_TIMESTAMP")
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
+
 
     @Builder
     public ProductImg(String productImgCode, Product productCode, String imgPath, String fileName, String imgKey) {

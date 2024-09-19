@@ -1,4 +1,4 @@
-package com.ms.hoopi.util;
+package com.ms.hoopi.common.util;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;

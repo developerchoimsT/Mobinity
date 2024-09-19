@@ -6,7 +6,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.ms.hoopi.constants.Constants;
-import com.ms.hoopi.util.CommonUtil;
+import com.ms.hoopi.common.util.CommonUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,6 +34,7 @@ public class FileUploadService {
         List<String> fileUrls = new ArrayList<>();
         try {
             for(int i = 0; i < files.size(); i++) {
+                log.info(keys.get(i));
                 String fileUrl= "https://" + bucket + keys.get(i);
                 ObjectMetadata metadata= new ObjectMetadata();
                 metadata.setContentType(files.get(i).getContentType());

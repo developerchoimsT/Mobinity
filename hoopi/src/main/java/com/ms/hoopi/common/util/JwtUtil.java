@@ -1,4 +1,4 @@
-package com.ms.hoopi.util;
+package com.ms.hoopi.common.util;
 
 import com.ms.hoopi.service.RedisService;
 import io.jsonwebtoken.Claims;
