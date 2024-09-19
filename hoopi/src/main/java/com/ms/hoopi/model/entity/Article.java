@@ -37,7 +37,7 @@ public class Article {
     @Column(name = "delete_yn", nullable = false, length = 1)
     private String deleteYn = "N";
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_code")
     private Product productCode;
 
