@@ -3,7 +3,7 @@ import axios from "axios";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import './userBody.css'
-import { useSearch } from '../../search/SearchContext';
+import { useSearch } from '../../searchMenu/SearchContext';
 
 const UserBody = () => {
     const id = localStorage.getItem("id");

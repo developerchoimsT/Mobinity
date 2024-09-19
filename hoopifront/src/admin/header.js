@@ -9,6 +9,7 @@ const Header = () => {
 
     useEffect(() => {
         fetchPath(path)
+        console.log("헤더");
     }, [path])
 
     const fetchPath = (path) => {
