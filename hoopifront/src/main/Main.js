@@ -5,7 +5,7 @@ import axios from "axios";
 const Main = () => {
 
     useEffect(() => {
-
+        productNew();
     }, []);
 
     const[newProduct, setNewProduct] = useState([]);
