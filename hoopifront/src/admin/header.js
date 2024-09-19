@@ -33,8 +33,8 @@ const Header = () => {
                       {boardName} 관리 게시판
                   </td>
                   <td>
-                      {path.includes('admin/notice')?<button>글쓰기</button>
-                          : path.includes('admin/product/write')?<button>상품 추가</button>
+                      {path.includes('admin/notice')?<Link to='/admin/notice/write'><button>글쓰기</button></Link>
+                          : path.includes('admin/product')?<Link to='/admin/product/write'><button>상품 추가</button></Link>
                               :''}
                   </td>
               </tr>
