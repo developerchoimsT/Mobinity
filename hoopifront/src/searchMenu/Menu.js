@@ -13,12 +13,13 @@ const Menu = () => {
     const location = useLocation();
     const path = location.pathname;
 
-    const role = localStorage.getItem("id");
+    const role = localStorage.getItem("role");
+    const id = localStorage.getItem("id");
 
     useEffect(() => {
         fetchMenuCategory();
 
-    }, []);
+    }, [path]);
     const [boardId, setBoardId] = useState('');
     const [board, setBoard] = useState({});
     const [category, setCategory] = useState([]);
