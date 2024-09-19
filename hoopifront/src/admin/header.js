@@ -34,7 +34,7 @@ const Header = () => {
                   </td>
                   <td>
                       {path.includes('admin/notice')?<button>글쓰기</button>
-                          : path.includes('admin/product')?<button>상품 추가</button>
+                          : path.includes('admin/product/write')?<button>상품 추가</button>
                               :''}
                   </td>
               </tr>
