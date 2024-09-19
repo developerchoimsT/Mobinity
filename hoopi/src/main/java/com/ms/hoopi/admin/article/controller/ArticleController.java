@@ -30,8 +30,8 @@ public class ArticleController {
     public ResponseEntity<String> addArticle(@RequestPart("file")List<MultipartFile> imgs
                                             , @RequestPart("data") String request) throws IOException {
         ArticleCreationRequestDto data = objectMapper.readValue(request, ArticleCreationRequestDto.class);
-        log.info("imgs:{}", objectMapper.readValue((JsonParser) imgs, MultipartFile.class));
         log.info("data:{}", data);
+        log.info("Number of images: {}", imgs.size());
         return articleService.addArticle(imgs, data.getProduct(), data.getArticle());
     }
 }
