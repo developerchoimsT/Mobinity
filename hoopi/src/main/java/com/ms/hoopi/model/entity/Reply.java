@@ -1,5 +1,6 @@
 package com.ms.hoopi.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -16,14 +17,17 @@ public class Reply {
     @Column(name = "reply_code", nullable = false)
     private String replyCode;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "article_code", nullable = false)
     private Article articleCode;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "board_code", nullable = false)
     private Board boardCode;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "code", nullable = false)
     private User code;

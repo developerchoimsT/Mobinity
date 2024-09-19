@@ -1,5 +1,7 @@
 package com.ms.hoopi.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -19,10 +21,12 @@ public class Article {
     @Column(name = "article_code", nullable = false)
     private String articleCode;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "code", nullable = false)
     private User code;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "board_code", nullable = false)
     private Board boardCode;
@@ -37,13 +41,16 @@ public class Article {
     @Column(name = "delete_yn", nullable = false, length = 1)
     private String deleteYn = "N";
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_code")
     private Product productCode;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "articleCode")
     private Set<ArticleImg> articleImgs = new LinkedHashSet<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "articleCode")
     private Set<Reply> replies = new LinkedHashSet<>();
 

@@ -1,5 +1,6 @@
 package com.ms.hoopi.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -14,14 +15,17 @@ public class ArticleImg {
     @Column(name = "article_img_code", nullable = false)
     private String articleImgCode;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "article_code", nullable = false)
     private Article articleCode;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "code", nullable = false)
     private User code;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "board_code", nullable = false)
     private Board boardCode;

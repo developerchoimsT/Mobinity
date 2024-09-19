@@ -1,5 +1,6 @@
 package com.ms.hoopi.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -19,10 +20,12 @@ public class Payment {
     @Column(name = "payment_code", nullable = false)
     private String paymentCode;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "order_code", nullable = false)
     private Order orderCode;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "code", nullable = false)
     private User code;

@@ -1,5 +1,6 @@
 package com.ms.hoopi.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,11 +14,13 @@ public class OrderDetail {
     @EmbeddedId
     private OrderDetailId id;
 
+    @JsonBackReference
     @MapsId("productCode")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_code", nullable = false)
     private Product productCode;
 
+    @JsonBackReference
     @MapsId("orderCode")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "order_code", nullable = false)

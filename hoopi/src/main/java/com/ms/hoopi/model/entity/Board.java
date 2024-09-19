@@ -1,5 +1,6 @@
 package com.ms.hoopi.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,12 +28,15 @@ public class Board {
     @Column(name = "board_id", nullable = false)
     private String boardId;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "boardCode")
     private Set<Article> articles = new LinkedHashSet<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "boardCode")
     private Set<ArticleImg> articleImgs = new LinkedHashSet<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "boardCode")
     private Set<Reply> replies = new LinkedHashSet<>();
 

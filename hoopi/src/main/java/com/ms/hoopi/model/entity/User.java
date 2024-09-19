@@ -1,5 +1,6 @@
 package com.ms.hoopi.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
@@ -56,27 +57,35 @@ public class User {
     @Column(name = "birth", nullable = false)
     private LocalDate birth;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "code")
     private Set<Address> addresses = new LinkedHashSet<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "code")
     private Set<Article> articles = new LinkedHashSet<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "code")
     private Set<ArticleImg> articleImgs = new LinkedHashSet<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "code")
     private Set<Cart> carts = new LinkedHashSet<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "code")
     private Set<Delivery> deliveries = new LinkedHashSet<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "code")
     private Set<Order> orders = new LinkedHashSet<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "code")
     private Set<Payment> payments = new LinkedHashSet<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "code")
     private Set<Reply> replies = new LinkedHashSet<>();
 

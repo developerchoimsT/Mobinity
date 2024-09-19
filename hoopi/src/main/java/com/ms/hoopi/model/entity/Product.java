@@ -1,5 +1,6 @@
 package com.ms.hoopi.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -29,15 +30,19 @@ public class Product {
     @Column(name = "stock", nullable = false)
     private Long stock;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "productCode")
     private Set<Article> articles = new LinkedHashSet<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "productCode")
     private Set<CartDetail> cartDetails = new LinkedHashSet<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "productCode")
     private Set<OrderDetail> orderDetails = new LinkedHashSet<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "productCode")
     private Set<ProductImg> productImgs = new LinkedHashSet<>();
 

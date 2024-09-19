@@ -1,5 +1,7 @@
 package com.ms.hoopi.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -16,6 +18,7 @@ public class Address {
     @Column(name = "address_code", nullable = false)
     private String addressCode;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "code", nullable = false)
     private User code;
@@ -27,6 +30,7 @@ public class Address {
     @Column(name = "main", length = 1)
     private String main = "Y";
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "addressCode")
     private Set<Delivery> deliveries = new LinkedHashSet<>();
 
