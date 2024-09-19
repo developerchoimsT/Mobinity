@@ -36,7 +36,7 @@ public class ArticleImg {
     @Column(name = "img_path", nullable = false)
     private String imgPath;
 
-    @Size(max = 255)
+    @Size(max = 500)
     @NotNull
     @Column(name = "img_key", nullable = false)
     private String imgKey;

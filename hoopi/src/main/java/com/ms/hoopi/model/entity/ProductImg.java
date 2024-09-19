@@ -28,7 +28,7 @@ public class ProductImg {
     @Column(name = "img_path")
     private String imgPath;
 
-    @Size(max = 255)
+    @Size(max = 500)
     @NotNull
     @Column(name = "img_key", nullable = false)
     private String imgKey;
