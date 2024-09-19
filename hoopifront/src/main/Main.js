@@ -2,6 +2,7 @@ import './Main.css';
 import Series from "./Series";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import {getImg} from "../common/S3Config";
 const Main = () => {
 
     useEffect(() => {
@@ -31,7 +32,7 @@ const Main = () => {
                             <tr>
                                 <td colSpan={2}>
                                     <div>
-                                        <img src={`https://${process.env.REACT_APP_S3_NM}.s3.ap-northeast-2.amazonaws.com/${encodeURIComponent(np.productImg.fileName)}`} alt='맛나요'/>
+                                        <img src={encodeURIComponent(np.imgUrl)} alt='맛나요'/>
                                     </div>
                                 </td>
                             </tr>

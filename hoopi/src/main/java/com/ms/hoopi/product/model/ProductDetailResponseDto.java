@@ -7,6 +7,6 @@ import lombok.Data;
 @Builder
 public class ProductDetailResponseDto {
     private ProductResponseDto product;
-    private ProductImgResponseDto productImg;
+    private String imgUrl;
     private String boardContent;
 }
