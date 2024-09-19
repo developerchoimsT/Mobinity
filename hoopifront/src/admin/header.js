@@ -9,7 +9,7 @@ const Header = () => {
 
     useEffect(() => {
         fetchPath(path)
-    }, [])
+    }, [path])
 
     const fetchPath = (path) => {
         if(path.includes('main')||path.includes('user')){
