@@ -32,7 +32,7 @@ const Main = () => {
                             <tr>
                                 <td colSpan={2}>
                                     <div>
-                                        <img src={encodeURIComponent(np.imgUrl)} alt='맛나요'/>
+                                        <img src={np.imgUrl} alt='맛나요'/>
                                     </div>
                                 </td>
                             </tr>
