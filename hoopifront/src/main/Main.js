@@ -2,11 +2,16 @@ import './Main.css';
 import Series from "./Series";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import {useLocation} from "react-router-dom";
 const Main = () => {
 
+    const location = useLocation();
+    const path = location.pathname;
     useEffect(() => {
-        productNew();
-    }, []);
+        if(path === 'http://hoopi.p-e.kr/'){
+            productNew();
+        }
+    }, [path]);
 
     const[newProduct, setNewProduct] = useState([]);
     const productNew = async () => {
