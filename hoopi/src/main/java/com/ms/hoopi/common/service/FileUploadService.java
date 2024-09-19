@@ -34,12 +34,12 @@ public class FileUploadService {
         List<String> fileUrls = new ArrayList<>();
         try {
             for(int i = 0; i < files.size(); i++) {
-                log.info(keys.get(i));
-                String fileUrl= "https://" + bucket + keys.get(i);
+                String fileKey = keys.get(i);
+                String fileUrl= "https://" + bucket + "/" + fileKey;
                 ObjectMetadata metadata= new ObjectMetadata();
                 metadata.setContentType(files.get(i).getContentType());
                 metadata.setContentLength(files.get(i).getSize());
-                amazonS3Client.putObject(bucket,files.get(i).getOriginalFilename(),files.get(i).getInputStream(),metadata);
+                amazonS3Client.putObject(bucket,fileKey,files.get(i).getInputStream(),metadata);
                 fileUrls.add(fileUrl);
         }
             return ResponseEntity.ok(fileUrls);
@@ -59,7 +59,7 @@ public class FileUploadService {
     }
 
 
-    private String getS3(String bucket, String key) {
+    public String getS3(String key) {
         return amazonS3.getUrl(bucket, key).toString();
     }
 

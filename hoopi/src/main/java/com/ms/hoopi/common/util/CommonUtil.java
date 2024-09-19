@@ -24,7 +24,7 @@ public class CommonUtil {
     }
 
     public String createS3Key(String path, String fileName) {
-        String newFileName = "/" + path + "/" + createCode() + "/" + fileName;
+        String newFileName = path + "/" + createCode() + "/" + fileName;
         return newFileName;
     }
 }

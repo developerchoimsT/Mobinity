@@ -1,14 +1,9 @@
 package com.ms.hoopi.repository;
 
-import com.ms.hoopi.model.entity.Product;
 import com.ms.hoopi.model.entity.ProductImg;
-import com.ms.hoopi.product.model.ProductImgResponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Repository
 public interface ProductImgRepository extends JpaRepository<ProductImg, String> {
