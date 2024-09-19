@@ -3,6 +3,7 @@ package com.ms.hoopi.admin.article.servie.serviceImpl;
 import com.ms.hoopi.admin.article.model.ArticleRequestDto;
 import com.ms.hoopi.admin.article.model.ProductRequestDto;
 import com.ms.hoopi.admin.article.servie.ArticleService;
+import com.ms.hoopi.common.service.FileUploadService;
 import com.ms.hoopi.constants.Constants;
 import com.ms.hoopi.model.entity.*;
 import com.ms.hoopi.repository.*;
@@ -31,6 +32,7 @@ public class ArticleServiceImpl implements ArticleService {
     private final UserRepository userRepository;
     private final CommonUtil commonUtil;
     private final BoardRepository boardRepository;
+    private final FileUploadService fileUploadService;
 
     // 게시글 저장
     @Override
@@ -77,22 +79,26 @@ public class ArticleServiceImpl implements ArticleService {
 
             log.info("article:{}",articleEntity);
 
+            List<String> keys = new ArrayList<>();
             if(!flag){
                 List<ArticleImg> articleImgs = new ArrayList<>();
                 for(MultipartFile img : imgs){
                     String articleImgCode = commonUtil.createCode();
+                    String key = commonUtil.createS3Key("article", img.getOriginalFilename());
                     ArticleImg articleImgEntity = ArticleImg.builder()
                             .articleImgCode(articleImgCode)
                             .articleCode(articleEntity)
-                            .imgType(img.getContentType())
-                            .imgData(img.getBytes())
                             .boardCode(articleEntity.getBoardCode())
                             .fileName(img.getOriginalFilename())
+                            .imgPath("article")
+                            .imgKey(key)
                             .code(user)
                             .build();
+                    keys.add(key);
                     articleImgs.add(articleImgEntity);
                 }
                 articleImgRepository.saveAll(articleImgs);
+                fileUploadService.uploadFile(imgs, keys);
                 log.info("articleImgs:{}",articleImgs);
             }
             return ResponseEntity.ok(Constants.ARTICLE_SUCCESS);
@@ -118,17 +124,21 @@ public class ArticleServiceImpl implements ArticleService {
         //productImg 정보 저장
         String productImgCode = commonUtil.createCode();
         List<ProductImg> productImgs = new ArrayList<>();
+        List<String> keys = new ArrayList<>();
         for(MultipartFile img : imgs) {
+            String key = commonUtil.createS3Key("product", img.getOriginalFilename());
             ProductImg productImg = ProductImg.builder()
                     .productImgCode(productImgCode)
                     .productCode(productEntity)
-                    .imgData(img.getBytes())
                     .fileName(img.getOriginalFilename())
-                    .contentType(img.getContentType())
+                    .imgPath("product")
+                    .imgKey(key)
                     .build();
             productImgs.add(productImg);
+            keys.add(key);
         }
         productImgRepository.saveAll(productImgs);
+        fileUploadService.uploadFile(imgs, keys);
         log.info("productImgs:{}",productImgs);
 
         return productEntity;

@@ -91,7 +91,7 @@ const Board = () => {
         formData.append('data', new Blob([JSON.stringify(combinedData)], {type: 'application/json'}));
 
         Array.from(files).forEach(file => {
-            formData.append('imgs', file);
+            formData.append('file', file);
         });
 
         try {

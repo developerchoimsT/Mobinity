@@ -26,29 +26,31 @@ public class ArticleImg {
     @JoinColumn(name = "board_code", nullable = false)
     private Board boardCode;
 
-    @NotNull
-    @Column(name = "img_data", nullable = false)
-    private byte[] imgData;
-
     @Size(max = 255)
     @NotNull
     @Column(name = "file_name", nullable = false)
     private String fileName;
 
-    @Size(max = 50)
+    @Size(max = 255)
     @NotNull
-    @Column(name = "img_type", nullable = false, length = 50)
-    private String imgType;
+    @Column(name = "img_path", nullable = false)
+    private String imgPath;
+
+    @Size(max = 255)
+    @NotNull
+    @Column(name = "img_key", nullable = false)
+    private String imgKey;
+
 
     @Builder
-    public ArticleImg(String articleImgCode, Article articleCode, User code, Board boardCode, byte[] imgData, String fileName, String imgType) {
+    public ArticleImg(String articleImgCode, Article articleCode, User code, Board boardCode, String imgPath, String fileName, String imgKey) {
         this.articleImgCode = articleImgCode;
         this.articleCode = articleCode;
         this.code = code;
         this.boardCode = boardCode;
-        this.imgData = imgData;
+        this.imgPath = imgPath;
         this.fileName = fileName;
-        this.imgType = imgType;
+        this.imgKey = imgKey;
     }
 
 }

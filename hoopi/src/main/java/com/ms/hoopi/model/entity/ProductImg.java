@@ -19,26 +19,26 @@ public class ProductImg {
     @JoinColumn(name = "product_code", nullable = false)
     private Product productCode;
 
-    @NotNull
-    @Column(name = "img_data", nullable = false)
-    private byte[] imgData;
-
     @Size(max = 255)
     @NotNull
     @Column(name = "file_name", nullable = false)
     private String fileName;
 
-    @Size(max = 50)
+    @Size(max = 255)
+    @Column(name = "img_path")
+    private String imgPath;
+
+    @Size(max = 255)
     @NotNull
-    @Column(name = "content_type", nullable = false, length = 50)
-    private String contentType;
+    @Column(name = "img_key", nullable = false)
+    private String imgKey;
 
     @Builder
-    public ProductImg(String productImgCode, Product productCode, byte[] imgData, String fileName, String contentType) {
+    public ProductImg(String productImgCode, Product productCode, String imgPath, String fileName, String imgKey) {
         this.productImgCode = productImgCode;
         this.productCode = productCode;
-        this.imgData = imgData;
+        this.imgPath = imgPath;
         this.fileName = fileName;
-        this.contentType = contentType;
+        this.imgKey = imgKey;
     }
 }

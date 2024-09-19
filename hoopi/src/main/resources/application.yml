@@ -59,3 +59,13 @@ logging:
       springframework:
         data:
           redis: DEBUG
+
+cloud:
+  aws:
+    s3:
+      bucket: ${S3_NM}
+    stack.auto: false
+    region.static: ap-northeast-2
+    credentials:
+      accessKey: ${S3_ACS_KEY}
+      secretKey: ${S3_SECRET_KEY}
