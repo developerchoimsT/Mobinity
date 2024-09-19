@@ -19,7 +19,7 @@ const Menu = () => {
     useEffect(() => {
         fetchMenuCategory();
 
-    }, [path]);
+    }, [path, role, id]);
     const [boardId, setBoardId] = useState('');
     const [board, setBoard] = useState({});
     const [category, setCategory] = useState([]);
