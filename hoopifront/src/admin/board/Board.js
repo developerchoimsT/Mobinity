@@ -15,7 +15,7 @@ const Board = () => {
     const [visible, setVisible] = useState(false);
     useEffect(() => {
         fetchBoard();
-    }, [path]);
+    }, []);
 
     const fetchBoard = async () => {
         let tempBoardId = '';
