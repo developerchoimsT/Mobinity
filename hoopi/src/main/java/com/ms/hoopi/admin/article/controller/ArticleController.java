@@ -31,7 +31,7 @@ public class ArticleController {
                                             , @RequestPart("data") String request) throws IOException {
         ArticleCreationRequestDto data = objectMapper.readValue(request, ArticleCreationRequestDto.class);
         log.info("data:{}", data);
-        log.info("Number of images: {}", imgs);
+        log.info("Number of images: {}", imgs.size());
         return articleService.addArticle(imgs, data.getProduct(), data.getArticle());
     }
 }

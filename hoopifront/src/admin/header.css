@@ -16,7 +16,7 @@
     text-align: end;
 }
 
-.admin-header-container>table>thead>tr>td:last-child>button{
+.admin-header-container>table>thead>tr>td:last-child>a>button{
     font-family: 'LeeSeoyun', sans-serif;
     font-size: 2.5vh;
     width: 7vw;
