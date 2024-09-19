@@ -11,7 +11,7 @@ const Menu = () => {
 
     useEffect(() => {
         fetchMenu();
-    }, [path]);
+    }, []);
 
     const[visible, setVisible] = useState(false);
     const[menu, setMenu] = useState();
