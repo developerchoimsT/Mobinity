@@ -31,7 +31,7 @@ const Main = () => {
                             <tr>
                                 <td colSpan={2}>
                                     <div>
-                                        <img src={`https://${process.env.REACT_APP_S3_NM}.s3.ap-northeast-2.amazonaws.com${np.productImg.fileName}`} alt='맛나요'/>
+                                        <img src={`https://${process.env.REACT_APP_S3_NM}.s3.ap-northeast-2.amazonaws.com/${encodeURIComponent(np.productImg.fileName)}`} alt='맛나요'/>
                                     </div>
                                 </td>
                             </tr>
