@@ -1,4 +1,4 @@
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import './board.css';
@@ -7,6 +7,7 @@ const Board = () => {
 
     const id = localStorage.getItem("id");
 
+    const navigate = useNavigate();
     const location = useLocation();
     const path = location.pathname;
 
@@ -101,7 +102,11 @@ const Board = () => {
         try {
             const response = await axios.post('http://hoopi.p-e.kr/api/hoopi/article', formData);
             alert(response.data);
-            history.back();
+            navigate(-1);
+            setArticle(null);
+            setProduct(null);
+            setFiles(null);
+            setImagePreviews(null);
         } catch (error) {
             console.error(error);
         }
