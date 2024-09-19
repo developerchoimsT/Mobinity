@@ -49,18 +49,22 @@ const Board = () => {
     const [imagePreviews, setImagePreviews] = useState([]);
 
     const handleFileChange = (event) => {
-        const newFiles = Array.from(event.target.files);
-        setFiles(newFiles);
+        const selectedFiles = Array.from(event.target.files);
 
-        const newImagePreviews = newFiles.map(file => {
+        // 기존 파일과 새로운 파일을 합칩니다.
+        const updatedFiles = [...files, ...selectedFiles];
+        setFiles(updatedFiles);  // 전체 파일 목록 업데이트
+
+        // 이미지 미리보기를 생성
+        selectedFiles.forEach(file => {
             const reader = new FileReader();
             reader.onload = (e) => {
-                setImagePreviews(prev => [...prev, e.target.result]);
+                setImagePreviews(prev => [...prev, e.target.result]); // 이전 미리보기에 추가
             };
             reader.readAsDataURL(file);
-            return reader;
         });
     };
+
 
     // article 설정
     const [article, setArticle] = useState();
