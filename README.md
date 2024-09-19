@@ -4,9 +4,9 @@
 
 
 ## 공통 구현 ##
-- [ ] JWT Token 인증(cookie, redis 이용)
-- [ ] 아이디/비밀번호 exception 다르게 처리
-- [ ] 동적 배너 및 검색 카테고리 구현
+- [x] JWT Token 인증(cookie, redis 이용)
+- [x] 아이디/비밀번호 exception 다르게 처리
+- [x] 동적 배너 및 검색 카테고리 구현
 
 
 ## 회원 페이지 구현 ##
