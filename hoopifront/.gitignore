@@ -4,6 +4,8 @@
 /node_modules
 /.pnp
 .pnp.js
+.gitignore
+
 
 # testing
 /coverage
@@ -23,3 +25,5 @@ yarn-debug.log*
 yarn-error.log*
 
 .dockerignore
+
+.env
