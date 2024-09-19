@@ -19,7 +19,7 @@ const Menu = () => {
         try{
             const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/menu');
             setMenu(response.data);
-            if(role === 'a dmin'){
+            if(role === 'admin'){
                 setVisible(true);
             }
         } catch (error){
