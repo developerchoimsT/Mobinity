@@ -12,5 +12,4 @@ public class ProductResponseDto {
     private String name;
     private Long price;
     private LocalDateTime createdAt;
-    private ProductImgResponseDto productImg;
 }

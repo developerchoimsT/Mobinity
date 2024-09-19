@@ -32,8 +32,15 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductDetailResponseDto> getProductsNew() {
         List<ProductDetailResponseDto> productNew = new ArrayList<>();
 
-        List<ProductResponseDto> product = productRepository.findAllNew();
-        for(ProductResponseDto productDto : product){
+        List<Product> product = productRepository.findAllNew();
+        for(Product p : product){
+            ProductResponseDto productDto = ProductResponseDto.builder()
+                                                                .productCode(p.getProductCode())
+                                                                .price(p.getPrice())
+                                                                .name(p.getName())
+                                                                .createdAt(p.getCreatedAt())
+                                                                .build();
+
             ProductImg productImg = productImgRepository.findByProductCode(productDto.getProductCode());
             ProductImgResponseDto productImgDto = ProductImgResponseDto.builder()
                                                                         .productImgCode(productImg.getProductImgCode())
