@@ -13,6 +13,7 @@ const Main = () => {
         try{
             const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/product-new');
             setNewProduct(response.data);
+            console.log(response.data);
         } catch (e){
             console.log(e);
         }
