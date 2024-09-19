@@ -11,7 +11,7 @@ const Main = () => {
         if(path === 'http://hoopi.p-e.kr/'){
             productNew();
         }
-    }, [path]);
+    }, []);
 
     const[newProduct, setNewProduct] = useState([]);
     const productNew = async () => {
