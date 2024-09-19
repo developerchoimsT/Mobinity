@@ -19,5 +19,5 @@ public interface ProductImgRepository extends JpaRepository<ProductImg, String> 
             "ORDER BY pi.created_at asc " +
             "LIMIT 1",
             nativeQuery = true)
-    ProductImgResponseDto findByProductCode(String productCode);
+    ProductImg findByProductCode(String productCode);
 }

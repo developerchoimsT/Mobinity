@@ -34,8 +34,18 @@ public class ProductServiceImpl implements ProductService {
 
         List<ProductResponseDto> product = productRepository.findAllNew();
         for(ProductResponseDto productDto : product){
-            ProductImgResponseDto productImgDto = productImgRepository.findByProductCode(productDto.getProductCode());
+            ProductImg productImg = productImgRepository.findByProductCode(productDto.getProductCode());
+            ProductImgResponseDto productImgDto = ProductImgResponseDto.builder()
+                                                                        .productImgCode(productImg.getProductImgCode())
+                                                                        .productCode(productImg.getProductCode())
+                                                                        .imgPath(productImg.getImgPath())
+                                                                        .imgKey(productImg.getImgKey())
+                                                                        .fileName(productImg.getFileName())
+                                                                        .createdAt(productImg.getCreatedAt())
+                                                                        .build();
+
             String boardContent = articleRepository.findByProductCode(productDto.getProductCode());
+
             ProductDetailResponseDto productDetailDto = ProductDetailResponseDto.builder()
                                                                                 .product(productDto)
                                                                                 .productImg(productImgDto)
