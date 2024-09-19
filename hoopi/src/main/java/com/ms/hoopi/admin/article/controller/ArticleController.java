@@ -26,7 +26,7 @@ public class ArticleController {
     private final ArticleService articleService;
 
     @PostMapping("/article")
-    public ResponseEntity<String> addArticle(@RequestPart("imgs")List<MultipartFile> imgs
+    public ResponseEntity<String> addArticle(@RequestPart("file")List<MultipartFile> imgs
                                             , @RequestPart("data") String request) throws IOException {
         ArticleCreationRequestDto data = objectMapper.readValue(request, ArticleCreationRequestDto.class);
         log.info("imgs:{}", imgs);
