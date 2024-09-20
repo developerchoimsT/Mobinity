@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ProductService {
     List<ProductDetailResponseDto> getProductsNew();
+
+    List<ProductDetailResponseDto> getProductsPopular();
 }

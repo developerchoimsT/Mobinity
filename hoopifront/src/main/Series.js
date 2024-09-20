@@ -1,17 +1,54 @@
 import './Series.css'
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 const Series = () => {
+
+    useEffect(() => {
+        productPopular();
+    }, []);
+
+    const[popularProduct, setPopularProduct] = useState([]);
+    const productPopular = async () => {
+        try{
+            const response = await axios.get('http://hoopi.p-e.kr/api/hoopi/product-popular');
+            setPopularProduct(response.data);
+            console.log(response.data);
+        } catch (e){
+            console.log(e);
+        }
+    }
+
     return(
+
         <div className="series-container">
+            <div className="series-letter-container">인기 상품</div>
             <div className="series-img-container">
-                <div className="series-img-box">
-                    <img src='/KakaoTalk_20240313_230801836_04.jpg'/>
-                    <img src='/KakaoTalk_20240313_230801836_04.jpg'/>
-                    <img src='/KakaoTalk_20240313_230801836_04.jpg'/>
-                    <img src='/KakaoTalk_20240313_230801836_04.jpg'/>
-                    <img src='/KakaoTalk_20240313_230801836_04.jpg'/>
-                    <img src='/KakaoTalk_20240313_230801836_04.jpg'/>
-                </div>
+                {popularProduct.map(pp => (
+                    <div className="series-img-box">
+                        <table>
+                            <thead>
+                            <tr>
+                                <td colSpan={2}>
+                                    <div>
+                                        <img src={pp.imgUrl} alt={pp.product.name}/>
+                                    </div>
+                                </td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th colSpan={2}>{pp.product.name}</th>
+                            </tr>
+                            <tr>
+                                <td>{pp.product.price}</td>
+                                <td>{pp.product.name}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                ))}
+
             </div>
         </div>
     );

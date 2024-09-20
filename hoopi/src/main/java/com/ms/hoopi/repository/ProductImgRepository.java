@@ -11,6 +11,7 @@ public interface ProductImgRepository extends JpaRepository<ProductImg, String> 
             ", pi.img_path, pi.img_key, pi.created_at " +
             "FROM product_img pi " +
             "WHERE pi.product_code = :productCode " +
+            "AND pi.main = 0" +
             "ORDER BY pi.created_at asc " +
             "LIMIT 1",
             nativeQuery = true)

@@ -124,6 +124,7 @@ public class ArticleServiceImpl implements ArticleService {
         //productImg 정보 저장
         List<ProductImg> productImgs = new ArrayList<>();
         List<String> keys = new ArrayList<>();
+        int i = 0;
         for(MultipartFile img : imgs) {
             String productImgCode = commonUtil.createCode();
             String key = commonUtil.createS3Key("product", img.getOriginalFilename());
@@ -133,9 +134,11 @@ public class ArticleServiceImpl implements ArticleService {
                     .fileName(img.getOriginalFilename())
                     .imgPath("product")
                     .imgKey(key)
+                    .main(i)
                     .build();
             productImgs.add(productImg);
             keys.add(key);
+            i++;
         }
         productImgRepository.saveAll(productImgs);
         fileUploadService.uploadFile(imgs, keys);

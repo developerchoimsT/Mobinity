@@ -43,13 +43,19 @@ public class ProductImg {
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    @NotNull
+    @Column(name = "main", nullable = false)
+    private Integer main;
+
+
 
     @Builder
-    public ProductImg(String productImgCode, Product productCode, String imgPath, String fileName, String imgKey) {
+    public ProductImg(String productImgCode, Product productCode, String imgPath, String fileName, String imgKey, Integer main) {
         this.productImgCode = productImgCode;
         this.productCode = productCode;
         this.imgPath = imgPath;
         this.fileName = fileName;
         this.imgKey = imgKey;
+        this.main = main;
     }
 }
