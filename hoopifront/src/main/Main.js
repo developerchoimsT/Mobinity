@@ -5,6 +5,8 @@ import axios from "axios";
 import {useLocation} from "react-router-dom";
 const Main = () => {
 
+    const role = localStorage.getItem("role");
+
     const location = useLocation();
     const path = location.pathname;
     useEffect(() => {
@@ -45,7 +47,7 @@ const Main = () => {
                                 <th colSpan={2}>{np.product.name}</th>
                             </tr>
                             <tr>
-                                <td>{np.product.price}</td>
+                                <td>{role === 'user' ? np.product.price : role === 'admin' ? 0 : '로그인 후 가격 확인'}</td>
                                 <td>{np.product.name}</td>
                             </tr>
                             </tbody>
