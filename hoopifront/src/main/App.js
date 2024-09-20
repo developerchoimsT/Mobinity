@@ -26,6 +26,7 @@ function App() {
                 localStorage.removeItem('id');
                 localStorage.removeItem('role');
                 alert(response.data);
+                window.location.href = '/';
             })
             .catch(error => {
                 alert(error.response.data);
