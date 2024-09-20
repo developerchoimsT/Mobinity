@@ -30,7 +30,7 @@ public class SecurityConfig {
                                             , "/hoopi/join", "/hoopi/email"
                                             , "/hoopi/phone", "/hoopi/logout",
                                 "/hoopi/category", "/hoopi/board", "/hoopi/menu"
-                        , "/hoopi/product-new").permitAll()
+                        , "/hoopi/product-new", "/hoopi/product-popular").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(formLogin -> formLogin.disable())
                 .logout(logout -> logout.disable())

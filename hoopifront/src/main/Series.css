@@ -1,15 +1,108 @@
-.series-img-box {
+.series-container {
     width: 100%;
-    height: 600px; /* 원하는 높이로 설정 */
-    overflow-x: auto; /* 가로 스크롤 가능하게 설정 */
+    font-family: 'LeeSeoyun', sans-serif;
+}
+
+.series-letter-container {
+    padding-top: 40px;
+    width: 100%;
+    font-size: 6vh;
+    color: #91bee3;
+    text-align: center;
+}
+
+.series-img-container {
+    display: flex;
+    justify-content: flex-start; /* 플렉스 아이템들을 왼쪽 정렬 */
+    align-items: center;
+    box-sizing: border-box;
+    margin: 0 0 5% 0;
+    width: 100%;
+    overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
+}
+
+
+.series-img-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    vertical-align: center;
+}
+
+.series-img-box > table {
+    border-radius: 5px;
+    width: 250px;
+    height: 250px;
+    table-layout: fixed;
+    border-collapse: collapse; /* 테이블 셀 사이의 간격 제거 */
+    box-sizing: border-box;
+    margin: 0 10px 0 10px;
+}
+
+.series-img-box > table thead {
+    height: 70%; /* thead가 전체 높이의 70% 차지 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.series-img-box > table thead th {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.series-img-box > table tbody {
+    height: 30%; /* tbody가 전체 높이의 30% 차지 */
+    display: flex;
+    flex-direction: column;
+}
+
+.series-img-box > table tbody tr {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.series-img-box > table tbody th {
+    height: 100%; /* tbody 내 th가 전체 tbody 높이의 100% 차지 */
+    width: 100%;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.series-img-box > table tbody td {
+    width: 50%; /* tbody 내 두 개의 td가 각각 50% 차지 */
+    height: 100%; /* td 요소가 부모 높이를 차지 */
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     box-sizing: border-box;
 }
 
-.series-img-box>img{
-    height: 100%; /* div의 높이에 맞춤 */
-    width: auto;
-    margin: 0 10px 0 10px;
-    border-radius: 10px;
+.series-img-box > table>thead>tr>td>div {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.series-img-box > table>thead>tr>td>div>img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 이미지가 div를 꽉 채우면서 비율을 유지 */
 }

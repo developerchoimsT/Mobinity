@@ -56,4 +56,32 @@ public class ProductServiceImpl implements ProductService {
         }
         return productNew;
     }
+
+    @Override
+    public List<ProductDetailResponseDto> getProductsPopular() {
+        List<ProductDetailResponseDto> productPopular = new ArrayList<>();
+
+        List<Product> product = productRepository.findAllPopular();
+        for(Product p : product){
+            ProductResponseDto productDto = ProductResponseDto.builder()
+                    .productCode(p.getProductCode())
+                    .price(p.getPrice())
+                    .name(p.getName())
+                    .createdAt(p.getCreatedAt())
+                    .build();
+
+            ProductImg productImg = productImgRepository.findByProductCode(productDto.getProductCode());
+            String imgUrl = fileUploadService.getS3(productImg.getImgKey());
+
+            String boardContent = articleRepository.findByProductCode(productDto.getProductCode());
+
+            ProductDetailResponseDto productDetailDto = ProductDetailResponseDto.builder()
+                    .product(productDto)
+                    .imgUrl(imgUrl)
+                    .boardContent(boardContent)
+                    .build();
+            productPopular.add(productDetailDto);
+        }
+        return productPopular;
+    }
 }

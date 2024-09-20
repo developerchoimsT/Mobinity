@@ -22,6 +22,7 @@ const Main = () => {
         }
     }
 
+
     return (
         <div className="main-container">
             <Series/>
@@ -34,7 +35,7 @@ const Main = () => {
                             <tr>
                                 <td colSpan={2}>
                                     <div>
-                                        <img src={np.imgUrl} alt='맛나요'/>
+                                        <img src={np.imgUrl} alt={np.product.name}/>
                                     </div>
                                 </td>
                             </tr>
@@ -45,7 +46,7 @@ const Main = () => {
                             </tr>
                             <tr>
                                 <td>{np.product.price}</td>
-                                <td>{np.boardContent}</td>
+                                <td>{np.product.name}</td>
                             </tr>
                             </tbody>
                         </table>
