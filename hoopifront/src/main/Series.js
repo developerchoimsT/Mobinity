@@ -4,6 +4,8 @@ import axios from "axios";
 
 const Series = () => {
 
+    const role = localStorage.getItem('role');
+
     useEffect(() => {
         productPopular();
     }, []);
