@@ -7,13 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductImgRepository extends JpaRepository<ProductImg, String> {
-    @Query(value = "SELECT pi.product_img_code, pi.product_code, pi.file_name" +
-            ", pi.img_path, pi.img_key, pi.created_at " +
-            "FROM product_img pi " +
-            "WHERE pi.product_code = :productCode " +
-            "AND pi.main = 0" +
-            "ORDER BY pi.created_at asc " +
-            "LIMIT 1",
-            nativeQuery = true)
+    @Query(value = "SELECT * FROM product_img pi WHERE pi.product_code = :productCode AND pi.main = 0", nativeQuery = true)
     ProductImg findByProductCode(String productCode);
 }
