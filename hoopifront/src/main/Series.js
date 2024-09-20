@@ -41,7 +41,7 @@ const Series = () => {
                                 <th colSpan={2}>{pp.product.name}</th>
                             </tr>
                             <tr>
-                                <td>{pp.product.price}</td>
+                                <td>{role === 'user' ? np.product.price : role === 'admin' ? 0 : '로그인 후 가격 확인'}</td>
                                 <td>{pp.product.name}</td>
                             </tr>
                             </tbody>
