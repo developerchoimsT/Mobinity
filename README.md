@@ -1,6 +1,40 @@
 # 공예품 판매 B2C 사이트 #
+---------------------------
+사이트 : http://hoopi.p-e.kr/
+## 메인
+### 로그인하지 않은 경우
+- 가격 관련 정보는 상품 목록 응답에 표시되지 않습니다.
+### 로그인한 경우
+- 사용자의 유형에 따라 설정된 금액이 상품 목록에 표시됩니다.(관리자: 0, 회원: 정가, 로그인x: 가격확인 필요)
+- 만약 사용자 유형에 맞는 금액 정보가 없을 경우, 상품의 기본 금액이 표시됩니다.
+## 로그인
+### 회원가입 API
+- 사용자가 회원가입을 할 수 있는 기능을 구현합니다.
+- 비밀번호는 암호화되어있어야합니다.
+### 로그인 API
+- 사용자가 로그인할 수 있는 기능을 구현합니다.
+- 아이디/비번이 다를 때 다른 예외처리를 해야합니다
+## Pagination
+- 관리자 회원 관리 페이지 적용
+## 검색
+- 관리자 회원 관리 페이지 검색 기능
+
 
 ## 사용 skill ##
+<div align='center'>
+  <img src="https://img.shields.io/badge/IntelliJ-000000?style=for-the-badge&logo=IntelliJ-&logoColor=white">
+  <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=for-the-badge&logo=SpringBoot-&logoColor=white">
+  <img src="https://img.shields.io/badge/SpringSecurity-6DB33F?style=for-the-badge&logo=SpringSecurity-&logoColor=white">
+  <img src="https://img.shields.io/badge/JPA-6DB33F?style=for-the-badge&logo=JPA-&logoColor=white">
+  <img src="https://img.shields.io/badge/Java-4B4B77?style=for-the-badge&logo=Java-&logoColor=white">
+  <img src="https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=MySql-&logoColor=white">
+  <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white">
+  <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub-&logoColor=white">
+  <img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=Postman&logoColor=white">
+  <img src="https://img.shields.io/badge/AWS S3-569A31?style=for-the-badge&logo=AWS S3&logoColor=white">
+  <img src="https://img.shields.io/badge/AWS RDS-527FFF?style=for-the-badge&logo=AWS RDS&logoColor=white">
+  <img src="https://img.shields.io/badge/AWS EC2-FF9900?style=for-the-badge&logo=AWS EC2&logoColor=white">
+</div>
 
 
 ## 공통 구현 ##
